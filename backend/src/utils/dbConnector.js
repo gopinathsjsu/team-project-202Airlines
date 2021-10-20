@@ -1,11 +1,12 @@
 const mysql = require('mysql');
+const { MYSQL } = require('../../configuration');
 
 const connector = mysql.createPool({
-  user: 'auro',
-  host: 'lab1237cmpe.cauvszlanaze.us-east-2.rds.amazonaws.com',
-  password: 'gnQAMYArWg3rqfuntohZ',
-  database: 'ubereats',
-  port: '3306',
+  user: MYSQL.USER,
+  host: MYSQL.HOST,
+  password: MYSQL.PASSWORD,
+  database: MYSQL.DATABASE,
+  port: MYSQL.PORT,
   multipleStatements: true,
 });
 

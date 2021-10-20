@@ -4,10 +4,11 @@ const CONFIG = {
 };
 
 const MYSQL = {
-  HOST: '',
-  USER: 'aDmIn',
-  PASSWORD: '',
-  DATABASSE: '',
+  HOST: 'airlinesytem.cnh8ixzrqjz8.us-west-1.rds.amazonaws.com',
+  USER: 'raoisha',
+  PASSWORD: 'Airlines_202',
+  DATABASE: 'Airlines',
+  PORT: 3306,
 };
 
-module.exports = { CONFIG };
+module.exports = { CONFIG, MYSQL };
