@@ -13,10 +13,14 @@ Backend:
 - node index.js
 
 # Webpage flow
-unregistered user:  
+unregistered user: 
+
     Home page 
+    
     Sign in  
+    
     >Sign up 
+    
     Search Flights 
 
 Registerd user: 
