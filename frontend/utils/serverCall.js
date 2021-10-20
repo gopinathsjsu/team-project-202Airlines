@@ -10,7 +10,7 @@ const get = (path, data) =>
       if (error.response.data.err) {
         throw error.response.data.err;
       } else {
-        throw 'server side error';
+        throw 'Some Server Side Error Occured';
       }
     });
 
