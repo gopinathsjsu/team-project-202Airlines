@@ -14,15 +14,10 @@ Backend:
 
 # Webpage flow
 unregistered user: 
-
-    Home page 
-    
-    Sign in  
-    
-    >Sign up 
-    
-    Search Flights 
-
+    Home page\
+    Sign in  \
+    >Sign up \
+    Search Flights \
 Registerd user: 
     Search Flight
         select miles or money
