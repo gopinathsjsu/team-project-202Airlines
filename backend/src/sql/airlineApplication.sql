@@ -43,3 +43,72 @@ create table customer (
     total_miles int, 
     primary key(customer_id)
 );
+CREATE TABLE IF NOT EXISTS `Airlines`.`Booking` (
+  `booking_id` INT NOT NULL AUTO_INCREMENT,
+  `status` VARCHAR(45) NULL DEFAULT NULL,
+  `src` VARCHAR(45) NULL DEFAULT NULL,
+  `dst` VARCHAR(45) NULL DEFAULT NULL,
+  `dep_date` DATETIME NULL DEFAULT NULL,
+  `arr_date` DATETIME NULL DEFAULT NULL,
+  `flight_id` INT NULL DEFAULT NULL,
+  `customer_id` INT NULL DEFAULT NULL,
+  `traveller_cnt` INT NULL DEFAULT NULL,
+  `price` FLOAT NULL DEFAULT NULL,
+  `milesused` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`booking_id`),
+  INDEX `flight_fk_idx` (`flight_id` ASC) VISIBLE,
+  INDEX `cstmr_fk_idx` (`customer_id` ASC) VISIBLE,
+  CONSTRAINT `cstmr_fk`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `Airlines`.`customer` (`customer_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `flight_fk`
+    FOREIGN KEY (`flight_id`)
+    REFERENCES `Airlines`.`flight` (`flight_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+ 
+ CREATE TABLE IF NOT EXISTS `Airlines`.`FlightSeat` (
+  `flight_id` INT NOT NULL,
+  `seat_no` VARCHAR(3) NULL DEFAULT NULL,
+  `customer_id` INT NOT NULL,
+  `booking_id` INT NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `date` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`flight_id`, `customer_id`, `booking_id`),
+  INDEX `cus_fk_idx` (`customer_id` ASC) VISIBLE,
+  INDEX `booking_fk_idx` (`booking_id` ASC) VISIBLE,
+  CONSTRAINT `booking_id_fk`
+    FOREIGN KEY (`booking_id`)
+    REFERENCES `Airlines`.`Booking` (`booking_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `customer_id_fk`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `Airlines`.`customer` (`customer_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `flight_id_fk`
+    FOREIGN KEY (`flight_id`)
+    REFERENCES `Airlines`.`flight` (`flight_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+  
+  CREATE TABLE IF NOT EXISTS `Airlines`.`Seat` (
+  `seat_no` VARCHAR(3) NOT NULL,
+  `class` VARCHAR(45) NULL DEFAULT NULL,
+  `price` FLOAT NULL DEFAULT NULL,
+  PRIMARY KEY (`seat_no`));
+  CREATE TABLE IF NOT EXISTS `Airlines`.`Traveller` (
+  `name` VARCHAR(45) NOT NULL,
+  `booking_id` INT NOT NULL,
+  `gender` CHAR(1) NULL DEFAULT NULL,
+  `age` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`name`, `booking_id`),
+  INDEX `booking_fk_idx` (`booking_id` ASC) VISIBLE,
+  CONSTRAINT `booking_fk`
+    FOREIGN KEY (`booking_id`)
+    REFERENCES `Airlines`.`Booking` (`booking_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
