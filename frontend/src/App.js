@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navigator from './components/Navigator';
 import Home from './views/Home';
 import InvalidPage from './views/InvalidPage';
-import SamplePage from './views/SamplePage';
+import BookFlight from './views/BookFlight';
+import MyTrip from './views/MyTrips';
 
 function App() {
   return (
@@ -14,11 +15,17 @@ function App() {
           <Route path='/home' exact>
             <Home />
           </Route>
-          <Route path='/addNewPage' exact>
-            <SamplePage></SamplePage>
+          <Route path='/bookFlight' exact>
+            <BookFlight></BookFlight>
+          </Route>
+          <Route path='/myTrips' exact>
+            <MyTrip></MyTrip>
+          </Route>
+          <Route path='/signIn' exact>
+            <MyTrip></MyTrip>
           </Route>
           <Route path='*'>
-            <InvalidPage> </InvalidPage>
+            <Home />
           </Route>
         </Switch>
       </Router>
