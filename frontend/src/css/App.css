@@ -9,3 +9,10 @@
 .shoe-container .container  {
     margin-top: 40vh;
 }
+
+.seatIcon {
+    cursor: pointer;
+}
+.seatIcon:hover {
+    color: grey;
+}

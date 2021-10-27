@@ -10,17 +10,23 @@ function SeatMap() {
     middleSeatPrice: 34,
   }
 
+  const seatClickHandler = (e) => {
+    console.log(e.currentTarget.getAttribute('seatid'));
+  }
+
+
   let rows = [];
   for(let i =0; i<defaultSeatData.rows; i++){
     let divisions = [];
     for(let j=0;j<defaultSeatData.divisions;j++){
       let columns = [];
       for(let k=0;k<defaultSeatData.seatsPerDivision;k++ ){
-        columns.push(<Col className="col"><i class="material-icons" color="yellow">event_seat</i>{i+1}{String.fromCharCode(j*3+k+1+64)}</Col>)
+        const id = (i+1)+String.fromCharCode(j*3+k+1+64);
+        columns.push(<Col className="col" seatid={id} key={id} onClick={seatClickHandler } className="seatIcon" ><i className="material-icons" color="yellow" title={id}>event_seat</i>{id}</Col>)
       }
-      divisions.push(<Col className="division" style={{marginLeft:"64px"}}><Row>{columns}</Row></Col>)
+      divisions.push(<Col className="division" key={j} style={{marginLeft:"64px"}}><Row>{columns}</Row></Col>)
     }
-    rows.push(<Row className="seatRow" >{divisions}</Row>)
+    rows.push(<Row className="seatRow" key={i}>{divisions}</Row>)
   }
   return <Container>
     
