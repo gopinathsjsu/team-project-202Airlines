@@ -6,6 +6,7 @@ import InvalidPage from './views/InvalidPage';
 import BookFlight from './views/BookFlight';
 import MyTrip from './views/MyTrips';
 import Signin from './views/Signin';
+import SeatMap from './views/SeatMap';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path='/signin' exact>
             <Signin></Signin>
+          </Route>
+          <Route path='/seatmap' exact>
+            <SeatMap></SeatMap>
           </Route>
           <Route path='*'>
             <Home />

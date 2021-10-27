@@ -23,6 +23,11 @@ function Navigator() {
                   SIGN IN
                 </Link>
               </Nav>
+              <Nav>
+                <Link to='/seatmap' className='nav-link'>
+                  Seat Page
+                </Link>
+              </Nav>
             </Container>
           </Navbar>
         </Row>
