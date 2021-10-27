@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 function SeatMap() {
@@ -9,8 +9,6 @@ function SeatMap() {
     aislePrice: 24,
     middleSeatPrice: 34,
   };
-
-  const [seatStatus, setSeatStatus] = useState([]);
 
   const seatClickHandler = (e) => {
     console.log(e.currentTarget.getAttribute("seatid"));
@@ -24,39 +22,32 @@ function SeatMap() {
       for (let k = 0; k < defaultSeatData.seatsPerDivision; k++) {
         const id = i + 1 + String.fromCharCode(j * 3 + k + 1 + 64);
         columns.push(
-          <div
+          <Col
             seatid={id}
             key={id}
             onClick={seatClickHandler}
             className="seatIcon"
-            style={{ display: "flex", minWidth: "56px", position: "relative" }}
-            data-toggle="tooltip"
-            title={id}
           >
-            <i className="material-icons" data-toggle="tooltip" title={id}>
+            <i className="material-icons" color="yellow" title={id}>
               event_seat
             </i>
-            {/* <p>{id}</p> */}
-          </div>
+            <p>{id}</p>
+          </Col>
         );
       }
       divisions.push(
-        <div
-          className="division"
-          key={j}
-          style={{ marginLeft: "64px", display: "flex" }}
-        >
-          {columns}
-        </div>
+        <Col className="division" key={j} style={{ marginLeft: "64px" }}>
+          <Row>{columns}</Row>
+        </Col>
       );
     }
     rows.push(
-      <div className="seatRow" style={{ display: "flex" }} key={i}>
+      <Row className="seatRow" key={i}>
         {divisions}
-      </div>
+      </Row>
     );
   }
-  return <div>{rows}</div>;
+  return <Container>{rows}</Container>;
 }
 
 export default SeatMap;
