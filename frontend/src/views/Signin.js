@@ -55,7 +55,7 @@ function Signin() {
           </Button>
           <br/>
           <div className="form-group">
-            <a href="register">SignUp</a>
+            <a href="Signup">SignUp</a>
           </div> 
         </Form>
       </Col>
