@@ -1,18 +1,18 @@
 select * from Airport;
-insert into Airport values(1,'San Jose International Airport', 'San Jose', 'USA');
-insert into Airport values(2, 'Indira Gandhi International Airport', 'New Delhi', 'India');
-insert into Airport values(3, 'San Francisco International Airport', 'San Francisco', 'USA');
+-- insert into Airport values(1,'San Jose International Airport', 'San Jose', 'USA');
+-- insert into Airport values(2, 'Indira Gandhi International Airport', 'New Delhi', 'India');
+-- insert into Airport values(3, 'San Francisco International Airport', 'San Francisco', 'USA');
 
--- insert into Airport values(1,'SJC','San Jose International Airport', 'San Jose', 'USA');
--- insert into Airport values(2,'DEL', 'Indira Gandhi International Airport', 'New Delhi', 'India');
--- insert into Airport values(3,'SFO','San Francisco International Airport', 'San Francisco', 'USA');
+insert into Airport values(1,'SJC','San Jose International Airport', 'San Jose', 'USA');
+insert into Airport values(2,'DEL', 'Indira Gandhi International Airport', 'New Delhi', 'India');
+insert into Airport values(3,'SFO','San Francisco International Airport', 'San Francisco', 'USA');
 
 select * from Flight;
-insert into Flight values(100,2,'5I100','San Jose International Airport', 'Indira Gandhi International Airport', 'International','12:00','23:00',95,9500);
-insert into Flight values(200,3, '5D200','San Jose International Airport', 'San Francisco International Airport', 'Domestic','9:00','11:00',40,4000);
+-- insert into Flight values(100,2,'5I100','San Jose International Airport', 'Indira Gandhi International Airport', 'International','12:00','23:00',95,9500);
+-- insert into Flight values(200,3, '5D200','San Jose International Airport', 'San Francisco International Airport', 'Domestic','9:00','11:00',40,4000);
 
--- insert into Flight values(100,'5I100','SJC', 'DEL', 'International','12:00','23:00',95,9500);
--- insert into Flight values(200, '5D200','SJC', 'SFO', 'Domestic','9:00','11:00',40,4000);
+insert into Flight values(100,'5I100','SJC', 'DEL', 'International','12:00','23:00',95,9500);
+insert into Flight values(200, '5D200','SJC', 'SFO', 'Domestic','9:00','11:00',40,4000);
 
 
 select * from Customer;
@@ -22,15 +22,18 @@ insert into Customer values(3,'Jahnavi', 'Marthala','Sunny Drive','Fremont','Cal
 insert into Customer values(4,'Anil', 'Gubbala','Fargo Drive','Miltpitas','California','93467','80EFv342','Male','password','anil@gmail.com','User','Favourite Sport','Tennis','8T242',400,'USA');
 
 select * from Booking;
-insert into Booking values(1,'Booked','San Jose International Airport', 'Indira Gandhi International Airport', '2021-10-10','2021-10-11',100,1,1,95,0);
-insert into Booking values(2,'Booked','San Jose International Airport', 'San Francisco International Airport', '2021-10-20','2021-10-20',200,3,1,40,0);
-insert into Booking values(3,'Canceled','San Jose International Airport', 'Indira Gandhi International Airport', '2021-10-30','2021-10-31',100,1,1,95,0);
-insert into Booking values(4,'Canceled','San Jose International Airport', 'San Francisco International Airport', '2021-10-20','2021-10-20',200,3,1,40,0);
-insert into Booking values(5,'Booked','San Jose International Airport', 'Indira Gandhi International Airport', '2021-10-29','2021-10-30',100,1,1,95,0);
-insert into Booking values(6,'Booked','San Jose International Airport', 'San Francisco International Airport', '2021-10-30','2021-10-30',200,3,1,40,0);
+-- insert into Booking values(1,'Booked','San Jose International Airport', 'Indira Gandhi International Airport','2021-10-10', '2021-11-10','2021-11-11',100,1,1,95,0);
+-- insert into Booking values(2,'Booked','San Jose International Airport', 'San Francisco International Airport','2021-10-10', '2021-10-20','2021-10-20',200,3,1,40,0);
+-- insert into Booking values(3,'Canceled','San Jose International Airport', 'Indira Gandhi International Airport','2021-10-10', '2021-10-30','2021-10-31',100,1,1,95,0);
+-- insert into Booking values(4,'Canceled','San Jose International Airport', 'San Francisco International Airport','2021-10-10', '2021-11-20','2021-11-20',200,3,1,40,0);
+-- insert into Booking values(5,'Booked','San Jose International Airport', 'Indira Gandhi International Airport','2021-10-10', '2021-10-29','2021-10-30',100,1,1,95,0);
+-- insert into Booking values(6,'Booked','San Jose International Airport', 'San Francisco International Airport','2021-10-10', '2021-10-30','2021-10-30',200,3,1,40,0);
 
--- insert into Booking values(1,'Booked','SJC', 'DEL', '2021-10-10','2021-10-11',100,1,1,95,0);
--- insert into Booking values(2,'Booked','SJC', 'SFO', '2021-10-20','2021-10-20',200,3,1,40,0);
+insert into Booking values(1,'Booked', '2021-10-10','2021-11-10','2021-11-11',100,1,1,95,0);
+insert into Booking values(2,'Booked','2021-10-10', '2021-10-20','2021-10-20',200,3,1,40,0);
+insert into Booking values(4,'Canceled','2021-10-10', '2021-11-20','2021-11-20',200,3,1,40,0);
+insert into Booking values(5,'Booked','2021-10-10', '2021-10-29','2021-10-30',100,1,1,95,0);
+insert into Booking values(6,'Booked','2021-10-10', '2021-10-30','2021-10-30',200,3,1,40,0);
 
 
 select * from FlightSeat;

@@ -4,19 +4,17 @@ use Airlines;
 
 CREATE TABLE IF NOT EXISTS `Airlines`.`Airport` (
   `airport_id` int NOT NULL AUTO_INCREMENT,
-  -- `airport_code` varchar(4) NOT NULL UNIQUE,
+  `airport_code` varchar(4) NOT NULL UNIQUE,
   `airport_name` varchar(100) DEFAULT NULL,
   `airport_location` varchar(100) DEFAULT NULL,
   `country` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`airport_id`)
 );
 
-CREATE TABLE IF NOT EXISTS `Airlines`.`Flight` (
+
+CREATE TABLE `Flight` (
   `flight_id` int NOT NULL AUTO_INCREMENT,
-  -- `airport_id` int NOT NULL,
   `flight_number` varchar(50) DEFAULT NULL,
-  -- `flight_src` varchar(100) DEFAULT NULL,
-  -- `flight_dst` varchar(100) DEFAULT NULL,
   `airport_code_src` varchar(100) DEFAULT NULL,
   `airport_code_dst` varchar(100) DEFAULT NULL,
   `flight_type` varchar(50) DEFAULT NULL,
@@ -24,16 +22,20 @@ CREATE TABLE IF NOT EXISTS `Airlines`.`Flight` (
   `end_time` time DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
   `miles` int DEFAULT NULL,
-  CHECK (airport_code_src != airport_code_dst),
   PRIMARY KEY (`flight_id`),
   UNIQUE KEY `flight_number` (`flight_number`),
-  -- KEY `airport_id` (`airport_id`),
-  -- CONSTRAINT `flight_ibfk_1` 
-  --   FOREIGN KEY (`airport_id`) 
-  --   REFERENCES `Airport` (`airport_id`) 
-  --   ON DELETE CASCADE 
-  --   ON UPDATE CASCADE
-  -- whether to keep airport_code_src n airport_code_dst as foreign key or not?
+  KEY `airport_code_src` (`airport_code_src`),
+  KEY `airport_code_dst` (`airport_code_dst`),
+  CONSTRAINT `Flight_ibfk_1` 
+    FOREIGN KEY (`airport_code_src`) 
+    REFERENCES `Airport` (`airport_code`) 
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE,
+  CONSTRAINT `Flight_ibfk_2` 
+    FOREIGN KEY (`airport_code_dst`) 
+    REFERENCES `Airport` (`airport_code`) 
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE
 );
 
 alter table Flight auto_increment = 100;
@@ -59,12 +61,12 @@ CREATE TABLE IF NOT EXISTS `Airlines`.`Customer` (
   PRIMARY KEY (`customer_id`)
 );
 
-
 CREATE TABLE IF NOT EXISTS `Airlines`.`Booking` (
   `booking_id` INT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(45) NULL DEFAULT NULL,
-  `src` VARCHAR(45) NULL DEFAULT NULL,
-  `dst` VARCHAR(45) NULL DEFAULT NULL,
+  -- `src` VARCHAR(45) NULL DEFAULT NULL,
+  -- `dst` VARCHAR(45) NULL DEFAULT NULL,
+  `booking_date` DATETIME NULL DEFAULT NULL,
   `dep_date` DATETIME NULL DEFAULT NULL,
   `arr_date` DATETIME NULL DEFAULT NULL,
   `flight_id` INT NULL DEFAULT NULL,

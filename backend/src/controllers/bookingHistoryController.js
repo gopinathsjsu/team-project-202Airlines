@@ -7,7 +7,7 @@ const getBookingHistory = (req, res) => {
     //   res.status(404).send({ err: "Invalid user session" });
     //   return;
     // }
-    conn.query("select booking_id, DATE_FORMAT(arr_date,'%Y-%m-%d') as 'arr_date',src,dst,status from Booking;",
+    conn.query("select booking_id, DATE_FORMAT(arr_date,'%Y-%m-%d') as 'arr_date',airport_code_src as src,airport_code_dst as dst,status from Booking,Flight where Booking.flight_id=Flight.flight_id;",
     //  where customer_id=? order by booking_id;",
     [req.body.customer_id],
      (error, result) => {
