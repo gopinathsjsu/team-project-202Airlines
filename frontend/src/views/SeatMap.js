@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
-//TODO : disable next button if all seats are not selected
-//TODO : display cost on screen
+// TODO : disable next button if all seats are not selected
+// TODO : display cost on screen
 
 function SeatMap() {
   const defaultSeatData = {
@@ -22,27 +22,26 @@ function SeatMap() {
 
   const noOfTravellers = 4;
 
-  const bookedSeats = ["1A", "1E", "10D", "8E"];
+  const bookedSeats = ['1A', '1E', '10D', '8E'];
 
   // const [seatStatus, setSeatStatus] = useState([]);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const seatClickHandler = (e) => {
-    const seatId = e.currentTarget.getAttribute("seatid");
+    const seatId = e.currentTarget.getAttribute('seatid');
     setSelectedSeats((prev) => {
       if (prev.indexOf(seatId) > -1) {
         const temp = [...prev];
         temp.splice(temp.indexOf(seatId), 1);
         return [...temp];
-      } else {
-        if (prev.length >= noOfTravellers) {
-          const temp = [...prev];
-          temp.shift();
-          return [...temp, seatId];
-        }
-        return [...prev, seatId];
       }
+      if (prev.length >= noOfTravellers) {
+        const temp = [...prev];
+        temp.shift();
+        return [...temp, seatId];
+      }
+      return [...prev, seatId];
     });
     // console.log(e.currentTarget.getAttribute("seatid"));
   };
@@ -50,9 +49,8 @@ function SeatMap() {
   const setClickHandler = (id) => {
     if (bookedSeats.indexOf(id) > -1) {
       return null;
-    } else {
-      return seatClickHandler;
     }
+    return seatClickHandler;
   };
 
   // const setSeatStyle = (id) => {
@@ -67,36 +65,26 @@ function SeatMap() {
   // };
 
   const setSeatStyle = (id, row) => {
-    let style = { color: "deepskyblue" };
+    let style = { color: 'deepskyblue' };
     if (row < defaultSeatData.businessClass) {
-      style = { ...style, color: "orange" };
+      style = { ...style, color: 'orange' };
     }
     if (bookedSeats.indexOf(id) > -1) {
-      style = { ...style, color: "red" };
+      style = { ...style, color: 'red' };
     }
 
     if (selectedSeats.indexOf(id) > -1) {
-      style = { ...style, color: "green" };
+      style = { ...style, color: 'green' };
     }
     return style;
   };
 
   const setSeatClass = (id) => {
-    let className = "seatIcon seatBase";
+    let className = 'seatIcon seatBase';
     if (bookedSeats.indexOf(id) < 0) {
-      className += " seatCursor";
+      className += ' seatCursor';
     }
     return className;
-  };
-
-  const getSeatPrice = (seatId) => {
-    let row = seatId.substring(0, seatId.length - 1);
-    row = parseInt(row) - 1;
-    let char = seatId.substring(seatId.length - 1, seatId.length);
-    char = char.charCodeAt(0) - 64 - 1;
-    const division = Math.floor(char / defaultSeatData.seatsPerDivision);
-    const column = char % defaultSeatData.seatsPerDivision;
-    return generateSeatPrice(row, column, division);
   };
 
   const generateSeatPrice = (row, column, division) => {
@@ -122,22 +110,27 @@ function SeatMap() {
     return price;
   };
 
-  let rows = [];
-  for (let i = 0; i < defaultSeatData.rows; i++) {
-    let divisions = [];
-    for (let j = 0; j < defaultSeatData.divisions; j++) {
-      let columns = [];
-      for (let k = 0; k < defaultSeatData.seatsPerDivision; k++) {
-        const id =
-          i +
-          1 +
-          String.fromCharCode(
-            j * defaultSeatData.seatsPerDivision + k + 1 + 64
-          );
+  const getSeatPrice = (seatId) => {
+    let row = seatId.substring(0, seatId.length - 1);
+    row = parseInt(row, 10) - 1;
+    let char = seatId.substring(seatId.length - 1, seatId.length);
+    char = char.charCodeAt(0) - 64 - 1;
+    const division = Math.floor(char / defaultSeatData.seatsPerDivision);
+    const column = char % defaultSeatData.seatsPerDivision;
+    return generateSeatPrice(row, column, division);
+  };
+
+  const rows = [];
+  for (let i = 0; i < defaultSeatData.rows; i += 1) {
+    const divisions = [];
+    for (let j = 0; j < defaultSeatData.divisions; j += 1) {
+      const columns = [];
+      for (let k = 0; k < defaultSeatData.seatsPerDivision; k += 1) {
+        const id = i + 1 + String.fromCharCode(j * defaultSeatData.seatsPerDivision + k + 1 + 64);
         columns.push(
           <div
             seatid={id}
-            info={id + " : $" + generateSeatPrice(i, k, j)}
+            info={`${id} : $${generateSeatPrice(i, k, j)}`}
             key={id}
             onClick={setClickHandler(id)}
             className={setSeatClass(id)}
@@ -160,25 +153,21 @@ function SeatMap() {
         );
       }
       divisions.push(
-        <div
-          className="division"
-          key={j}
-          style={{ marginLeft: "32px", display: "flex" }}
-        >
+        <div className="division" key={j} style={{ marginLeft: '32px', display: 'flex' }}>
           {columns}
         </div>
       );
     }
     rows.push(
-      <div className="seatRow" style={{ display: "flex" }} key={i}>
+      <div className="seatRow" style={{ display: 'flex' }} key={i}>
         {divisions}
       </div>
     );
   }
 
-  const cost = () => {
+  const totalCost = () => {
     let cost = 0;
-    selectedSeats.map((each) => {
+    selectedSeats.forEach((each) => {
       cost += getSeatPrice(each);
     });
     return cost;
@@ -187,7 +176,7 @@ function SeatMap() {
   return (
     <>
       <div>{rows}</div>
-      <div>{"$" + cost()}</div>
+      <div>{`$${totalCost()}`}</div>
     </>
   );
 }
