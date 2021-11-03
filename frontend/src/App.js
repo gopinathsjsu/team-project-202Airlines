@@ -9,6 +9,7 @@ import MyTrip from './views/MyTrips';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
 import SeatMap from './views/SeatMap';
+import UpdateBooking from './views/UpdateBooking';
 
 function App() {
   return (
@@ -34,13 +35,13 @@ function App() {
           <Route path="/seatmap" exact>
             <SeatMap />
           </Route>
-          <Route path='/flightList/:details' exact>
-            <FlightList></FlightList>
+          <Route path="/flightList/:details" exact>
+            <FlightList />
           </Route>
           <Route>
-            <Signup></Signup>
+            <Signup />
           </Route>
-          <Route path='*'>
+          <Route path="*">
             <Home />
           </Route>
         </Switch>

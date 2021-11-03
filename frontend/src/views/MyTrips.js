@@ -7,7 +7,8 @@ import backendServer from "../webConfig";
 function MyTrip() {
   const [toggleState, setToggleState] = useState(1);
   const [bookingHistory, setBookingHistory] = useState([]);
-  
+  // const [cancelMode, setCancelMode] = useState(false);
+
   const toggleTab = (index) => {
       setToggleState(index);
     };
@@ -18,19 +19,22 @@ function MyTrip() {
         setBookingHistory(response.data);
       });
     }, []);
+    console.log(bookingHistory);
 
-  const Cancelbooking = () =>{
+  const cancelBooking = (id) =>{
+    console.log("id",id);
       Axios.post(`${backendServer}/cancelFlightBooking`,{
-        booking_id: bookingHistory.booking_id
+        booking_id: id 
       })
       .then((result)=>{
-        console.log("resuklt");
+        console.log(result);
        window.location.reload();
     })
     .catch((error) => {
     });
   }
   
+
     return (
       <div className="container">
         <div className="bloc-tabs">
@@ -54,39 +58,51 @@ function MyTrip() {
           </button>
         </div>
   
+
+        
+
+
         <div className="content-tabs">
           <div
             className={toggleState === 1 ? "content  active-content" : "content"}
           >
             <table id="booking">
+              <tbody>
                 <tr>
                   <th scope="col">S.No.</th>
-                  <th scope="col">Date</th>
+                  <th scope="col">Booking Date</th>
+                  <th scope="col">Departure Date</th>
                   <th scope="col">Source</th>
+                  <th scope="col">Arrival Date</th>
                   <th scope="col">Destination</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Status</th>
                 </tr>
-            <div>
               {bookingHistory.filter((a) => {
-                  return (new Date(a.arr_date) - new Date >0) && !((a.status.toLowerCase() === "cancelled")||(a.status.toLowerCase() === "canceled"))
+                  return (new Date(a.dep_date) - new Date >0) && !((a.status.toLowerCase() === "cancelled")||(a.status.toLowerCase() === "canceled"))
                 }).map((data, index) => {
-                return (
-                  <tbody>
-                  <tr>
+                return (              
+                  <tr key={data.booking_id}>
                     <th scope="row">{data.booking_id}</th>
-                    <td>{data.arr_date}</td>
+                    <td>{data.booking_date}</td>
+                    <td>{data.dep_date}</td>
                     <td>{data.src}</td>
+                    <td>{data.arr_date}</td>
                     <td>{data.dst}</td>
+                    <td>${data.price}</td>
                     <td>{data.status}</td>
+                    <td><button onClick={() => {
+                    window.location="/updateBooking";
+                  }}>Update Booking</button>
                     <button onClick={() => {
-                    Cancelbooking();
+                    cancelBooking(data.booking_id);
                   }}>Cancel Booking</button>
+                  </td>
                   </tr>
-                  </tbody>
                   );
                 })
                 }
-            </div>
+                </tbody>
             </table>
           </div>
           <div
@@ -94,30 +110,32 @@ function MyTrip() {
           >
             <table id="booking">
                 <tr>
-                  <th scope="col">S.No.</th>
-                  <th scope="col">Date</th>
+                <th scope="col">S.No.</th>
+                  <th scope="col">Booking Date</th>
+                  <th scope="col">Departure Date</th>
                   <th scope="col">Source</th>
+                  <th scope="col">Arrival Date</th>
                   <th scope="col">Destination</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Status</th>
                 </tr>
-            <div>
             {bookingHistory.filter((a) => {
-              return (new Date(a.arr_date) - new Date <0)
+              return (new Date(a.dep_date) - new Date <0)
             }).map((data, index) => {
               return (
-                <tbody>
-                  <tr>
+                  <tr  key={data.booking_id}>
                     <th scope="row">{data.booking_id}</th>
-                    <td>{data.arr_date}</td>
+                    <td>{data.booking_date}</td>
+                    <td>{data.dep_date}</td>
                     <td>{data.src}</td>
+                    <td>{data.arr_date}</td>
                     <td>{data.dst}</td>
+                    <td>${data.price}</td>
                     <td>{data.status}</td>
                   </tr>
-                  </tbody>
               );
             })
             }
-            </div>
             </table>
           </div>
           <div
@@ -125,30 +143,32 @@ function MyTrip() {
           >
             <table id="booking">
                 <tr>
-                  <th scope="col">S.No.</th>
-                  <th scope="col">Date</th>
+                <th scope="col">S.No.</th>
+                  <th scope="col">Booking Date</th>
+                  <th scope="col">Departure Date</th>
                   <th scope="col">Source</th>
+                  <th scope="col">Arrival Date</th>
                   <th scope="col">Destination</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Status</th>
                 </tr>
-            <div>
             {bookingHistory.filter((a) => {
                 return ((a.status.toLowerCase() === "cancelled") || (a.status.toLowerCase() === "canceled"))
              }).map((data, index) => {
               return (
-                <tbody>
-                  <tr>
+                  <tr  key={data.booking_id}>
                     <th scope="row">{data.booking_id}</th>
-                    <td>{data.arr_date}</td>
+                    <td>{data.booking_date}</td>
+                    <td>{data.dep_date}</td>
                     <td>{data.src}</td>
+                    <td>{data.arr_date}</td>
                     <td>{data.dst}</td>
+                    <td>${data.price}</td>
                     <td>{data.status}</td>
                   </tr>
-                  </tbody>
               );
             })
             }
-            </div>
             </table>
           </div>
         </div>
