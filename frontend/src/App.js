@@ -2,7 +2,6 @@ import './css/App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navigator from './components/Navigator';
 import Home from './views/Home';
-import InvalidPage from './views/InvalidPage';
 import BookFlight from './views/BookFlight';
 import FlightList from './views/FlightList';
 import MyTrip from './views/MyTrips';

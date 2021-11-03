@@ -9,6 +9,7 @@ const getBookingHistory = (req, res) => {
   // }
   conn.query(
     "select booking_id, DATE_FORMAT(booking_date,'%Y-%m-%d') as booking_date,DATE_FORMAT(dep_date,'%Y-%m-%d') as dep_date,DATE_FORMAT(arr_date,'%Y-%m-%d') as arr_date,airport_code_src as src,airport_code_dst as dst,Booking.price,status from Booking,Flight where Booking.flight_id=Flight.flight_id;",
+    //  where customer_id=? order by booking_id;",
     [req.body.customer_id],
     (error, result) => {
       //  console.log(result);
