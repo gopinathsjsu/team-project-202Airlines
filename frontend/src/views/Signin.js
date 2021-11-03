@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
 import { post } from '../utils/serverCall';
+import classnames from "classnames";
+
 function Signin() {
   const defaultValues = {
     id: '',
@@ -20,15 +23,19 @@ function Signin() {
   };
 
   return (
-    <Container>
+<Container>
       <Col>
         <Form>
           <Form.Group className='mb-3' controlId='formEmail'>
-            <Form.Label>Access ID</Form.Label>
+          <div className="panel">
+           <h2>Login</h2>
+           <p>Please enter your username and password</p>                                    
+             </div> 
+            <Form.Label>Email ID</Form.Label>
             <Form.Control
               name='id'
               type='text'
-              placeholder='Enter Id'
+              placeholder='Email Id'
               required
               onChange={eventHandler}
             />
@@ -38,7 +45,7 @@ function Signin() {
             <Form.Control
               name='password'
               type='password'
-              placeholder='Enter Password'
+              placeholder='Password'
               required
               onChange={eventHandler}
             />
@@ -46,10 +53,15 @@ function Signin() {
           <Button variant='primary' type='submit' onClick={handleSubmit}>
             Submit
           </Button>
+          <br/>
+          <div className="form-group">
+            <a href="Signup">SignUp</a>
+          </div> 
         </Form>
       </Col>
     </Container>
-  );
+        
+  )
 }
 
 export default Signin;
