@@ -3,17 +3,66 @@ import { Col, Container, Row } from "react-bootstrap";
 
 function SeatMap() {
   const defaultSeatData = {
-    rows: 30,
+    rows: 20,
     seatsPerDivision: 3,
-    divisions: 3,
-    aislePrice: 24,
-    middleSeatPrice: 34,
+    divisions: 2,
+    businessClass: 5,
   };
+
+  const defaultPrice = {
+    base: 500,
+    businessClass: 100,
+    window: 25,
+    aisle: 25,
+    last: 25,
+  };
+
+  const bookedSeats = ["1A", "1E", "10D", "8E"];
 
   const [seatStatus, setSeatStatus] = useState([]);
 
   const seatClickHandler = (e) => {
     console.log(e.currentTarget.getAttribute("seatid"));
+  };
+
+  const setClickHandler = (id) => {
+    if (bookedSeats.indexOf(id) > -1) {
+      return null;
+    } else {
+      return seatClickHandler;
+    }
+  };
+
+  const setSeatStyle = (id) => {
+    let style = { display: "flex", minWidth: "32px", position: "relative" };
+    if (bookedSeats.indexOf(id) < 0) {
+      style = { ...style, cursor: "pointer" };
+    }
+    return style;
+  };
+
+  const setSeatPrice = (row, column, division) => {
+    let price = defaultPrice.base;
+    if (row < defaultSeatData.businessClass) {
+      price += defaultPrice.businessClass;
+    }
+    if (row > defaultSeatData.rows * 0.8) {
+      price -= defaultPrice.last;
+    }
+    if (column === 0) {
+      price += defaultPrice.aisle;
+      if (division === 0) {
+        price += defaultPrice.window;
+      }
+    }
+    if ((column + 1) % defaultSeatData.seatsPerDivision === 0) {
+      price += defaultPrice.aisle;
+      if ((division + 1) % defaultSeatData.divisions === 0) {
+        price += defaultPrice.window;
+      }
+    }
+    console.log(price);
+    return price;
   };
 
   let rows = [];
@@ -26,14 +75,22 @@ function SeatMap() {
         columns.push(
           <div
             seatid={id}
+            info={id + " : $" + setSeatPrice(i, k, j)}
             key={id}
-            onClick={seatClickHandler}
+            onClick={setClickHandler(id)}
             className="seatIcon"
-            style={{ display: "flex", minWidth: "56px", position: "relative" }}
+            style={setSeatStyle(id)}
             data-toggle="tooltip"
-            title={id}
+            // title={id}
           >
-            <i className="material-icons" data-toggle="tooltip" title={id}>
+            <i
+              className="material-icons"
+              // data-toggle="tooltip"
+              // title={id}
+              style={{
+                color: i < defaultSeatData.businessClass ? "orange" : "blue",
+              }}
+            >
               event_seat
             </i>
             {/* <p>{id}</p> */}
@@ -44,7 +101,7 @@ function SeatMap() {
         <div
           className="division"
           key={j}
-          style={{ marginLeft: "64px", display: "flex" }}
+          style={{ marginLeft: "32px", display: "flex" }}
         >
           {columns}
         </div>
@@ -56,6 +113,7 @@ function SeatMap() {
       </div>
     );
   }
+
   return <div>{rows}</div>;
 }
 
