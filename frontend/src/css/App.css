@@ -1,13 +1,13 @@
 .shoe-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image:url('../images/bg_image.jpeg');
-    background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/bg_image.jpeg");
+  background-size: cover;
 }
 
-.shoe-container .container  {
-    margin-top: 40vh;
+.shoe-container .container {
+  margin-top: 40vh;
 }
 
 
@@ -137,6 +137,30 @@ input::placeholder{
     transition: 0.5s;
 }
 
+/* .seatIcon {
+  cursor: pointer;
+} */
+.seatIcon:hover {
+  color: grey;
+}
 
+.seatBase {
+  display: flex;
+  min-width: 32px;
+  position: relative;
+}
+.seatCursor {
+  cursor: pointer;
+}
 
-
+.seatIcon:hover::after {
+  position: absolute;
+  content: attr(info);
+  bottom: 75%;
+  left: 75%;
+  width: max-content;
+  background-color: rgb(253, 247, 247);
+  color: rgb(212, 34, 34);
+  padding: 0.25em 0.5em;
+  z-index: 1000;
+}
