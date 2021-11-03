@@ -11,29 +11,29 @@ import SeatMap from './views/SeatMap';
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <Router>
         <Navigator />
         <Switch>
-          <Route path='/home' exact>
+          <Route path="/home" exact>
             <Home />
           </Route>
-          <Route path='/bookFlight' exact>
+          <Route path="/bookFlight" exact>
             <BookFlight></BookFlight>
           </Route>
-          <Route path='/myTrips' exact>
+          <Route path="/myTrips" exact>
             <MyTrip></MyTrip>
           </Route>
-          <Route path='/signin' exact>
+          <Route path="/signin" exact>
             <Signin></Signin>
           </Route>
-          <Route path='/signup' exact>
+          <Route path="/signup" exact>
             <Signup></Signup>
           </Route>
-          <Route path='/seatmap' exact>
+          <Route path="/seatmap" exact>
             <SeatMap></SeatMap>
           </Route>
-          <Route path='*'>
+          <Route path="*">
             <Home />
           </Route>
         </Switch>
