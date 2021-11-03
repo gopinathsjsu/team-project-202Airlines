@@ -19,19 +19,19 @@ function App() {
             <Home />
           </Route>
           <Route path="/bookFlight" exact>
-            <BookFlight></BookFlight>
+            <BookFlight />
           </Route>
           <Route path="/myTrips" exact>
-            <MyTrip></MyTrip>
+            <MyTrip />
           </Route>
           <Route path="/signin" exact>
-            <Signin></Signin>
+            <Signin />
           </Route>
           <Route path="/signup" exact>
-            <Signup></Signup>
+            <Signup />
           </Route>
           <Route path="/seatmap" exact>
-            <SeatMap></SeatMap>
+            <SeatMap />
           </Route>
           <Route path="*">
             <Home />
