@@ -41,6 +41,12 @@ function App() {
           <Route path="/flightList/:details" exact>
             <FlightList />
           </Route>
+<<<<<<< HEAD
+=======
+          <Route>
+            <Signup />
+          </Route>
+>>>>>>> 46db540 (Cancel booking functionality complete)
           <Route path="*">
             <Home />
           </Route>
