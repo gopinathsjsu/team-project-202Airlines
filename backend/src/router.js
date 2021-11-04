@@ -12,8 +12,6 @@ const { getFlightList } = require("./controllers/flightDetailsController");
 
 const router = express.Router();
 
-const router = express.Router();
-
 // demo
 router.route("/demoCall").post(demoCall);
 router.route("/signin").post(signin);
