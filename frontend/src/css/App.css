@@ -164,3 +164,39 @@ input::placeholder{
   padding: 0.25em 0.5em;
   z-index: 1000;
 }
+
+.login-form{
+    padding: 0 20px 20px;
+    
+}
+
+.login-form label{
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.login-form-box {
+    max-width: 370px;
+    border: 1px solid #ced4da;
+    margin: 10% auto 0;
+}
+
+.Mileage-form-box {
+    max-width: 370px;
+    border: 1px solid #f4fafa;
+    margin: 10% auto 0;
+    text-align: center;
+    /* border-style: solid;
+    border-width: 5px; */
+    background-color: white;
+}
+.circle {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    background-color:#0d9cdf;;
+    border-radius: 50%;
+  }
+

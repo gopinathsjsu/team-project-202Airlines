@@ -8,58 +8,22 @@ import { post } from '../utils/serverCall';
 import classnames from "classnames";
 
 function Signin() {
-  const defaultValues = {
-    id: '',
-    password: '',
-  };
-  const [formData, setFormData] = useState(defaultValues);
-  const eventHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    post('/signin', formData).then(() => {});
-  };
 
   return (
-<Container>
-      <Col>
-        <Form>
-          <Form.Group className='mb-3' controlId='formEmail'>
-          <div className="panel">
-           <h2>Login</h2>
-           <p>Please enter your username and password</p>                                    
-             </div> 
-            <Form.Label>Email ID</Form.Label>
-            <Form.Control
-              name='id'
-              type='text'
-              placeholder='Email Id'
-              required
-              onChange={eventHandler}
-            />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formPassword'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              name='password'
-              type='password'
-              placeholder='Password'
-              required
-              onChange={eventHandler}
-            />
-          </Form.Group>
-          <Button variant='primary' type='submit' onClick={handleSubmit}>
-            Submit
-          </Button>
-          <br/>
-          <div className="form-group">
-            <a href="Signup">SignUp</a>
-          </div> 
-        </Form>
-      </Col>
-    </Container>
+<form className="flight-book-form">
+        <div className="login-form-box">
+        <div className="login-form" style={{color: 'white'}} >
+           <h2 className="heading-section text-center"  >Login</h2>
+           <h3 class="mb-4 text-center"  >Have an account?</h3>
+            <input type="text" className="form-control" placeholder="Username"/><br/>
+            <input type="text" className="form-control" placeholder="Password"/><br/>
+<button type="submit" className="form-control" ><h4>Login</h4></button>
+<br/>
+<p class="w-100 text-center" >&mdash; Haven't registered yet &mdash;</p>
+            <a href="Signup" ><h4 style={{color: 'white', textAlign: "center"}}>SignUp</h4></a>
+        </div>
+        </div>
+    </form>
         
   )
 }

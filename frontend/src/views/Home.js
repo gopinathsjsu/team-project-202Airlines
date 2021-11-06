@@ -36,7 +36,7 @@ function Home() {
               <div className="card-body">
                 <img src={mileageLogo} alt=" " width="40" height="40"></img>
                 <h5 className="card-title">Manage Mileage Account</h5>
-                <Link to="/myTrips" className="btn btn-secondary btn-lg">Mileage</Link>
+                <Link to="/mileage" className="btn btn-secondary btn-lg">Mileage</Link>
               </div>
             </div>
           </div>

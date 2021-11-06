@@ -5,6 +5,7 @@ import Home from './views/Home';
 import InvalidPage from './views/InvalidPage';
 import BookFlight from './views/BookFlight';
 import MyTrip from './views/MyTrips';
+import Mileage from './views/Mileage';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
 import SeatMap from './views/SeatMap';
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/myTrips" exact>
             <MyTrip />
+          </Route>
+          <Route path="/mileage" exact>
+            <Mileage />
           </Route>
           <Route path="/signin" exact>
             <Signin />
