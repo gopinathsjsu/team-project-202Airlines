@@ -40,6 +40,12 @@ function App() {
           <Route>
             <Signup></Signup>
           </Route>
+          <Route path='/flightList/:details' exact>
+            <FlightList></FlightList>
+          </Route>
+          <Route>
+            <Signup></Signup>
+          </Route>
           <Route path='*'>
             <Home />
           </Route>
