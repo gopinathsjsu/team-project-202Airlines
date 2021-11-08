@@ -6,7 +6,6 @@ const { signin } = require("./controllers/accountController");
 const {
   getBookingHistory,
   cancelFlightBooking,
-  updateFlightBooking,
 } = require("./controllers/bookingHistoryController");
 const { getFlightList } = require("./controllers/flightDetailsController");
 
