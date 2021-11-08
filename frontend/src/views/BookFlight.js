@@ -1,7 +1,12 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
 function BookFlight() {
-
+  const history = useHistory();
+  const getFlight = (event) => {
+    let details = "2";
+    history.push("/flightList/" + details);
+  }
 
   return (
     <form className="flight-book-form">
@@ -34,7 +39,7 @@ function BookFlight() {
             </div>
 
             <div className="input-grp">
-            <button type="button" className="btn btn-primary flight">Show Flights</button>
+              <button type="button" className="btn btn-primary flight" onClick={getFlight}>Show Flights</button>
             </div>
 
         </div>
