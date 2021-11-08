@@ -41,9 +41,6 @@ function App() {
           <Route path="/flightList/:details" exact>
             <FlightList />
           </Route>
-          <Route>
-            <Signup />
-          </Route>
           <Route path="*">
             <Home />
           </Route>
