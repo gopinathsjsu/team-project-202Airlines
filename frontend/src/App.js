@@ -4,6 +4,7 @@ import Navigator from './components/Navigator';
 import Home from './views/Home';
 import InvalidPage from './views/InvalidPage';
 import BookFlight from './views/BookFlight';
+import FlightList from './views/FlightList';
 import MyTrip from './views/MyTrips';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
@@ -27,6 +28,12 @@ function App() {
             <Signin></Signin>
           </Route>
           <Route path='/signup' exact>
+            <Signup></Signup>
+          </Route>
+          <Route path='/flightList/:details' exact>
+            <FlightList></FlightList>
+          </Route>
+          <Route>
             <Signup></Signup>
           </Route>
           <Route path='*'>
