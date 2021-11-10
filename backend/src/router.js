@@ -13,11 +13,13 @@ const { getFlightList } = require("./controllers/flightDetailsController");
 const router = express.Router();
 
 // demo
+
 router.route("/demoCall").post(demoCall);
 router.route("/signin").post(signin);
 router.route("/getBookingHistory").get(getBookingHistory);
 router.route("/cancelFlightBooking").post(cancelFlightBooking);
-router.route("/updateBooking/:booking_id").get(updateFlightBooking);
+router.route("/updateBooking/:id").get(updateFlightBooking);
 //flight
 router.route("/flightList").post(getFlightList);
+
 module.exports = router;
