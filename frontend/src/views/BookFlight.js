@@ -10,7 +10,7 @@ export default function BookFlight() {
     flying_to: '',
     flight_date: '',
     travellers: '',
-    flight_class: 'Economy',
+    flight_class: '',
   };
 
   const [flightDetails, setFlightDetails] = useState(defaultValues);
@@ -84,11 +84,11 @@ export default function BookFlight() {
             <select
               className="custom-select"
               onChange={(e) => {
-                setFlightDetails({ ...flightDetails, flight_class: e.target.value });
+                setFlightDetails({ ...flightDetails, class: e.target.value });
               }}
             >
-              <option value="Economy">Economy</option>
-              <option value="Business">Business</option>
+              <option value="1">Economy</option>
+              <option value="2">Business</option>
             </select>
           </div>
 

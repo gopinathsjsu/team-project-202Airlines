@@ -177,15 +177,3 @@ input::placeholder {
   margin-bottom: 0.5rem;
   font-size: 15px;
 }
-
-.display-text{
-    font-size: 5rem;
-}
-
-.btn-default {
-    width: 5%;
-    padding: 1px 0;
-    margin-top: 0.1rem;
-    margin-bottom: 0.5rem;
-    font-size: 15px;
-}

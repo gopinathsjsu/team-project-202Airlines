@@ -6,11 +6,15 @@ const { signin } = require("./controllers/accountController");
 const {
   getBookingHistory,
   cancelFlightBooking,
+  updateFlightBooking,
 } = require("./controllers/bookingHistoryController");
 const { getFlightList } = require("./controllers/flightDetailsController");
 
 const router = express.Router();
 
+const router = express.Router();
+
+// demo
 router.route("/demoCall").post(demoCall);
 router.route("/signin").post(signin);
 router.route("/getBookingHistory").get(getBookingHistory);
