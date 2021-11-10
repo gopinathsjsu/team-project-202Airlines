@@ -1,18 +1,20 @@
 import React from 'react';
 import Axios from "axios";
 import { useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import backendServer from "../webConfig";
 
 let rows = [];
 function FlightList() {
     Axios.defaults.withCredentials = true;
-
     const [loading, setLoading] = useState(true);
-    const history = useHistory();
+
+    let { details } = useParams();
+    let flightSearchDetails = JSON.parse(decodeURIComponent(details));
 
     useEffect(() => {
-        Axios.get(`${backendServer}/flightList/`+ "2").then(function (res) {
+        console.log(flightSearchDetails);
+        Axios.post(`${backendServer}/flightList`, flightSearchDetails).then(function (res) {
             console.log(res);
             rows = res.data;
             setLoading(false);
@@ -22,18 +24,19 @@ function FlightList() {
         return ("Loading data....");
     } else {
         return (
-            <table>
-                <tbody>
-                    {rows[0].name !== null && rows.map(res =>
-                        <tr>
-                          <td>#</td>
-                          <td>{res.flight_number}</td>
-                          <td>{res.airport_code_dst}</td>
-                          <td>{res.airport_code_src}</td>                        
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+            <div className="container">
+                {rows.map(res =>
+                    <div className="row row-cols-6" key={res.flight_number}>
+                        <div className="col">{res.flight_number}</div>
+                        <div className="col">{res.airport_code_dst}</div>
+                        <div className="col">{res.airport_code_src}</div>
+                        <div className="col">{res.start_time}</div>
+                        <div className="col">{res.end_time}</div>
+                        <div className="col">${res.price}</div>
+                    </div>
+                )}
+            </div>
+
         );
     }
 }

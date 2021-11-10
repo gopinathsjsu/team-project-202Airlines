@@ -15,7 +15,7 @@ router.route('/signin').post(signin);
 router.route('/getBookingHistory').get(getBookingHistory);
 router.route('/cancelFlightBooking').post(cancelFlightBooking);
 //flight
-router.route('/flightList/:details').get(getFlightList);
+router.route('/flightList').post(getFlightList);
 
 module.exports = router;
 

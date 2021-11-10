@@ -164,3 +164,10 @@ input::placeholder{
   padding: 0.25em 0.5em;
   z-index: 1000;
 }
+
+.row row-cols-4 {
+    max-width: 370px;
+    border: 1px solid #ced4da;
+    margin: 10% auto 0;
+
+}
