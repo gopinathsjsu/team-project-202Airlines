@@ -11,7 +11,7 @@ export default function BookFlight() {
     flying_to: "",
     flight_date: "",
     travellers: "",
-    flight_class: "",
+    flight_class: "Economy",
   };
 
   const [flightDetails, setFlightDetails] = useState(defaultValues);
@@ -63,10 +63,10 @@ export default function BookFlight() {
             <div className="input-grp">
               <label> Class </label>
               <select class="custom-select" onChange={(e) => {
-                    setFlightDetails({ ...flightDetails, class: e.target.value });
+                    setFlightDetails({ ...flightDetails, flight_class: e.target.value });
                   }}>
-                <option value="1">Economy</option>
-                <option value="2">Business</option>
+                <option value="Economy">Economy</option>
+                <option value="Business">Business</option>
               </select>
             </div>
 
