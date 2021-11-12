@@ -62,7 +62,7 @@ export default function BookFlight() {
 
             <div className="input-grp">
               <label> Class </label>
-              <select class="custom-select" onChange={(e) => {
+              <select className="custom-select" onChange={(e) => {
                     setFlightDetails({ ...flightDetails, flight_class: e.target.value });
                   }}>
                 <option value="Economy">Economy</option>
