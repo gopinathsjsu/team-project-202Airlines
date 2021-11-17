@@ -32,32 +32,113 @@ function MyTrip() {
   };
 
   return (
-    <div className="container">
-      <div className="bloc-tabs">
-        <button
-          className={toggleState === 1 ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab(1)}
-        >
-          Upcoming
-        </button>
-        <button
-          className={toggleState === 2 ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab(2)}
-        >
-          Past
-        </button>
-        <button
-          className={toggleState === 3 ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab(3)}
-        >
-          Canceled
-        </button>
-      </div>
+    <div className="flight-book-form">
+      <div className="container">
+        <div className="bloc-tabs">
+          <button
+            className={toggleState === 1 ? 'tabs active-tabs' : 'tabs'}
+            onClick={() => toggleTab(1)}
+          >
+            Upcoming
+          </button>
+          <button
+            className={toggleState === 2 ? 'tabs active-tabs' : 'tabs'}
+            onClick={() => toggleTab(2)}
+          >
+            Past
+          </button>
+          <button
+            className={toggleState === 3 ? 'tabs active-tabs' : 'tabs'}
+            onClick={() => toggleTab(3)}
+          >
+            Canceled
+          </button>
+        </div>
 
-      <div className="content-tabs">
-        <div className={toggleState === 1 ? 'content  active-content' : 'content'}>
-          <table id="booking">
-            <tbody>
+        <div className="content-tabs">
+          <div className={toggleState === 1 ? 'content  active-content' : 'content'}>
+            <table id="booking">
+              <tbody>
+                <tr>
+                  <th scope="col">S.No.</th>
+                  <th scope="col">Booking Date</th>
+                  <th scope="col">Departure Date</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Arrival Date</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Status</th>
+                </tr>
+                {bookingHistory
+                  .filter(
+                    (a) =>
+                      new Date(a.dep_date) - new Date() > 0 &&
+                      !(
+                        a.status.toLowerCase() === 'cancelled' ||
+                        a.status.toLowerCase() === 'canceled'
+                      )
+                  )
+                  .map((data, index) => (
+                    <tr key={data.booking_id}>
+                      <th scope="row">{data.booking_id}</th>
+                      <td>{data.booking_date}</td>
+                      <td>{data.dep_date}</td>
+                      <td>{data.src}</td>
+                      <td>{data.arr_date}</td>
+                      <td>{data.dst}</td>
+                      <td>${data.price}</td>
+                      <td>{data.status}</td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            window.location = `/updateBooking/${data.booking_id}`;
+                          }}
+                        >
+                          Update Booking
+                        </button>
+                        <button
+                          onClick={() => {
+                            cancelBooking(data.booking_id);
+                          }}
+                        >
+                          Cancel Booking
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+          <div className={toggleState === 2 ? 'content  active-content' : 'content'}>
+            <table id="booking">
+              <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Booking Date</th>
+                <th scope="col">Departure Date</th>
+                <th scope="col">Source</th>
+                <th scope="col">Arrival Date</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+              </tr>
+              {bookingHistory
+                .filter((a) => new Date(a.dep_date) - new Date() < 0)
+                .map((data, index) => (
+                  <tr key={data.booking_id}>
+                    <th scope="row">{data.booking_id}</th>
+                    <td>{data.booking_date}</td>
+                    <td>{data.dep_date}</td>
+                    <td>{data.src}</td>
+                    <td>{data.arr_date}</td>
+                    <td>{data.dst}</td>
+                    <td>${data.price}</td>
+                    <td>{data.status}</td>
+                  </tr>
+                ))}
+            </table>
+          </div>
+          <div className={toggleState === 3 ? 'content  active-content' : 'content'}>
+            <table id="booking">
               <tr>
                 <th scope="col">S.No.</th>
                 <th scope="col">Booking Date</th>
@@ -71,11 +152,7 @@ function MyTrip() {
               {bookingHistory
                 .filter(
                   (a) =>
-                    new Date(a.dep_date) - new Date() > 0 &&
-                    !(
-                      a.status.toLowerCase() === 'cancelled' ||
-                      a.status.toLowerCase() === 'canceled'
-                    )
+                    a.status.toLowerCase() === 'cancelled' || a.status.toLowerCase() === 'canceled'
                 )
                 .map((data, index) => (
                   <tr key={data.booking_id}>
@@ -87,85 +164,10 @@ function MyTrip() {
                     <td>{data.dst}</td>
                     <td>${data.price}</td>
                     <td>{data.status}</td>
-                    <td>
-                      <button
-                        onClick={() => {
-                          window.location = `/updateBooking/${data.booking_id}`;
-                        }}
-                      >
-                        Update Booking
-                      </button>
-                      <button
-                        onClick={() => {
-                          cancelBooking(data.booking_id);
-                        }}
-                      >
-                        Cancel Booking
-                      </button>
-                    </td>
                   </tr>
                 ))}
-            </tbody>
-          </table>
-        </div>
-        <div className={toggleState === 2 ? 'content  active-content' : 'content'}>
-          <table id="booking">
-            <tr>
-              <th scope="col">S.No.</th>
-              <th scope="col">Booking Date</th>
-              <th scope="col">Departure Date</th>
-              <th scope="col">Source</th>
-              <th scope="col">Arrival Date</th>
-              <th scope="col">Destination</th>
-              <th scope="col">Price</th>
-              <th scope="col">Status</th>
-            </tr>
-            {bookingHistory
-              .filter((a) => new Date(a.dep_date) - new Date() < 0)
-              .map((data, index) => (
-                <tr key={data.booking_id}>
-                  <th scope="row">{data.booking_id}</th>
-                  <td>{data.booking_date}</td>
-                  <td>{data.dep_date}</td>
-                  <td>{data.src}</td>
-                  <td>{data.arr_date}</td>
-                  <td>{data.dst}</td>
-                  <td>${data.price}</td>
-                  <td>{data.status}</td>
-                </tr>
-              ))}
-          </table>
-        </div>
-        <div className={toggleState === 3 ? 'content  active-content' : 'content'}>
-          <table id="booking">
-            <tr>
-              <th scope="col">S.No.</th>
-              <th scope="col">Booking Date</th>
-              <th scope="col">Departure Date</th>
-              <th scope="col">Source</th>
-              <th scope="col">Arrival Date</th>
-              <th scope="col">Destination</th>
-              <th scope="col">Price</th>
-              <th scope="col">Status</th>
-            </tr>
-            {bookingHistory
-              .filter(
-                (a) =>
-                  a.status.toLowerCase() === 'cancelled' || a.status.toLowerCase() === 'canceled'
-              )
-              .map((data, index) => (
-                <tr key={data.booking_id}>
-                  <th scope="row">{data.booking_id}</th>
-                  <td>{data.booking_date}</td>
-                  <td>{data.dep_date}</td>
-                  <td>{data.src}</td>
-                  <td>{data.arr_date}</td>
-                  <td>{data.dst}</td>
-                  <td>${data.price}</td>
-                  <td>{data.status}</td>
-                </tr>
-              ))}
-          </table>
+            </table>
+          </div>
         </div>
       </div>
     </div>
