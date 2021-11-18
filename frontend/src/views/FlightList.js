@@ -6,22 +6,44 @@ import flightLogo from '../images/flightlogo.png';
 import backendServer from '../webConfig';
 
 let rows = [];
+
 function FlightList() {
   Axios.defaults.withCredentials = true;
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
 
   const { details } = useParams();
   const flightSearchDetails = JSON.parse(decodeURIComponent(details));
   const displayDate = moment(flightSearchDetails.flight_date).format('MMMM Do, YYYY');
 
   useEffect(() => {
-    console.log(flightSearchDetails);
     Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {
       console.log(res);
       rows = res.data;
       setLoading(false);
     });
   }, []);
+
+  const reviewFlight = (res) => {
+    const { flight_date, flying_from, flying_to, travellers, flight_class, book_with } =
+      flightSearchDetails;
+    const { flight_number, start_time, end_time, price, miles } = res;
+    const selectedFlight = {
+      flight_date,
+      flying_from,
+      flying_to,
+      travellers,
+      flight_class,
+      flight_number,
+      start_time,
+      end_time,
+      book_with,
+      price,
+      miles,
+    };
+    console.log(selectedFlight);
+    history.push(`/flightInfo/${encodeURIComponent(JSON.stringify(selectedFlight))}`);
+  };
 
   return (
     <div className="container">
@@ -85,9 +107,10 @@ function FlightList() {
                 {flightSearchDetails.book_with === 'Money' ? '$' : ''}
                 {flightSearchDetails.book_with === 'Money' ? res.price : res.miles}
               </div>
-              <button className="btn btn-default" type="button">
+              <button className="btn btn-default" type="button" onClick={() => reviewFlight(res)}>
                 Select
               </button>
+              <br />
             </div>
           ))}
         </div>

@@ -10,6 +10,8 @@ import Signup from './views/Signup';
 import SeatMap from './views/SeatMap';
 import UpdateBooking from './views/UpdateBooking';
 import AdminHome from './views/AdminHome';
+import FlightInfo from './views/FlightInfo';
+import TravellerDetails from './views/TravellerDetails';
 
 function App() {
   return (
@@ -43,6 +45,12 @@ function App() {
           </Route>
           <Route path="/adminHome" exact>
             <AdminHome />
+          </Route>
+          <Route path="/flightInfo/:details" exact>
+            <FlightInfo />
+          </Route>
+          <Route path="/travellerDetails/:details" exact>
+            <TravellerDetails />
           </Route>
           <Route path="*">
             <Home />
