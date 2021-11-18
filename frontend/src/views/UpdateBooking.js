@@ -14,16 +14,29 @@ function UpdateBooking() {
     axios.get(`${backendServer}/updateBooking/${id}`).then((response) => {
       setBookingHistory(response.data);
       console.log('data', response.data);
-      setFlightDetails({
-        flying_from: `${response.data[0].src}`,
-        flying_to: `${response.data[0].dst}`,
-        flight_date: `${response.data[0].dep_date}`,
-        flight_class: 'Economy',
-      });
     });
   }, []);
 
+  // useEffect(() => {
+  //   axios.get(`${backendServer}/updateBooking/${id}`).then((response) => {
+  //     setBookingHistory(response.data);
+  //     console.log('data', response.data);
+  //     setFlightDetails({
+  //       flying_from: `${response.data[0].src}`,
+  //       flying_to: `${response.data[0].dst}`,
+  //       flight_date: `${response.data[0].dep_date}`,
+  //       flight_class: 'Economy',
+  //     });
+  //   });
+  // }, []);
+
   const getFlight = (event) => {
+    setFlightDetails({
+      flying_from: event.defaultValue,
+      flying_to: event.defaultValue,
+      flight_date: event.target.value,
+      flight_class: 'Economy',
+    });
     history.push(`/flightList/${encodeURIComponent(JSON.stringify(flightDetails))}`);
   };
 
@@ -42,7 +55,7 @@ function UpdateBooking() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder={data.src}
+                  defaultValue={data.src}
                   disabled
                   style={{ background: 'grey' }}
                 />
@@ -50,7 +63,7 @@ function UpdateBooking() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder={data.dst}
+                  defaultValue={data.dst}
                   disabled
                   style={{ background: 'grey' }}
                 />

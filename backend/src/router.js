@@ -9,6 +9,13 @@ const {
   updateFlightBooking,
 } = require("./controllers/bookingHistoryController");
 const { getFlightList } = require("./controllers/flightDetailsController");
+const {
+  getProfile,
+  getFlights,
+  getFlightsById,
+  addFlights,
+  editFlights,
+} = require("./controllers/adminController");
 
 const router = express.Router();
 
@@ -20,5 +27,11 @@ router.route("/cancelFlightBooking").post(cancelFlightBooking);
 router.route("/updateBooking/:id").get(updateFlightBooking);
 //flight
 router.route("/flightList").post(getFlightList);
+//employer
+router.route("/getProfile").get(getProfile);
+router.route("/getFlights").get(getFlights);
+router.route("/getFlightsById/:flightId").get(getFlightsById);
+router.route("/addFlights").post(addFlights);
+router.route("/editFlights").post(editFlights);
 
 module.exports = router;

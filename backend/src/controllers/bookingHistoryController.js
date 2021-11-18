@@ -1,5 +1,5 @@
 const conn = require("../utils/dbConnector");
-
+const SQL_BOOKING = require("../Database/booking");
 //Get all bookking details
 
 const getBookingHistory = (req, res) => {
@@ -8,8 +8,7 @@ const getBookingHistory = (req, res) => {
   //   return;
   // }
   conn.query(
-    "select booking_id, DATE_FORMAT(booking_date,'%Y-%m-%d') as booking_date,DATE_FORMAT(dep_date,'%Y-%m-%d') as dep_date,DATE_FORMAT(arr_date,'%Y-%m-%d') as arr_date,airport_code_src as src,airport_code_dst as dst,Booking.price,status from Booking,Flight where Booking.flight_id=Flight.flight_id;",
-    //  where customer_id=? order by booking_id;",
+    SQL_BOOKING.GET_BOOKING_HISTORY,
     [req.body.customer_id],
     (error, result) => {
       //  console.log(result);
@@ -30,7 +29,7 @@ const cancelFlightBooking = (req, res) => {
   //   return;
   // }
   conn.query(
-    "Update Airlines.Booking set status='Canceled' where booking_id=?;",
+    SQL_BOOKING.CANCEL_BOOKING,
     [req.body.booking_id],
     (error, result) => {
       if (error) {
@@ -53,7 +52,7 @@ const updateFlightBooking = (req, res) => {
   // }
   const booking_id = req.params.booking_id;
   conn.query(
-    "select booking_id, DATE_FORMAT(booking_date,'%Y-%m-%d') as booking_date,DATE_FORMAT(dep_date,'%Y-%m-%d') as dep_date,DATE_FORMAT(arr_date,'%Y-%m-%d') as arr_date,airport_code_src as src,airport_code_dst as dst,Booking.price,status from Booking,Flight where Booking.flight_id=Flight.flight_id and booking_id=?;",
+    SQL_BOOKING.GET_BOOKING_FOR_UPDATE,
     [booking_id],
     (error, result) => {
       if (error) {
