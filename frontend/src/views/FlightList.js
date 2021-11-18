@@ -7,16 +7,17 @@ import { useParams, useHistory } from "react-router-dom";
 import backendServer from "../webConfig";
 
 let rows = [];
+
 function FlightList() {
     Axios.defaults.withCredentials = true;
     const [loading, setLoading] = useState(true);
+    const history = useHistory();
 
     let { details } = useParams();
     let flightSearchDetails = JSON.parse(decodeURIComponent(details));
     let displayDate = moment(flightSearchDetails.flight_date).format('MMMM Do, YYYY');;
 
     useEffect(() => {
-        console.log(flightSearchDetails);
         Axios.post(`${backendServer}/flightList`, flightSearchDetails).then(function (res) {
             console.log(res);
             rows = res.data;
@@ -24,8 +25,28 @@ function FlightList() {
         });
     }, []);
 
-        return (
-           
+      const reviewFlight = (res) => {
+          const {flight_date, flying_from, flying_to,travellers,flight_class,book_with} = flightSearchDetails;
+          const {flight_number, start_time,end_time,price,miles} = res;
+          const selectedFlight = {
+            flight_date,
+            flying_from,
+            flying_to,
+            travellers,
+            flight_class,
+            flight_number,
+            start_time,
+            end_time,
+            book_with,
+            price,
+            miles
+          }
+          console.log(selectedFlight);
+        history.push("/flightInfo/" + encodeURIComponent(JSON.stringify(selectedFlight)));
+      }
+
+
+        return (           
             <div className="container">
                  <div className="row">
                     <div className="col-3"></div>
@@ -74,7 +95,8 @@ function FlightList() {
                             <div className="col">{res.end_time}</div>
                             <div className="col">{(moment.duration(moment(res.end_time,"HH:mm:ss").diff(moment(res.start_time,"HH:mm:ss")))).asHours()} hours</div>
                             <div className="col">{(flightSearchDetails.book_with==="Money")?"$":""}{(flightSearchDetails.book_with==="Money")?res.price:res.miles}</div>
-                            <button className="btn btn-default" type="button">Select</button>
+                            <button className="btn btn-default" type="button" onClick={() => reviewFlight(res)}>Select</button>
+                            <br/>
                         </div>
                     )}
                     </div>
