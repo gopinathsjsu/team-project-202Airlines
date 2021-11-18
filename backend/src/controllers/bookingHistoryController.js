@@ -38,7 +38,7 @@ const cancelFlightBooking = (req, res) => {
       } else if (result.length == 0) {
         res.send([]);
       } else {
-        console.log("cancel");
+        // console.log("cancel");
         res.send(result);
       }
     }
@@ -61,7 +61,7 @@ const updateFlightBooking = (req, res) => {
       } else if (result.length == 0) {
         res.send([]);
       } else {
-        console.log("update");
+        // console.log("update");
         res.send(result);
       }
     }

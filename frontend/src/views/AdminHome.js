@@ -10,6 +10,7 @@ import '../css/index.css';
 
 function AdminHome() {
   const [show, setShow] = useState(false);
+  const [id, setId] = useState('');
   const [getFlights, setGetFlights] = useState([]);
   const [getFlightsById, setGetFlightsById] = useState([]);
   const handleClose = () => setShow(false);
@@ -46,6 +47,7 @@ function AdminHome() {
       no_of_seats: seatNo,
       miles: mile,
       price: amount,
+      flight_id: id,
     })
       .then((response) => {
         console.log(response);
@@ -196,7 +198,14 @@ function AdminHome() {
                   required
                 />
                 <br />
-                <Button type="submit">Update Details</Button>
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    setId(`${data.flight_id}`);
+                  }}
+                >
+                  Update Details
+                </Button>
               </Form.Group>
             ))}
           </Form>

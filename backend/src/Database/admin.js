@@ -6,8 +6,18 @@ const SQL_ADMIN = {
   ADD_FLIGHTS:
     "Insert into Airlines.Flight (flight_number,airport_code_src,airport_code_dst,flight_type,start_time,end_time,price,miles) \
     values (?,?,?,?,?,?,?,?);",
-  EDIT_FLIGHT_DETAILS: "Update Airlines.Flight set \
-  where flight_id=?;",
+  EDIT_FLIGHT_DETAILS:
+    "Update Airlines.Flight set \
+      airport_code_src =?,\
+      airport_code_dst =?,\
+      flight_date=?,\
+      start_time=?,\
+      end_time=?,\
+      flight_type=?,\
+      no_of_seats=?,\
+      miles=?,\
+      price=?\
+      where flight_id=?;",
   GET_AIRPORT_CODE: "Select * from Airport;",
 };
 
