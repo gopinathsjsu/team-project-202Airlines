@@ -21,11 +21,44 @@ function AdminHome() {
     });
   };
 
-  const editFlightDetails = async (flightId) => {
-    await Axios.post(`${backendServer}/editFlights/${flightId}`).then((res) => {
-      console.log(res);
-      setGetFlights(res);
-    });
+  const editFlightDetails = (e) => {
+    e.preventDefault();
+    // const isValid = formValidation();
+
+    const formData = new FormData(e.target);
+    const src = formData.get('src');
+    const dst = formData.get('dst');
+    const fltDate = formData.get('fltDate');
+    const strtTime = formData.get('strtTime');
+    const endTime = formData.get('endTime');
+    const fltType = formData.get('fltType');
+    const seatNo = formData.get('seatNo');
+    const mile = formData.get('mile');
+    const amount = formData.get('amount');
+
+    Axios.post(`${backendServer}/editFlights`, {
+      airport_code_src: src,
+      airport_code_dst: dst,
+      flight_date: fltDate,
+      start_time: strtTime,
+      end_time: endTime,
+      flight_type: fltType,
+      no_of_seats: seatNo,
+      miles: mile,
+      price: amount,
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          console.log('returned');
+          console.log(response.data);
+          window.location = '/adminHome';
+        }
+      })
+      .catch((err) => {
+        console.log('caught an error');
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -86,6 +119,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="text"
+                  name="src"
                   defaultValue={data.airport_code_src}
                   required
                 />
@@ -94,6 +128,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="text"
+                  name="dst"
                   defaultValue={data.airport_code_dst}
                   required
                 />
@@ -102,6 +137,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="date"
+                  name="fltDate"
                   defaultValue={data.flight_date}
                   required
                 />
@@ -110,6 +146,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="time"
+                  name="strtTime"
                   defaultValue={data.start_time}
                   required
                 />
@@ -118,6 +155,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="time"
+                  name="endTime"
                   defaultValue={data.end_time}
                   required
                 />
@@ -126,6 +164,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="text"
+                  name="fltType"
                   defaultValue={data.flight_type}
                   required
                 />
@@ -134,6 +173,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="number"
+                  name="seatNo"
                   defaultValue={data.no_of_seats}
                   required
                 />
@@ -142,6 +182,7 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="number"
+                  name="mile"
                   defaultValue={data.miles}
                   required
                 />
@@ -150,17 +191,12 @@ function AdminHome() {
                 <Form.Control
                   className="mb-3 text-primary"
                   type="number"
+                  name="amount"
                   defaultValue={data.price}
                   required
                 />
                 <br />
-                <Button
-                  onClick={() => {
-                    editFlightDetails(`${data.flight_id}`);
-                  }}
-                >
-                  Update Details
-                </Button>
+                <Button type="submit">Update Details</Button>
               </Form.Group>
             ))}
           </Form>

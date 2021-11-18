@@ -8,6 +8,7 @@ const SQL_ADMIN = {
     values (?,?,?,?,?,?,?,?);",
   EDIT_FLIGHT_DETAILS: "Update Airlines.Flight set \
   where flight_id=?;",
+  GET_AIRPORT_CODE: "Select * from Airport;",
 };
 
 module.exports = SQL_ADMIN;

@@ -50,7 +50,7 @@ const updateFlightBooking = (req, res) => {
   //   res.status(404).send({ err: "Invalid user session" });
   //   return;
   // }
-  const booking_id = req.params.booking_id;
+  const booking_id = req.params.id;
   conn.query(
     SQL_BOOKING.GET_BOOKING_FOR_UPDATE,
     [booking_id],

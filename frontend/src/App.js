@@ -12,6 +12,7 @@ import UpdateBooking from './views/UpdateBooking';
 import AdminHome from './views/AdminHome';
 import FlightInfo from './views/FlightInfo';
 import TravellerDetails from './views/TravellerDetails';
+import AdminAddFlight from './views/AdminAddFlight';
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path="/adminHome" exact>
             <AdminHome />
+          </Route>
+          <Route path="/adminNewFlight" exact>
+            <AdminAddFlight />
           </Route>
           <Route path="/flightInfo/:details" exact>
             <FlightInfo />

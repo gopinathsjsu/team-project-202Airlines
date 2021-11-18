@@ -15,6 +15,7 @@ const {
   getFlightsById,
   addFlights,
   editFlights,
+  getAirportCode,
 } = require("./controllers/adminController");
 
 const router = express.Router();
@@ -33,5 +34,6 @@ router.route("/getFlights").get(getFlights);
 router.route("/getFlightsById/:flightId").get(getFlightsById);
 router.route("/addFlights").post(addFlights);
 router.route("/editFlights").post(editFlights);
+router.route("/getAirportCode").get(getAirportCode);
 
 module.exports = router;
