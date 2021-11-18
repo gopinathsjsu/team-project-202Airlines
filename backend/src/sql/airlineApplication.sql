@@ -22,6 +22,7 @@ CREATE TABLE `Flight` (
   `end_time` time DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
   `miles` int DEFAULT NULL,
+  -- `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`flight_id`),
   UNIQUE KEY `flight_number` (`flight_number`),
   KEY `airport_code_src` (`airport_code_src`),

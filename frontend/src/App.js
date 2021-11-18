@@ -2,15 +2,17 @@ import './css/App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navigator from './components/Navigator';
 import Home from './views/Home';
-import InvalidPage from './views/InvalidPage';
 import BookFlight from './views/BookFlight';
 import FlightList from './views/FlightList';
 import MyTrip from './views/MyTrips';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
 import SeatMap from './views/SeatMap';
+import UpdateBooking from './views/UpdateBooking';
+import AdminHome from './views/AdminHome';
 import FlightInfo from './views/FlightInfo';
 import TravellerDetails from './views/TravellerDetails';
+import AdminAddFlight from './views/AdminAddFlight';
 
 function App() {
   return (
@@ -27,6 +29,9 @@ function App() {
           <Route path="/myTrips" exact>
             <MyTrip />
           </Route>
+          <Route path="/updateBooking/:id" exact>
+            <UpdateBooking />
+          </Route>
           <Route path="/signin" exact>
             <Signin />
           </Route>
@@ -36,16 +41,22 @@ function App() {
           <Route path="/seatmap" exact>
             <SeatMap />
           </Route>
-          <Route path='/flightList/:details' exact>
-            <FlightList></FlightList>
+          <Route path="/flightList/:details" exact>
+            <FlightList />
           </Route>
-          <Route path='/flightInfo/:details' exact>
-            <FlightInfo></FlightInfo>
+          <Route path="/adminHome" exact>
+            <AdminHome />
           </Route>
-          <Route path='/travellerDetails/:details' exact>
-            <TravellerDetails></TravellerDetails>
+          <Route path="/adminNewFlight" exact>
+            <AdminAddFlight />
           </Route>
-          <Route path='*'>
+          <Route path="/flightInfo/:details" exact>
+            <FlightInfo />
+          </Route>
+          <Route path="/travellerDetails/:details" exact>
+            <TravellerDetails />
+          </Route>
+          <Route path="*">
             <Home />
           </Route>
         </Switch>
