@@ -45,24 +45,20 @@ function FlightList() {
     history.push(`/flightInfo/${encodeURIComponent(JSON.stringify(selectedFlight))}`);
   };
 
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-3" />
-        <div className="col-6 row display-text">
-          <div className="col-4 text-center">{flightSearchDetails.flying_from}</div>
-          <div className="col-4 text-center">
-            <img src={flightLogo} alt=" " width="100" height="100" />
-          </div>
-          <div className="col-4 text-center">{flightSearchDetails.flying_to}</div>
-        </div>
-        <div className="col-3" />
-      </div>
-      <br />
-
-      <div className="row">
-        <h2 className="col text-center">{displayDate}</h2>
-      </div>
+        return (           
+            <div className="container flight-info">
+                 <div className="row">
+                    <div className="col-3"></div>
+                    <div className="col-6 row display-text">
+                        <div className="col-4 text-center" >{flightSearchDetails.flying_from}</div>
+                        <div className="col-4 text-center">
+                            <img src={flightLogo} alt=" " width="100" height="100"></img>
+                        </div>
+                        <div className="col-4 text-center">{flightSearchDetails.flying_to}</div>
+                    </div>
+                    <div className="col-3"></div>
+                </div>
+                <br/>
 
       <br />
       <br />
