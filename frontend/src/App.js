@@ -16,10 +16,14 @@ import AdminHome from './views/AdminHome';
 import FlightInfo from './views/FlightInfo';
 import TravellerDetails from './views/TravellerDetails';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AdminAddFlight from './views/AdminAddFlight';
 =======
 import Payment from './views/Payment'
 >>>>>>> 5d8415f (developed traveller details page, added dummy payment screen)
+=======
+import Payment from './views/Payment'
+>>>>>>> 5d8415fcdfd59c1cd800a4f6896f14a02039fa04
 
 function App() {
   const [userState, setuserState] = useState(0);
@@ -65,6 +69,7 @@ function App() {
           <Route path="/adminNewFlight" exact>
             <AdminAddFlight />
           </Route>
+<<<<<<< HEAD
           <Route path="/flightInfo/:details" exact>
             <FlightInfo />
           </Route>
@@ -74,6 +79,8 @@ function App() {
 <<<<<<< HEAD
           <Route path="*">
 =======
+=======
+>>>>>>> 5d8415fcdfd59c1cd800a4f6896f14a02039fa04
           <Route path='/paymentGateway' exact>
             <Payment></Payment>
           </Route>
