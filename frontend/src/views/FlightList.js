@@ -47,7 +47,7 @@ function FlightList() {
 
 
         return (           
-            <div className="container">
+            <div className="container flight-info">
                  <div className="row">
                     <div className="col-3"></div>
                     <div className="col-6 row display-text">

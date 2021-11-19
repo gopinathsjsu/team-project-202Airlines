@@ -33,20 +33,20 @@ export default function BookFlight() {
 
         <div className="booking-form">
             <label> Flying From </label>
-            <input type="text" className="form-control" placeholder="Enter Airport Code"
+            <input type="text" className="form-control book" placeholder="Enter Airport Code"
                    onChange={(e) => {
                     setFlightDetails({ ...flightDetails, flying_from: e.target.value });
                    }}/>
 
             <label> Flying To </label>
-            <input type="text" className="form-control" placeholder="Enter Airport Code"
+            <input type="text" className="form-control book" placeholder="Enter Airport Code"
                     onChange={(e) => {
                       setFlightDetails({ ...flightDetails, flying_to: e.target.value });
                     }}/>
 
             <div className="input-grp">
               <label> Departing </label>
-              <input type="date" className="form-control select-date"
+              <input type="date" className="form-control book select-date"
                 onChange={(e) => {
                 setFlightDetails({ ...flightDetails, flight_date: e.target.value });
                         }}/>
@@ -54,7 +54,7 @@ export default function BookFlight() {
 
             <div className="input-grp">
               <label> Travellers </label>
-              <input type="number" className="form-control" min="1" step="1"
+              <input type="number" className="form-control book" min="1" step="1"
                 onChange={(e) => {
                 setFlightDetails({ ...flightDetails, travellers: e.target.value });
                         }}/>

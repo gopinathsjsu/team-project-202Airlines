@@ -11,6 +11,7 @@ import Signup from './views/Signup';
 import SeatMap from './views/SeatMap';
 import FlightInfo from './views/FlightInfo';
 import TravellerDetails from './views/TravellerDetails';
+import Payment from './views/Payment'
 
 function App() {
   return (
@@ -45,6 +46,10 @@ function App() {
           <Route path='/travellerDetails/:details' exact>
             <TravellerDetails></TravellerDetails>
           </Route>
+          <Route path='/paymentGateway' exact>
+            <Payment></Payment>
+          </Route>
+
           <Route path='*'>
             <Home />
           </Route>

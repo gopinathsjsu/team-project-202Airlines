@@ -17,23 +17,15 @@ export default function FlightInfo() {
     let selectedFlightDetails = JSON.parse(decodeURIComponent(details));
     let displayDate = moment(selectedFlightDetails.flight_date).format('MMMM Do, YYYY');;
 
-    useEffect(() => {
-        console.log(selectedFlightDetails);
-        Axios.post(`${backendServer}/flightInfo`, selectedFlightDetails).then(function (res) {
-            console.log(res);
-            rows = res.data;
-            setLoading(false);
-        });
-    }, []);
 
-    const reviewFlight = (res) => {
+    const travellerInfo = (res) => {
         const {travellers} = selectedFlightDetails;
         const selectedFlight = {
             travellers
   
         }
         console.log(selectedFlight);
-      history.push("/flightInfo/" + encodeURIComponent(JSON.stringify(selectedFlight)));
+      history.push("/travellerDetails/" + encodeURIComponent(JSON.stringify(selectedFlight)));
     }
 
 
@@ -94,7 +86,17 @@ export default function FlightInfo() {
                         </div>
                     </div>
                 </div>
+                <br/><br/>
+                <br/><br/>
+                <br/><br/>
+                <br/><br/>
+                <br/><br/>
+                <br/><br/>
                 <div className="col-sm-2"></div>
+                <div className="col-sm-4"></div>
+
+                <button type="button" className="btn btn-primary  col-sm-4" onClick={travellerInfo}>Continue</button>
+                <div className="col-sm-4"></div>
             </div>
         </div>
        
