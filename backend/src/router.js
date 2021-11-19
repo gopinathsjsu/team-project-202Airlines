@@ -2,7 +2,6 @@ const express = require("express");
 
 //
 const { demoCall } = require("./controllers/demoController");
-const { signin } = require("./controllers/accountController");
 const {
   getBookingHistory,
   cancelFlightBooking,
@@ -18,11 +17,21 @@ const {
   getAirportCode,
 } = require("./controllers/adminController");
 
+const {
+  signin,
+  registerUser,
+  getLogin,
+  signout,
+} = require("./controllers/accountController");
+
 const router = express.Router();
 
 // demo
 router.route("/demoCall").post(demoCall);
-router.route("/signin").post(signin);
+router.route("/signinData").post(signin);
+router.route("/getLogin").get(getLogin);
+router.route("/signout").get(signout);
+router.route("/register").post(registerUser);
 router.route("/getBookingHistory").get(getBookingHistory);
 router.route("/cancelFlightBooking").post(cancelFlightBooking);
 router.route("/updateBooking/:id").get(updateFlightBooking);

@@ -1,67 +1,89 @@
-import { useState } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, Component } from 'react';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
+import classnames from 'classnames';
+import Axios from 'axios';
+import cookie from 'react-cookies';
 import { post } from '../utils/serverCall';
-import classnames from "classnames";
+import backendServer from '../webConfig';
 
 function Signin() {
-  const defaultValues = {
-    id: '',
-    password: '',
-  };
-  const [formData, setFormData] = useState(defaultValues);
-  const eventHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [emailid, setEmailId] = useState('');
+  const history = useHistory();
+  const [password, setPassword] = useState('');
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [failMsg, setFailMsg] = useState('');
+
+  Axios.defaults.withCredentials = true;
+  const login = async (event) => {
+    event.preventDefault();
+    const data = {
+      emailid,
+      password,
+    };
+    try {
+      await Axios.post(`${backendServer}/signinData`, data).then((response) => {
+        console.log('res check', response);
+        if (response.status === 200) {
+          alert('Login successfull');
+          setLoginStatus(true);
+          console.log(loginStatus);
+          // history.push('/home');
+        } else {
+          alert('Invalid credentials');
+        }
+      });
+    } catch (error) {
+      alert('error', error);
+      setLoginStatus(false);
+    }
+    console.log('after call..>>>>');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    post('/signin', formData).then(() => {});
-  };
+  if (loginStatus) {
+    console.log('Entered');
+    return <Redirect to="/home" />;
+  }
 
   return (
-<Container>
-      <Col>
-        <Form>
-          <Form.Group className='mb-3' controlId='formEmail'>
-          <div className="panel">
-           <h2>Login</h2>
-           <p>Please enter your username and password</p>                                    
-             </div> 
-            <Form.Label>Email ID</Form.Label>
-            <Form.Control
-              name='id'
-              type='text'
-              placeholder='Email Id'
-              required
-              onChange={eventHandler}
-            />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formPassword'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              name='password'
-              type='password'
-              placeholder='Password'
-              required
-              onChange={eventHandler}
-            />
-          </Form.Group>
-          <Button variant='primary' type='submit' onClick={handleSubmit}>
-            Submit
-          </Button>
-          <br/>
-          <div className="form-group">
-            <a href="Signup">SignUp</a>
-          </div> 
-        </Form>
-      </Col>
-    </Container>
-        
-  )
+    <form className="flight-book-form">
+      <div className="login-form-box">
+        <div className="login-form" style={{ color: 'white' }}>
+          <h2 className="heading-section text-center">Sign In</h2>
+          <h3 className="mb-4 text-center">Have an account?</h3>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Username"
+            onChange={(e) => {
+              setEmailId(e.target.value);
+            }}
+          />
+          <br />
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <br />
+          <button type="submit" className="form-control" onClick={login}>
+            <h4>Sign In</h4>
+          </button>
+          <br />
+          <p className="w-100 text-center">&mdash; Haven't registered yet &mdash;</p>
+          <a href="Signup">
+            <h4 style={{ color: 'white', textAlign: 'center' }}>SignUp</h4>
+          </a>
+        </div>
+      </div>
+    </form>
+  );
 }
 
 export default Signin;

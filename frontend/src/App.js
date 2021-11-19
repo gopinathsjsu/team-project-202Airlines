@@ -1,12 +1,15 @@
 import './css/App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useState } from 'react';
 import Navigator from './components/Navigator';
 import Home from './views/Home';
 import BookFlight from './views/BookFlight';
 import FlightList from './views/FlightList';
 import MyTrip from './views/MyTrips';
+import Mileage from './views/Mileage';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
+import Signout from './views/signout';
 import SeatMap from './views/SeatMap';
 import UpdateBooking from './views/UpdateBooking';
 import AdminHome from './views/AdminHome';
@@ -15,6 +18,8 @@ import TravellerDetails from './views/TravellerDetails';
 import AdminAddFlight from './views/AdminAddFlight';
 
 function App() {
+  const [userState, setuserState] = useState(0);
+
   return (
     <div className="App">
       <Router>
@@ -32,11 +37,17 @@ function App() {
           <Route path="/updateBooking/:id" exact>
             <UpdateBooking />
           </Route>
+          <Route path="/mileage" exact>
+            <Mileage />
+          </Route>
           <Route path="/signin" exact>
             <Signin />
           </Route>
           <Route path="/signup" exact>
             <Signup />
+          </Route>
+          <Route path="/signout" exact>
+            <Signout />
           </Route>
           <Route path="/seatmap" exact>
             <SeatMap />
