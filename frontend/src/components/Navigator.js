@@ -10,22 +10,27 @@ function Navigator() {
     <div>
       <Container fluid>
         <Row>
-          <Navbar bg='dark' variant='dark'>
+          <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>MY-AIRLINE</Navbar.Brand>
-              <Nav className='me-auto'>
-                <Link to='/home' className='nav-link'>
+              <Nav className="me-auto">
+                <Link to="/home" className="nav-link">
                   HOME
                 </Link>
               </Nav>
               <Nav>
-                <Link to='/signIn' className='nav-link'>
+                <Link to="/seatmap" className="nav-link">
+                  Seat Page
+                </Link>
+              </Nav>
+              <Nav>
+                <Link to="/signin" className="nav-link">
                   SIGN IN
                 </Link>
               </Nav>
               <Nav>
-                <Link to='/seatmap' className='nav-link'>
-                  Seat Page
+                <Link to="/signout" className="nav-link">
+                  SIGN OUT
                 </Link>
               </Nav>
             </Container>

@@ -1,5 +1,6 @@
 import './css/App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useState } from 'react';
 import Navigator from './components/Navigator';
 import Home from './views/Home';
 import InvalidPage from './views/InvalidPage';
@@ -8,9 +9,12 @@ import MyTrip from './views/MyTrips';
 import Mileage from './views/Mileage';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
+import Signout from './views/signout';
 import SeatMap from './views/SeatMap';
 
 function App() {
+  const [userState, setuserState] = useState(0);
+
   return (
     <div className="App">
       <Router>
@@ -33,6 +37,9 @@ function App() {
           </Route>
           <Route path="/signup" exact>
             <Signup />
+          </Route>
+          <Route path="/signout" exact>
+            <Signout />
           </Route>
           <Route path="/seatmap" exact>
             <SeatMap />
