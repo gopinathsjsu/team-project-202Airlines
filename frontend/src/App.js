@@ -15,7 +15,9 @@ import UpdateBooking from './views/UpdateBooking';
 import AdminHome from './views/AdminHome';
 import FlightInfo from './views/FlightInfo';
 import TravellerDetails from './views/TravellerDetails';
+
 import AdminAddFlight from './views/AdminAddFlight';
+import Payment from './views/Payment';
 
 function App() {
   const [userState, setuserState] = useState(0);
@@ -67,7 +69,10 @@ function App() {
           <Route path="/travellerDetails/:details" exact>
             <TravellerDetails />
           </Route>
-          <Route path="*">
+          <Route path='/paymentGateway' exact>
+            <Payment></Payment>
+          </Route>
+          <Route path='*'>
             <Home />
           </Route>
         </Switch>
