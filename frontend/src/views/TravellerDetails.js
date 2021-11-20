@@ -16,8 +16,6 @@ export default function TravellerDetails() {
 
     let { details } = useParams();
     let travellerDetails = JSON.parse(decodeURIComponent(details));
-    console.log(travellerDetails);
-
     let travellers = [];
 
     for (let i=1; i<=travellerDetails.travellers; i++) {

@@ -19,13 +19,7 @@ export default function FlightInfo() {
 
 
     const travellerInfo = (res) => {
-        const {travellers} = selectedFlightDetails;
-        const selectedFlight = {
-            travellers
-  
-        }
-        console.log(selectedFlight);
-      history.push("/travellerDetails/" + encodeURIComponent(JSON.stringify(selectedFlight)));
+        history.push("/travellerDetails/" + encodeURIComponent(JSON.stringify(selectedFlightDetails)));
     }
 
 
