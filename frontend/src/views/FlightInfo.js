@@ -1,22 +1,18 @@
 import React from 'react';
 import Axios from "axios";
 import moment from 'moment';
-import { useEffect, useState } from 'react';
 import { useParams, useHistory } from "react-router-dom";
-import backendServer from "../webConfig";
 
 let rows = [];
 
 export default function FlightInfo() {
 
     Axios.defaults.withCredentials = true;
-    const [loading, setLoading] = useState(true);
     const history = useHistory();
 
     let { details } = useParams();
     let selectedFlightDetails = JSON.parse(decodeURIComponent(details));
     let displayDate = moment(selectedFlightDetails.flight_date).format('MMMM Do, YYYY');;
-
 
     const travellerInfo = (res) => {
         history.push("/travellerDetails/" + encodeURIComponent(JSON.stringify(selectedFlightDetails)));

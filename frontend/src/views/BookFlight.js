@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function BookFlight() {
@@ -28,13 +28,13 @@ export default function BookFlight() {
             setFlightDetails({ ...flightDetails, book_with: e.target.value });
           }}
         >
-          <input type="radio" className="btn" value="Money" name="bookwith" checked="checked" />
+          <input type="radio" className="btn" value="Money" name="bookwith" defaultChecked="checked" />
           <span>Money</span>
           <input type="radio" className="btn" value="Miles" name="bookwith" />
           <span>Miles</span>
         </div>
 
-        <form className="booking-form">
+        <div className="booking-form">
             <label> Flying From </label>
             <input type="text" className="form-control book" placeholder="Enter Airport Code" required
                    onChange={(e) => {
@@ -83,7 +83,7 @@ export default function BookFlight() {
               Show Flights
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </form>
   );

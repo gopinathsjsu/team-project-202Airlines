@@ -14,7 +14,6 @@ function FlightList() {
 
   const { details } = useParams();
   const flightSearchDetails = JSON.parse(decodeURIComponent(details));
-  const displayDate = moment(flightSearchDetails.flight_date).format('MMMM Do, YYYY');
 
   useEffect(() => {
     Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {

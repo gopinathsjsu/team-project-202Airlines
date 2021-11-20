@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import { useParams, useHistory } from "react-router-dom";
 
 // TODO : disable next button if all seats are not selected
 // TODO : display cost on screen
 
 function SeatMap() {
+  let { details } = useParams();
+  let flightDetails = JSON.parse(decodeURIComponent(details));
+
   const defaultSeatData = {
     rows: 20,
     seatsPerDivision: 3,
