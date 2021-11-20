@@ -51,7 +51,7 @@ function App() {
           <Route path="/signout" exact>
             <Signout />
           </Route>
-          <Route path="/seatmap" exact>
+          <Route path="/seatmap/:details" exact>
             <SeatMap />
           </Route>
           <Route path="/flightList/:details" exact>

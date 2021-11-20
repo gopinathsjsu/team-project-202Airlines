@@ -19,7 +19,7 @@ function Navigator() {
                 </Link>
               </Nav>
               <Nav>
-                <Link to="/seatmap" className="nav-link">
+                <Link to="/seatmap/:details" className="nav-link">
                   Seat Page
                 </Link>
               </Nav>
