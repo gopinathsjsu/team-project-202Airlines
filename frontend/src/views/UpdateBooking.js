@@ -23,6 +23,7 @@ function UpdateBooking() {
       setBookingHistory(response.data);
       console.log('data', response.data);
       setFlightDetails({
+        book_with: `${response.data[0].price}` > 1000 ? 'Miles' : 'Money',
         flying_from: `${response.data[0].src}`,
         flying_to: `${response.data[0].dst}`,
         flight_date: `${response.data[0].dep_date}`,
@@ -33,7 +34,7 @@ function UpdateBooking() {
 
   const getFlight = (event) => {
     console.log('data for update', flightDetails);
-    history.push(`/flightList/${encodeURIComponent(JSON.stringify(flightDetails))}`);
+    history.push(`/updateflightList/${encodeURIComponent(JSON.stringify(flightDetails))}`);
   };
 
   return (
