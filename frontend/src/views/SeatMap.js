@@ -41,7 +41,8 @@ function SeatMap() {
     get('/getSeatInfo', { flight_id: 100 }).then((res) => {
       console.log(res);
       setSeatData(res.seatInfo[0]);
-      setBookedSeats(res.bookedSeats);
+      const booked = res.bookedSeats.map((each) => each.seatId);
+      setBookedSeats(booked);
     });
   }, []);
 
