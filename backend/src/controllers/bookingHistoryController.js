@@ -28,6 +28,7 @@ const cancelFlightBooking = (req, res) => {
   //   res.status(404).send({ err: "Invalid user session" });
   //   return;
   // }
+  // console.log(req.body);
   conn.query(
     SQL_BOOKING.CANCEL_BOOKING,
     [req.body.booking_id],
@@ -39,7 +40,18 @@ const cancelFlightBooking = (req, res) => {
         res.send([]);
       } else {
         // console.log("cancel");
-        res.send(result);
+        if (req.body.total_miles != 0) {
+          conn.query(
+            SQL_BOOKING.CANCEL_BOOKING_MILES,
+            [req.body.total_miles],
+            (err, results) => {
+              // console.log(req.body.total_miles);
+              res.send(results);
+            }
+          );
+        } else {
+          res.send(result);
+        }
       }
     }
   );

@@ -33,7 +33,8 @@ router.route("/getLogin").get(getLogin);
 router.route("/signout").get(signout);
 router.route("/register").post(registerUser);
 router.route("/getBookingHistory").get(getBookingHistory);
-router.route("/cancelFlightBooking").post(cancelFlightBooking);
+router.route("/cancelFlightBookingCharges").post(cancelFlightBooking);
+router.route("/cancelFlightBookingRefund").post(cancelFlightBooking);
 router.route("/updateBooking/:id").get(updateFlightBooking);
 //flight
 router.route("/flightList").post(getFlightList);
