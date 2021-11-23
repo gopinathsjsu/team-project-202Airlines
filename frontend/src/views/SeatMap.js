@@ -1,32 +1,53 @@
-import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Nav, Row } from 'react-bootstrap';
+import { useParams, useHistory } from 'react-router-dom';
+import { Navigate } from 'react-router';
+import { get } from '../utils/serverCall';
 
 // TODO : disable next button if all seats are not selected
 // TODO : display cost on screen
 
 function SeatMap() {
-  let { details } = useParams();
-  let flightDetails = JSON.parse(decodeURIComponent(details));
-
+  const { details } = useParams();
+  if (!details) {
+    return <Navigate to="/home" />;
+  }
+  const flightDetails = JSON.parse(decodeURIComponent(details));
+  console.log(flightDetails);
   const defaultSeatData = {
     rows: 20,
-    seatsPerDivision: 3,
+    cols: 3,
     divisions: 2,
     businessClass: 5,
-  };
-
-  const defaultPrice = {
     base: 50,
-    businessClass: 25,
+    business: 25,
     window: 5,
     aisle: 5,
     last: 5,
   };
 
-  const noOfTravellers = 4;
+  // const seatData = {
+  //   base: 50,
+  //   business: 25,
+  //   window: 5,
+  //   aisle: 5,
+  //   last: 5,
+  // };
 
-  const bookedSeats = ['1A', '1E', '10D', '8E'];
+  const [seatData, setSeatData] = useState(defaultSeatData);
+  const [bookedSeats, setBookedSeats] = useState([]);
+
+  useEffect(() => {
+    get('/getSeatInfo', { flight_id: 100 }).then((res) => {
+      console.log(res);
+      setSeatData(res.seatInfo[0]);
+      setBookedSeats(res.bookedSeats);
+    });
+  }, []);
+
+  const noOfTravellers = flightDetails.travellers;
+
+  // const bookedSeats = ['1A', '1E', '10D', '8E'];
 
   // const [seatStatus, setSeatStatus] = useState([]);
 
@@ -70,7 +91,7 @@ function SeatMap() {
 
   const setSeatStyle = (id, row) => {
     let style = { color: 'deepskyblue' };
-    if (row < defaultSeatData.businessClass) {
+    if (row < seatData.businessClass) {
       style = { ...style, color: 'orange' };
     }
     if (bookedSeats.indexOf(id) > -1) {
@@ -92,23 +113,23 @@ function SeatMap() {
   };
 
   const generateSeatPrice = (row, column, division) => {
-    let price = defaultPrice.base;
-    if (row < defaultSeatData.businessClass) {
-      price += defaultPrice.businessClass;
+    let price = seatData.base;
+    if (row < seatData.businessClass) {
+      price += seatData.business;
     }
-    if (row > defaultSeatData.rows * 0.8) {
-      price -= defaultPrice.last;
+    if (row > seatData.rows * 0.8) {
+      price -= seatData.last;
     }
     if (column === 0) {
-      price += defaultPrice.aisle;
+      price += seatData.aisle;
       if (division === 0) {
-        price += defaultPrice.window;
+        price += seatData.window;
       }
     }
-    if ((column + 1) % defaultSeatData.seatsPerDivision === 0) {
-      price += defaultPrice.aisle;
-      if ((division + 1) % defaultSeatData.divisions === 0) {
-        price += defaultPrice.window;
+    if ((column + 1) % seatData.cols === 0) {
+      price += seatData.aisle;
+      if ((division + 1) % seatData.divisions === 0) {
+        price += seatData.window;
       }
     }
     return price;
@@ -119,18 +140,18 @@ function SeatMap() {
     row = parseInt(row, 10) - 1;
     let char = seatId.substring(seatId.length - 1, seatId.length);
     char = char.charCodeAt(0) - 64 - 1;
-    const division = Math.floor(char / defaultSeatData.seatsPerDivision);
-    const column = char % defaultSeatData.seatsPerDivision;
+    const division = Math.floor(char / seatData.cols);
+    const column = char % seatData.cols;
     return generateSeatPrice(row, column, division);
   };
 
   const rows = [];
-  for (let i = 0; i < defaultSeatData.rows; i += 1) {
+  for (let i = 0; i < seatData.rows; i += 1) {
     const divisions = [];
-    for (let j = 0; j < defaultSeatData.divisions; j += 1) {
+    for (let j = 0; j < seatData.divisions; j += 1) {
       const columns = [];
-      for (let k = 0; k < defaultSeatData.seatsPerDivision; k += 1) {
-        const id = i + 1 + String.fromCharCode(j * defaultSeatData.seatsPerDivision + k + 1 + 64);
+      for (let k = 0; k < seatData.cols; k += 1) {
+        const id = i + 1 + String.fromCharCode(j * seatData.cols + k + 1 + 64);
         columns.push(
           <div
             seatid={id}
@@ -147,7 +168,7 @@ function SeatMap() {
               // data-toggle="tooltip"
               // title={id}
               // style={{
-              //   color: i < defaultSeatData.businessClass ? "orange" : "blue",
+              //   color: i < seatData.businessClass ? "orange" : "blue",
               // }}
             >
               event_seat
