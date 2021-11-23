@@ -15,6 +15,7 @@ const {
   addFlights,
   editFlights,
   getAirportCode,
+  getMileage,
 } = require("./controllers/adminController");
 
 const {
@@ -32,6 +33,7 @@ router.route("/signinData").post(signin);
 router.route("/getLogin").get(getLogin);
 router.route("/signout").get(signout);
 router.route("/register").post(registerUser);
+router.route("/mileage").get(getMileage);
 router.route("/getBookingHistory").get(getBookingHistory);
 router.route("/cancelFlightBooking").post(cancelFlightBooking);
 router.route("/updateBooking/:id").get(updateFlightBooking);
