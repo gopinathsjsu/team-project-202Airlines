@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import '../css/App.css';
 import '../css/myTrip.css';
+import Alert from 'react-bootstrap/Alert';
+import moment from 'moment';
 import backendServer from '../webConfig';
 
 function MyTrip() {
@@ -20,15 +22,53 @@ function MyTrip() {
   }, []);
   console.log(bookingHistory);
 
-  const cancelBooking = (id) => {
-    Axios.post(`${backendServer}/cancelFlightBooking`, {
-      booking_id: id,
-    })
-      .then((result) => {
-        console.log(result);
-        window.location.reload();
-      })
-      .catch((error) => {});
+  const cancelBookingFullRefund = (id, prices, miles) => {
+    if (prices) {
+      alert('Money will be refunded within 5 days');
+      const values = {
+        booking_id: id,
+        total_miles: 0,
+      };
+
+      Axios.post(`${backendServer}/cancelFlightBookingRefund`, values)
+        .then((result) => {
+          console.log(result);
+          window.location.reload();
+        })
+        .catch((error) => {});
+    } else {
+      const values = {
+        booking_id: id,
+        total_miles: miles,
+      };
+
+      Axios.post(`${backendServer}/cancelFlightBookingRefund`, values)
+        .then((result) => {
+          console.log(result);
+          window.location.reload();
+          alert(`${values.total_miles} Miles has been refunded to mileage account`);
+        })
+        .catch((error) => {});
+    }
+  };
+
+  const cancelBookingCharges = (id, prices, miles) => {
+    if (miles) {
+      miles *= 0.8;
+      const values = {
+        booking_id: id,
+        total_miles: miles,
+      };
+      console.log(values);
+      Axios.post(`${backendServer}/cancelFlightBookingCharges`, values)
+        .then((result) => {
+          // console.log(result);
+          window.location.reload();
+        })
+        .catch((error) => {});
+    } else {
+      alert('Money after charges will be refunded within 5 days');
+    }
   };
 
   return (
@@ -57,7 +97,7 @@ function MyTrip() {
 
         <div className="content-tabs">
           <div className={toggleState === 1 ? 'content  active-content' : 'content'}>
-            <table id="booking">
+            <table id="booking" style={{ width: '100%' }}>
               <tbody>
                 <tr>
                   <th scope="col">S.No.</th>
@@ -67,7 +107,9 @@ function MyTrip() {
                   <th scope="col">Arrival Date</th>
                   <th scope="col">Destination</th>
                   <th scope="col">Price</th>
+                  <th scope="col">Miles</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Edit Reservation</th>
                 </tr>
                 {bookingHistory
                   .filter(
@@ -87,6 +129,7 @@ function MyTrip() {
                       <td>{data.arr_date}</td>
                       <td>{data.dst}</td>
                       <td>${data.price}</td>
+                      <td>{data.milesused}</td>
                       <td>{data.status}</td>
                       <td>
                         <button
@@ -98,7 +141,18 @@ function MyTrip() {
                         </button>
                         <button
                           onClick={() => {
-                            cancelBooking(data.booking_id);
+                            const dateOne = moment(`${data.dep_date}`);
+                            const dateTwo = moment(`${data.curr_date}`);
+                            const result = dateOne.diff(dateTwo, 'days');
+                            console.log(result);
+                            if (result <= 1) {
+                              alert(
+                                'Booking cancellation charges apply since cancelling one day before flight departure.'
+                              );
+                              cancelBookingCharges(data.booking_id, data.price, data.milesused);
+                            } else {
+                              cancelBookingFullRefund(data.booking_id, data.price, data.milesused);
+                            }
                           }}
                         >
                           Cancel Booking
@@ -110,7 +164,7 @@ function MyTrip() {
             </table>
           </div>
           <div className={toggleState === 2 ? 'content  active-content' : 'content'}>
-            <table id="booking">
+            <table id="booking" style={{ width: '100%' }}>
               <tr>
                 <th scope="col">S.No.</th>
                 <th scope="col">Booking Date</th>
@@ -119,6 +173,7 @@ function MyTrip() {
                 <th scope="col">Arrival Date</th>
                 <th scope="col">Destination</th>
                 <th scope="col">Price</th>
+                <th scope="col">Miles</th>
                 <th scope="col">Status</th>
               </tr>
               {bookingHistory
@@ -132,13 +187,14 @@ function MyTrip() {
                     <td>{data.arr_date}</td>
                     <td>{data.dst}</td>
                     <td>${data.price}</td>
+                    <td>{data.milesused}</td>
                     <td>{data.status}</td>
                   </tr>
                 ))}
             </table>
           </div>
           <div className={toggleState === 3 ? 'content  active-content' : 'content'}>
-            <table id="booking">
+            <table id="booking" style={{ width: '100%' }}>
               <tr>
                 <th scope="col">S.No.</th>
                 <th scope="col">Booking Date</th>
@@ -147,6 +203,7 @@ function MyTrip() {
                 <th scope="col">Arrival Date</th>
                 <th scope="col">Destination</th>
                 <th scope="col">Price</th>
+                <th scope="col">Miles</th>
                 <th scope="col">Status</th>
               </tr>
               {bookingHistory
@@ -163,6 +220,7 @@ function MyTrip() {
                     <td>{data.arr_date}</td>
                     <td>{data.dst}</td>
                     <td>${data.price}</td>
+                    <td>{data.milesused}</td>
                     <td>{data.status}</td>
                   </tr>
                 ))}

@@ -18,6 +18,7 @@ import TravellerDetails from './views/TravellerDetails';
 
 import AdminAddFlight from './views/AdminAddFlight';
 import Payment from './views/Payment';
+import FlightUpdateSearch from './views/FlightUpdateSearch';
 
 function App() {
   const [userState, setuserState] = useState(0);
@@ -51,7 +52,7 @@ function App() {
           <Route path="/signout" exact>
             <Signout />
           </Route>
-          <Route path="/seatmap" exact>
+          <Route path="/seatmap/:details" exact>
             <SeatMap />
           </Route>
           <Route path="/flightList/:details" exact>
@@ -69,10 +70,13 @@ function App() {
           <Route path="/travellerDetails/:details" exact>
             <TravellerDetails />
           </Route>
-          <Route path='/paymentGateway' exact>
-            <Payment></Payment>
+          <Route path="/paymentGateway" exact>
+            <Payment />
           </Route>
-          <Route path='*'>
+          <Route path="/updateflightList/:details" exact>
+            <FlightUpdateSearch />
+          </Route>
+          <Route path="*">
             <Home />
           </Route>
         </Switch>
