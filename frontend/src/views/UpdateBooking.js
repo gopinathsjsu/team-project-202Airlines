@@ -18,7 +18,7 @@ function UpdateBooking() {
       setBookingHistory(response.data);
       // console.log('data', response.data);
       setFlightDetails({
-        book_with: `${response.data[0].price}` > 1000 ? 'Miles' : 'Money',
+        book_with: `${response.data[0].price}` == 0 ? 'Miles' : 'Money',
         flying_from: `${response.data[0].src}`,
         flying_to: `${response.data[0].dst}`,
         flight_date: `${response.data[0].dep_date}`,
