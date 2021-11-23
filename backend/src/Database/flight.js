@@ -4,10 +4,10 @@ const SQL_FLIGHT = {
                       where flight_date=? and airport_code_src=? and airport_code_dst=?;",
 
   GET_SEAT_INFO:
-    "Select Airplane.*, SeatPrice.* from Flight join Airplane join SeatPrice where flight_id = ?",
+    "Select Airplane.*, SeatPrice.* from Flight natural join Airplane natural join SeatPrice where flight_id = ?",
 
   GET_BOOKED_SEATS:
-    "Select  seatId  from Booking join SeatBooking where flight_id=?",
+    "Select  seatId  from Booking natural join SeatBooking where flight_id=?",
 };
 
 module.exports = SQL_FLIGHT;
