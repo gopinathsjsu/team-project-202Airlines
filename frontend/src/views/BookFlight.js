@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function BookFlight() {
@@ -28,7 +28,7 @@ export default function BookFlight() {
             setFlightDetails({ ...flightDetails, book_with: e.target.value });
           }}
         >
-          <input type="radio" className="btn" value="Money" name="bookwith" checked="checked" />
+          <input type="radio" className="btn" value="Money" name="bookwith" defaultChecked="checked" />
           <span>Money</span>
           <input type="radio" className="btn" value="Miles" name="bookwith" />
           <span>Miles</span>
@@ -36,20 +36,20 @@ export default function BookFlight() {
 
         <div className="booking-form">
             <label> Flying From </label>
-            <input type="text" className="form-control book" placeholder="Enter Airport Code"
+            <input type="text" className="form-control book" placeholder="Enter Airport Code" required
                    onChange={(e) => {
                     setFlightDetails({ ...flightDetails, flying_from: e.target.value });
                    }}/>
 
             <label> Flying To </label>
-            <input type="text" className="form-control book" placeholder="Enter Airport Code"
+            <input type="text" className="form-control book" placeholder="Enter Airport Code" required
                     onChange={(e) => {
                       setFlightDetails({ ...flightDetails, flying_to: e.target.value });
                     }}/>
 
             <div className="input-grp">
               <label> Departing </label>
-              <input type="date" className="form-control book select-date"
+              <input type="date" className="form-control book select-date" required
                 onChange={(e) => {
                 setFlightDetails({ ...flightDetails, flight_date: e.target.value });
               }}
@@ -58,7 +58,7 @@ export default function BookFlight() {
 
             <div className="input-grp">
               <label> Travellers </label>
-              <input type="number" className="form-control book" min="1" step="1"
+              <input type="number" className="form-control book" min="1" step="1" required
                 onChange={(e) => {
                 setFlightDetails({ ...flightDetails, travellers: e.target.value });
               }}
@@ -68,7 +68,7 @@ export default function BookFlight() {
           <div className="input-grp">
             <label> Class </label>
             <select
-              className="custom-select"
+              className="custom-select" required
               onChange={(e) => {
                 setFlightDetails({ ...flightDetails, flight_class: e.target.value });
               }}
@@ -79,7 +79,7 @@ export default function BookFlight() {
           </div>
 
           <div className="input-grp">
-            <button type="button" className="btn btn-primary flight" onClick={getFlight}>
+            <button type="submit" className="btn btn-primary flight" onClick={getFlight}>
               Show Flights
             </button>
           </div>
