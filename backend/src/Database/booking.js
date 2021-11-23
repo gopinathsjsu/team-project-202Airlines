@@ -16,6 +16,8 @@ const SQL_BOOKING = {
     "Update Airlines.Booking set src=?,dst=?,dep_date=? where booking_id=? and customer_id=?;",
   CHANGE_MILES_AFTER_BOOKING_UPDATE:
     "Update Airlines.Customer set total_miles=? where customer_id=?",
+  GET_PASSPORT: "Select passportid from Customer where customer_id=?;",
+  UPDATE_PASSPORT: "Update Customer set passportid=? where customer_id=?",
 };
 
 module.exports = SQL_BOOKING;

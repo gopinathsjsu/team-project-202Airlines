@@ -111,7 +111,12 @@ function FlightUpdateSearch() {
           ))}
         </div>
       ) : (
-        <h2 className="text-danger">No Flights Are Available for the Selected dates</h2>
+        <div>
+          <h3 className="text-danger">No Flights Are Available for the Selected dates</h3>
+          <a href="/myTrips">
+            <b>Go Back to My trips</b>
+          </a>
+        </div>
       )}
     </div>
   );

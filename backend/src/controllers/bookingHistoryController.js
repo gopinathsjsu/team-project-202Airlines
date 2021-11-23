@@ -1,5 +1,6 @@
 const conn = require("../utils/dbConnector");
 const SQL_BOOKING = require("../Database/booking");
+const { query } = require("express");
 //Get all bookking details
 
 const getBookingHistory = (req, res) => {
@@ -24,11 +25,6 @@ const getBookingHistory = (req, res) => {
 };
 
 const cancelFlightBooking = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
-  // console.log(req.body);
   conn.query(
     SQL_BOOKING.CANCEL_BOOKING,
     [req.body.booking_id],
@@ -58,10 +54,6 @@ const cancelFlightBooking = (req, res) => {
 };
 
 const updateFlightBooking = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
   const booking_id = req.params.id;
   conn.query(
     SQL_BOOKING.GET_BOOKING_FOR_UPDATE,
@@ -80,8 +72,42 @@ const updateFlightBooking = (req, res) => {
   );
 };
 
+const getPassport = (req, res) => {
+  const customer_id = 1;
+  conn.query(SQL_BOOKING.GET_PASSPORT, [customer_id], (error, result) => {
+    if (error) {
+      res.status(404).send({ err: error.code });
+      return;
+    } else {
+      res.send(result);
+    }
+  });
+};
+
+const updatePassport = (req, res) => {
+  const customer_id = 1;
+  // console.log(req.body);
+  conn.query(
+    SQL_BOOKING.UPDATE_PASSPORT,
+    [req.body.passportid, customer_id],
+    (error, result) => {
+      if (error) {
+        res.status(404).send({ err: error.code });
+        return;
+      } else if (result.length == 0) {
+        res.send([]);
+      } else {
+        // console.log(query);
+        res.send(result);
+      }
+    }
+  );
+};
+
 module.exports = {
   getBookingHistory,
   cancelFlightBooking,
   updateFlightBooking,
+  getPassport,
+  updatePassport,
 };
