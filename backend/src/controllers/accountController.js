@@ -126,7 +126,9 @@ const signout = (req, res) => {
   if (req.session.user) {
     req.session.destroy();
     req.session = null;
-    res.send("hello");
+    res.send();
+  } else {
+    res.send();
   }
 };
 
