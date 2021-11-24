@@ -7,8 +7,12 @@ import Form from 'react-bootstrap/Form';
 import classnames from 'classnames';
 import Axios from 'axios';
 import cookie from 'react-cookies';
+import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { post } from '../utils/serverCall';
 import backendServer from '../webConfig';
+import { actionCreators } from '../reducers/actionCreators';
+import { REDUCER } from '../utils/consts';
 
 function Signin() {
   const [emailid, setEmailId] = useState('');
@@ -16,6 +20,9 @@ function Signin() {
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState(false);
   const [failMsg, setFailMsg] = useState('');
+
+  const dispatch = useDispatch();
+  const { customerLogin } = bindActionCreators(actionCreators, dispatch);
 
   Axios.defaults.withCredentials = true;
   const login = async (event) => {
@@ -26,21 +33,17 @@ function Signin() {
     };
     try {
       await Axios.post(`${backendServer}/signinData`, data).then((response) => {
-        console.log('res check', response);
         if (response.status === 200) {
-          alert('Login successfull');
+          localStorage.setItem(REDUCER.SIGNEDIN, true);
+          customerLogin();
           setLoginStatus(true);
-          console.log(loginStatus);
-          // history.push('/home');
         } else {
-          alert('Invalid credentials');
+          console.log('error in serverside');
         }
       });
     } catch (error) {
-      alert('error', error);
       setLoginStatus(false);
     }
-    console.log('after call..>>>>');
   };
 
   if (loginStatus) {

@@ -18,6 +18,24 @@ const getProfile = (req, res) => {
   });
 };
 
+const getMileage = (req, res) => {
+  // if (!req.session.user) {
+  //   res.status(404).send({ err: "Invalid user session" });
+  //   return;
+  // }
+  const customer_id = req.query.customer_id;
+  conn.query(SQL_ADMIN.MILEAGE, [customer_id], (error, result) => {
+    console.log(result);
+    if (error) {
+      res.status(404).send({ err: error.code });
+    } else if (result.length == 0) {
+      res.send([]);
+    } else {
+      res.send(result);
+    }
+  });
+};
+
 const getFlights = (req, res) => {
   // if (!req.session.user) {
   //   res.status(404).send({ err: "Invalid user session" });
@@ -138,6 +156,7 @@ const getAirportCode = (req, res) => {
 
 module.exports = {
   getProfile,
+  getMileage,
   getFlights,
   getFlightsById,
   addFlights,

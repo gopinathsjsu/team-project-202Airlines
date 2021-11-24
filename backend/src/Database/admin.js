@@ -1,6 +1,8 @@
 const SQL_ADMIN = {
   ADMIN_PROFILE:
     "Select * from Airlines.Customer where role='EMPLOYER' and customer_id=?;",
+  MILEAGE:
+    "Select mileage_plus_number, customer_first_name, total_miles from Airlines.Customer where customer_id=?;",
   GET_FLIGHTS: "SELECT * from Airlines.Flight;",
   GET_FLIGHTS_BY_ID: "SELECT * from Airlines.Flight where flight_id=?;",
   ADD_FLIGHTS:

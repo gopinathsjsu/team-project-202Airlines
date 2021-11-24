@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import backendServer from '../webConfig';
+import { actionCreators } from '../reducers/actionCreators';
 
 const Signout = () => {
+  const dispatch = useDispatch();
+  const { logout } = bindActionCreators(actionCreators, dispatch);
+
   Axios.defaults.withCredentials = true;
   const [loggedOut, setLoggedout] = useState(false);
   useEffect(async () => {
     Axios.get(`${backendServer}/signout`).then((response) => {
-      console.log('loggedout');
+      localStorage.clear();
+      logout();
       setLoggedout(true);
     });
   }, []);

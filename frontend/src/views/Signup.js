@@ -26,7 +26,8 @@ function Signup() {
     password: false,
     customer_first_name: false,
     customer_last_name: false,
-    email_id: false,
+    emailid: false,
+    address: false,
     city: false,
     state: false,
     country: false,
@@ -38,20 +39,20 @@ function Signup() {
     role: false,
   });
   const defaultValues = {
-    // user_id: "",
     password: '',
     customer_first_name: '',
     customer_last_name: '',
-    email_id: '',
+    emailid: '',
+    address: '',
     city: '',
     state: '',
     country: '',
     zip_code: '',
     passportid: '',
-    gender: '',
-    sec_ques: '',
+    gender: 'Male',
+    sec_ques: "What is your mother's maiden name?",
     sec_ans: '',
-    role: '',
+    role: 'customer',
   };
 
   const [userDetails, setUserDetails] = useState(defaultValues);
@@ -64,14 +65,14 @@ function Signup() {
       userDetails.customer_first_name.trim() === '' ||
       userDetails.customer_last_name.trim() === '' ||
       userDetails.city.trim() === '' ||
-      userDetails.street.trim() === '' ||
-      userDetails.email_id.trim() === '' ||
+      userDetails.address.trim() === '' ||
+      userDetails.emailid.trim() === '' ||
       userDetails.zip_code.length < 5
     ) {
       alert('Please fill all fields');
       setMessage('Please fill all fields');
     } else if (
-      userDetails.email_id.includes(' ') ||
+      userDetails.emailid.includes(' ') ||
       userDetails.zip_code.includes(' ') ||
       userDetails.password.includes(' ')
     ) {
@@ -84,7 +85,10 @@ function Signup() {
         userDetails,
       })
         .then((response) => {
-          setMessage(`Your User ID is "${response.data.email_id}`);
+          console.log(response);
+          setMessage(
+            `Your User ID is "${response.data.emailid}" \n Mileage account: "${response.data.mileage_number}"`
+          );
           setRegisterd(true);
         })
         .catch((error) => {
@@ -96,12 +100,15 @@ function Signup() {
 
   if (registered) {
     return (
-      <div className="main">
-        <h1 style={{ textAlign: 'center' }}> {message}</h1>
-        <Link to="/login" className="button-xlarge pure-button">
-          Go to Login Page
-        </Link>
-      </div>
+      <form className="flight-book-form">
+        <div className="main">
+          <h1 style={{ textAlign: 'center' }}> {message}</h1>
+          <br />
+          <Link to="/login" style={{ fontSize: 35, textAlign: 'center' }}>
+            <h1>Go to Login Page</h1>
+          </Link>
+        </div>
+      </form>
     );
   }
 
@@ -149,15 +156,15 @@ function Signup() {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   required
-                  helpertext={invalid.email_id ? '1-25 characters' : ''}
+                  helpertext={invalid.emailid ? '1-25 characters' : ''}
                   id="register-email-id"
                   label="Email ID"
                   type="text"
                   error={invalid.email_id}
                   onChange={(e) => {
                     const validation = !!(e.target.value.length > 25 || e.target.value === '');
-                    setInvalid({ ...invalid, email_id: validation });
-                    setUserDetails({ ...userDetails, email_id: e.target.value });
+                    setInvalid({ ...invalid, emailid: validation });
+                    setUserDetails({ ...userDetails, emailid: e.target.value });
                   }}
                 />
               </Form.Group>
@@ -278,11 +285,15 @@ function Signup() {
                 <Form.Label>Gender</Form.Label>
                 <Form.Control
                   as="select"
+                  default="Male"
+                  value={userDetails?.gender}
                   onChange={(e) => {
                     setUserDetails({ ...userDetails, gender: e.target.value });
                   }}
                 >
-                  <option value="Male">Male</option>
+                  <option value="Male" defaultChecked>
+                    Male
+                  </option>
                   <option value="Female">Female</option>
                 </Form.Control>
               </Form.Group>
@@ -292,30 +303,29 @@ function Signup() {
                 <Form.Label>Security Question 1</Form.Label>
                 <Form.Control
                   as="select"
+                  default="What is your mother's maiden name?"
+                  value={userDetails?.sec_ques}
                   onChange={(e) => {
                     setUserDetails({ ...userDetails, sec_ques: e.target.value });
                   }}
                 >
-                  <option value="0">What is your mother's maiden name?</option>
-                  <option value="1">What was the name of your first pet?</option>
-                  <option value="2">What was the name of your first school?</option>
+                  <option value="What is your mother's maiden name?">
+                    What is your mother's maiden name?
+                  </option>
+                  <option value="What was the name of your first pet?">
+                    What was the name of your first pet?
+                  </option>
+                  <option value="What was the name of your first school?">
+                    What was the name of your first school?
+                  </option>
                 </Form.Control>
-                <Form.Control type="text" placeholder="Answer:" />
-              </Form.Group>
-              <Form.Group class="col">
-                <Form.Label>Security Question 2</Form.Label>
                 <Form.Control
-                  as="select"
+                  type="text"
+                  placeholder="Answer:"
                   onChange={(e) => {
-                    setUserDetails({ ...userDetails, sq2: e.target.value });
+                    setUserDetails({ ...userDetails, sec_ans: e.target.value });
                   }}
-                >
-                  <option value="0">What is your mother's maiden name?</option>
-                  <option value="1">What was the name of your first pet?</option>
-                  <option value="2">What was the name of your first school?</option>
-                </Form.Control>
-                <Form.Control type="text" placeholder="Answer:" />
-                <br />
+                />
               </Form.Group>
             </div>
             <div className="row">
@@ -324,6 +334,7 @@ function Signup() {
                 <Form.Control
                   as="select"
                   default="Customer"
+                  value={userDetails?.role}
                   onChange={(e) => {
                     setUserDetails({ ...userDetails, role: e.target.value });
                   }}
