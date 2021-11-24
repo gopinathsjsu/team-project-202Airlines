@@ -12,6 +12,7 @@ export const ACTION = {
   CUSTOMER_SIGIN: 'CUSTOMER',
   RESET: 'RESET',
   SHOWERROR: 'ERROR',
+  BOOKING: 'BOOKING',
 };
 
 export const BOOKING = {

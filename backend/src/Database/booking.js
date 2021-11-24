@@ -15,6 +15,10 @@ const SQL_BOOKING = {
     "Update Airlines.Booking set src=?,dst=?,dep_date=? where booking_id=? and customer_id=?",
   CHANGE_MILES_AFTER_BOOKING_UPDATE:
     "Update Airlines.Customer set total_miles=? where customer_id=?",
+  CREATE_BOOKING:
+    "insert into Booking (status, booking_date, flight_id, customer_id, traveller_cnt, price, milesused, class ) values (?,?,?,?,?,?,?,?)",
+  INSERT_TRAVELLERS:
+    "insert into Traveller (name,booking_id, gender, age, seatId) values ?",
 };
 
 module.exports = SQL_BOOKING;

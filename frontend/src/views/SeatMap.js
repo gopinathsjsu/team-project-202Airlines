@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Nav, Row } from 'react-bootstrap';
-import { useParams, useHistory } from 'react-router-dom';
-import { Navigate } from 'react-router';
+import { useParams, useHistory, Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { get } from '../utils/serverCall';
 import { BOOKING } from '../utils/consts';
+import { updateBooking } from '../reducers/actions';
 
 // TODO : disable next button if all seats are not selected
 // TODO : display cost on screen
 
 function SeatMap() {
-  const { details } = useParams();
-  if (!details) {
-    return <Navigate to="/home" />;
-  }
-  const flightDetails = JSON.parse(decodeURIComponent(details));
-  console.log(flightDetails);
+  const bookingState = useSelector((state) => state.bookingReducer);
+
+  // const { details } = useParams();
+  // if (!details) {
+  // return <Redirect to="/home" />;
+  // }
+  // const flightDetails = JSON.parse(decodeURIComponent(details));
+  // const flightDetails = JSON.parse(decodeURIComponent({}));
+  // console.log(flightDetails);
   const defaultSeatData = {
     rows: 20,
     cols: 3,
@@ -35,27 +39,37 @@ function SeatMap() {
   //   last: 5,
   // };
 
+  const dispatch = useDispatch();
+
   const [seatData, setSeatData] = useState(defaultSeatData);
+
   const [bookedSeats, setBookedSeats] = useState([]);
   const [next, setNext] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [redirectNextPage, setRedirectNextPage] = useState(false);
+  const [redirectHomePage, setRedirectHomePage] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem(BOOKING.SEATS)) {
-      setSelectedSeats(JSON.parse(localStorage.getItem(BOOKING.SEATS)));
-    }
-    get('/getSeatInfo', { flight_id: flightDetails.flight_id }).then((res) => {
-      console.log(res);
+    // if (localStorage.getItem(BOOKING.SEATS)) {
+    //   setSelectedSeats(JSON.parse(localStorage.getItem(BOOKING.SEATS)));
+    // }
+    get('/getSeatInfo', { flight_id: bookingState.flight_id }).then((res) => {
+      // console.log(res);
       setSeatData(res.seatInfo[0]);
       const booked = res.bookedSeats.map((each) => each.seatId);
       setBookedSeats(booked);
     });
   }, []);
 
-  const noOfTravellers = flightDetails.travellers;
+  useEffect(() => {
+    setSelectedSeats(bookingState.seats);
+    // console.log(bookingState);
+    if (bookingState.flight_id === '') {
+      setRedirectHomePage(true);
+    }
+  }, [bookingState]);
 
-  // const bookedSeats = ['1A', '1E', '10D', '8E'];
-  // const [seatStatus, setSeatStatus] = useState([]);
+  const noOfTravellers = bookingState.travellers;
 
   const seatClickHandler = (e) => {
     const seatId = e.currentTarget.getAttribute('seatid');
@@ -63,16 +77,16 @@ function SeatMap() {
       if (prev.indexOf(seatId) > -1) {
         const temp = [...prev];
         temp.splice(temp.indexOf(seatId), 1);
-        localStorage.setItem(BOOKING.SEATS, JSON.stringify([...temp]));
+        // localStorage.setItem(BOOKING.SEATS, JSON.stringify([...temp]));
         return [...temp];
       }
       if (prev.length >= noOfTravellers) {
         const temp = [...prev];
         temp.shift();
-        localStorage.setItem(BOOKING.SEATS, JSON.stringify([...temp, seatId]));
+        // localStorage.setItem(BOOKING.SEATS, JSON.stringify([...temp, seatId]));
         return [...temp, seatId];
       }
-      localStorage.setItem(BOOKING.SEATS, JSON.stringify([...prev, seatId]));
+      // localStorage.setItem(BOOKING.SEATS, JSON.stringify([...prev, seatId]));
       return [...prev, seatId];
     });
     // console.log(e.currentTarget.getAttribute("seatid"));
@@ -161,6 +175,19 @@ function SeatMap() {
     return generateSeatPrice(row, column, division);
   };
 
+  const totalCost = () => {
+    let cost = 0;
+    selectedSeats.forEach((each) => {
+      cost += getSeatPrice(each);
+    });
+    return cost;
+  };
+
+  const nextPage = (e) => {
+    dispatch(updateBooking({ seats: selectedSeats, seatsPrice: totalCost() }));
+    setRedirectNextPage(true);
+  };
+
   const rows = [];
   for (let i = 0; i < seatData.rows; i += 1) {
     const divisions = [];
@@ -206,13 +233,13 @@ function SeatMap() {
     );
   }
 
-  const totalCost = () => {
-    let cost = 0;
-    selectedSeats.forEach((each) => {
-      cost += getSeatPrice(each);
-    });
-    return cost;
-  };
+  if (redirectNextPage) {
+    // return <Navigate to="/signin"> </Navigate>;
+    return <Redirect push="true" to="/bookingSummary" />;
+  }
+  if (redirectHomePage) {
+    return <Redirect push="true" to="/bookFlight" />;
+  }
 
   return (
     <>
@@ -220,7 +247,7 @@ function SeatMap() {
       <div>{`$${totalCost()}`}</div>
       <div>
         {next && (
-          <button type="button" className="btn btn-primary me-auto col-sm-2">
+          <button type="button" className="btn btn-primary me-auto col-sm-2" onClick={nextPage}>
             Continue
           </button>
         )}

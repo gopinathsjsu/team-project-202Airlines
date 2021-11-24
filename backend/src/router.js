@@ -6,6 +6,7 @@ const {
   getBookingHistory,
   cancelFlightBooking,
   updateFlightBooking,
+  createBooking,
 } = require("./controllers/bookingHistoryController");
 const {
   getFlightList,
@@ -48,5 +49,6 @@ router.route("/addFlights").post(addFlights);
 router.route("/editFlights").post(editFlights);
 router.route("/getAirportCode").get(getAirportCode);
 router.route("/getSeatInfo").get(getSeatInfo);
+router.route("/createBooking").post(createBooking);
 
 module.exports = router;
