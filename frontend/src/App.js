@@ -20,6 +20,7 @@ import AdminAddFlight from './views/AdminAddFlight';
 import Payment from './views/Payment';
 import FlightUpdateSearch from './views/FlightUpdateSearch';
 import FlightDateUpdate from './views/FlightDateUpdate';
+import Summary from './views/Summary';
 
 function App() {
   const [userState, setuserState] = useState(0);
@@ -53,7 +54,7 @@ function App() {
           <Route path="/signout" exact>
             <Signout />
           </Route>
-          <Route path="/seatmap/:details" exact>
+          <Route path="/seatmap" exact>
             <SeatMap />
           </Route>
           <Route path="/flightList/:details" exact>
@@ -79,6 +80,8 @@ function App() {
           </Route>
           <Route path="/flightDateUpdate/:details" exact>
             <FlightDateUpdate />
+          <Route path="/bookingSummary" exact>
+            <Summary />
           </Route>
           <Route path="*">
             <Home />
