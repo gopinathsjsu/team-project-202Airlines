@@ -7,3 +7,7 @@ export const customerLogin = (payload) => (dispatch) => {
 export const logout = (payload) => (dispatch) => {
   dispatch({ type: ACTION.RESET, payload });
 };
+
+export const showError = (payload) => (dispatch) => {
+  dispatch({ type: ACTION.SHOWERROR, payload });
+};
