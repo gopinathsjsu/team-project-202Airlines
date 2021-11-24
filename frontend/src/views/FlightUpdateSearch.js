@@ -25,14 +25,12 @@ function FlightUpdateSearch() {
   }, []);
 
   const reviewFlight = (res) => {
-    const { flight_date, flying_from, flying_to, travellers, flight_class, book_with } =
-      flightSearchDetails;
+    const { flight_date, flying_from, flying_to, flight_class, book_with } = flightSearchDetails;
     const { flight_number, start_time, end_time, price, miles } = res;
     const selectedFlight = {
       flight_date,
       flying_from,
       flying_to,
-      travellers,
       flight_class,
       flight_number,
       start_time,
@@ -42,7 +40,7 @@ function FlightUpdateSearch() {
       miles,
     };
     console.log(selectedFlight);
-    history.push(`/flightInfo/${encodeURIComponent(JSON.stringify(selectedFlight))}`);
+    history.push(`/flightDateUpdate/${encodeURIComponent(JSON.stringify(selectedFlight))}`);
   };
 
   return (
@@ -101,7 +99,7 @@ function FlightUpdateSearch() {
               </div>
               <div className="col">
                 {/* {flightSearchDetails.book_with === 'Money' ?  : ''} */}
-                {flightSearchDetails.book_with === 'Money' ? `$${res.price}` : res.miles}
+                {flightSearchDetails.book_with === 'Money' ? `$${res.price}` : `${res.miles}`}
               </div>
               <button className="btn btn-default" type="button" onClick={() => reviewFlight(res)}>
                 Select
@@ -111,7 +109,12 @@ function FlightUpdateSearch() {
           ))}
         </div>
       ) : (
-        <h2 className="text-danger">No Flights Are Available for the Selected dates</h2>
+        <div>
+          <h3 className="text-danger">No Flights Are Available for the Selected dates</h3>
+          <a href="/myTrips">
+            <b>Go Back to My trips</b>
+          </a>
+        </div>
       )}
     </div>
   );

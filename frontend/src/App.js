@@ -19,6 +19,7 @@ import TravellerDetails from './views/TravellerDetails';
 import AdminAddFlight from './views/AdminAddFlight';
 import Payment from './views/Payment';
 import FlightUpdateSearch from './views/FlightUpdateSearch';
+import FlightDateUpdate from './views/FlightDateUpdate';
 
 function App() {
   const [userState, setuserState] = useState(0);
@@ -75,6 +76,9 @@ function App() {
           </Route>
           <Route path="/updateflightList/:details" exact>
             <FlightUpdateSearch />
+          </Route>
+          <Route path="/flightDateUpdate/:details" exact>
+            <FlightDateUpdate />
           </Route>
           <Route path="*">
             <Home />
