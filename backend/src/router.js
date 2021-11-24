@@ -6,6 +6,8 @@ const {
   getBookingHistory,
   cancelFlightBooking,
   updateFlightBooking,
+  getPassport,
+  updatePassport,
   createBooking,
 } = require("./controllers/bookingHistoryController");
 const {
@@ -19,6 +21,7 @@ const {
   addFlights,
   editFlights,
   getAirportCode,
+  getMileage,
 } = require("./controllers/adminController");
 
 const {
@@ -36,8 +39,10 @@ router.route("/signinData").post(signin);
 router.route("/getLogin").get(getLogin);
 router.route("/signout").get(signout);
 router.route("/register").post(registerUser);
+router.route("/mileage").get(getMileage);
 router.route("/getBookingHistory").get(getBookingHistory);
-router.route("/cancelFlightBooking").post(cancelFlightBooking);
+router.route("/cancelFlightBookingCharges").post(cancelFlightBooking);
+router.route("/cancelFlightBookingRefund").post(cancelFlightBooking);
 router.route("/updateBooking/:id").get(updateFlightBooking);
 //flight
 router.route("/flightList").post(getFlightList);
@@ -48,6 +53,8 @@ router.route("/getFlightsById/:flightId").get(getFlightsById);
 router.route("/addFlights").post(addFlights);
 router.route("/editFlights").post(editFlights);
 router.route("/getAirportCode").get(getAirportCode);
+router.route("/getPassport").get(getPassport);
+router.route("/updatePassport").post(updatePassport);
 router.route("/getSeatInfo").get(getSeatInfo);
 router.route("/createBooking").post(createBooking);
 

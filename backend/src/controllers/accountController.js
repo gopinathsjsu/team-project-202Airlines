@@ -3,10 +3,9 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const getLogin = (req, res) => {
-  console.log("Get Login");
   if (req.session.user) {
     res.send({ loggedIn: true, user: req.session.user });
-    console.log(res);
+    // console.log(res);
   } else {
     res.send({ loggedIn: false });
   }
@@ -65,8 +64,6 @@ const setSession = (req, res, email_id, customer_id, membership_type) => {
 };
 
 const registerUser = (req, res) => {
-  console.log("register");
-
   const {
     customer_first_name,
     customer_last_name,
@@ -81,17 +78,16 @@ const registerUser = (req, res) => {
     role,
     sec_ques,
     sec_ans,
-  } = req.body;
-  // Hash password before store in db
+  } = req.body.userDetails;
+
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if (err) {
+      console.log(err);
       return;
     } else {
-      if (err) {
-        return;
-      }
+      var mileage_number = `${passportid}` + "T62954";
       var sql =
-        "INSERT INTO Customer (  customer_first_name, customer_last_name, address,city,state,zip_code,passportid,gender, password,emailid,role,sec_ques,sec_ans) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO Customer ( customer_first_name, customer_last_name, address,city,state,zip_code,passportid,gender, password,emailid,role,sec_ques,sec_ans,mileage_plus_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       conn.query(
         sql,
         [
@@ -108,14 +104,21 @@ const registerUser = (req, res) => {
           role,
           sec_ques,
           sec_ans,
+          mileage_number,
         ],
         (err, result) => {
-          if (err) throw err;
-          console.log(result);
+          if (err) {
+            console.log(err);
+            throw err;
+          }
+          const data = {
+            emailid: emailid,
+            mileage_number: mileage_number,
+          };
           res.writeHead(200, {
             "Content-Type": "text/plain",
           });
-          res.end(JSON.stringify(result));
+          res.end(JSON.stringify(data));
         }
       );
     }
