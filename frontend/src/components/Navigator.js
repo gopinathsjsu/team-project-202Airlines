@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 import { REDUCER } from '../utils/consts';
 
 function Navigator() {
   const loginState = useSelector((state) => state.loginReducer);
+  const errorState = useSelector((state) => state.errorReducer);
 
   const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
   const isAdmin = JSON.parse(localStorage.getItem(REDUCER.ISADMIN));
+  const [showAlert, setShowAlert] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     console.log('initial render');
@@ -20,6 +24,20 @@ function Navigator() {
   useEffect(() => {
     console.log('entered change login state');
   }, [loginState]);
+
+  const hideAlert = () => {
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    if (errorState[REDUCER.ERR_MSG] !== '') {
+      setErrorMsg(errorState[REDUCER.ERR_MSG]);
+      setShowAlert(true);
+      hideAlert();
+    }
+  }, [errorState]);
 
   return (
     <div>
@@ -51,6 +69,11 @@ function Navigator() {
             </Container>
           </Navbar>
         </Row>
+        {showAlert && (
+          <div style={{ position: 'absolute', bottom: '10px', zIndex: '2' }}>
+            <Alert variant="danger">{errorMsg}</Alert>
+          </div>
+        )}
       </Container>
     </div>
   );

@@ -25,14 +25,14 @@ function Signin() {
   const { customerLogin } = bindActionCreators(actionCreators, dispatch);
 
   Axios.defaults.withCredentials = true;
-  const login = async (event) => {
+  const login = (event) => {
     event.preventDefault();
     const data = {
       emailid,
       password,
     };
-    try {
-      await Axios.post(`${backendServer}/signinData`, data).then((response) => {
+    post('/signinData', data)
+      .then((response) => {
         if (response.status === 200) {
           localStorage.setItem(REDUCER.SIGNEDIN, true);
           customerLogin();
@@ -40,10 +40,23 @@ function Signin() {
         } else {
           console.log('error in serverside');
         }
+      })
+      .catch(() => {
+        setLoginStatus(false);
       });
-    } catch (error) {
-      setLoginStatus(false);
-    }
+    // try {
+    //   await post(`${backendServer}/signinData`, data).then((response) => {
+    //     if (response.status === 200) {
+    //       localStorage.setItem(REDUCER.SIGNEDIN, true);
+    //       customerLogin();
+    //       setLoginStatus(true);
+    //     } else {
+    //       console.log('error in serverside');
+    //     }
+    //   });
+    // } catch (error) {
+    //   setLoginStatus(false);
+    // }
   };
 
   if (loginStatus) {

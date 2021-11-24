@@ -3,6 +3,7 @@ import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 import { Navigate } from 'react-router';
 import { get } from '../utils/serverCall';
+import { BOOKING } from '../utils/consts';
 
 // TODO : disable next button if all seats are not selected
 // TODO : display cost on screen
@@ -36,9 +37,14 @@ function SeatMap() {
 
   const [seatData, setSeatData] = useState(defaultSeatData);
   const [bookedSeats, setBookedSeats] = useState([]);
+  const [next, setNext] = useState(false);
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   useEffect(() => {
-    get('/getSeatInfo', { flight_id: 100 }).then((res) => {
+    if (localStorage.getItem(BOOKING.SEATS)) {
+      setSelectedSeats(JSON.parse(localStorage.getItem(BOOKING.SEATS)));
+    }
+    get('/getSeatInfo', { flight_id: flightDetails.flight_id }).then((res) => {
       console.log(res);
       setSeatData(res.seatInfo[0]);
       const booked = res.bookedSeats.map((each) => each.seatId);
@@ -49,10 +55,7 @@ function SeatMap() {
   const noOfTravellers = flightDetails.travellers;
 
   // const bookedSeats = ['1A', '1E', '10D', '8E'];
-
   // const [seatStatus, setSeatStatus] = useState([]);
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
 
   const seatClickHandler = (e) => {
     const seatId = e.currentTarget.getAttribute('seatid');
@@ -60,17 +63,29 @@ function SeatMap() {
       if (prev.indexOf(seatId) > -1) {
         const temp = [...prev];
         temp.splice(temp.indexOf(seatId), 1);
+        localStorage.setItem(BOOKING.SEATS, JSON.stringify([...temp]));
         return [...temp];
       }
       if (prev.length >= noOfTravellers) {
         const temp = [...prev];
         temp.shift();
+        localStorage.setItem(BOOKING.SEATS, JSON.stringify([...temp, seatId]));
         return [...temp, seatId];
       }
+      localStorage.setItem(BOOKING.SEATS, JSON.stringify([...prev, seatId]));
       return [...prev, seatId];
     });
     // console.log(e.currentTarget.getAttribute("seatid"));
   };
+
+  useEffect(() => {
+    // localStorage.setItem(BOOKING.SEATS, JSON.stringify(selectedSeats));
+    if (parseInt(noOfTravellers, 10) === selectedSeats.length) {
+      setNext(true);
+    } else {
+      setNext(false);
+    }
+  }, [selectedSeats]);
 
   const setClickHandler = (id) => {
     if (bookedSeats.indexOf(id) > -1) {
@@ -203,6 +218,13 @@ function SeatMap() {
     <>
       <div>{rows}</div>
       <div>{`$${totalCost()}`}</div>
+      <div>
+        {next && (
+          <button type="button" className="btn btn-primary me-auto col-sm-2">
+            Continue
+          </button>
+        )}
+      </div>
     </>
   );
 }
