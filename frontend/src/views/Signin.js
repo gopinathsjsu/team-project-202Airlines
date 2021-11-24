@@ -33,13 +33,9 @@ function Signin() {
     };
     post('/signinData', data)
       .then((response) => {
-        if (response.status === 200) {
-          localStorage.setItem(REDUCER.SIGNEDIN, true);
-          customerLogin();
-          setLoginStatus(true);
-        } else {
-          console.log('error in serverside');
-        }
+        localStorage.setItem(REDUCER.SIGNEDIN, true);
+        customerLogin();
+        setLoginStatus(true);
       })
       .catch(() => {
         setLoginStatus(false);
