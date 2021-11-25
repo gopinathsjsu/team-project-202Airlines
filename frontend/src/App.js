@@ -57,7 +57,7 @@ function App() {
           <Route path="/seatmap" exact>
             <SeatMap />
           </Route>
-          <Route path="/flightList/:details" exact>
+          <Route path="/flightList" exact>
             <FlightList />
           </Route>
           <Route path="/adminHome" exact>
@@ -66,10 +66,10 @@ function App() {
           <Route path="/adminNewFlight" exact>
             <AdminAddFlight />
           </Route>
-          <Route path="/flightInfo/:details" exact>
+          <Route path="/flightInfo" exact>
             <FlightInfo />
           </Route>
-          <Route path="/travellerDetails/:details" exact>
+          <Route path="/travellerDetails" exact>
             <TravellerDetails />
           </Route>
           <Route path="/paymentGateway" exact>
@@ -80,6 +80,7 @@ function App() {
           </Route>
           <Route path="/flightDateUpdate/:details" exact>
             <FlightDateUpdate />
+          </Route>
           <Route path="/bookingSummary" exact>
             <Summary />
           </Route>

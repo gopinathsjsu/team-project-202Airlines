@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import moment from 'moment';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import flightLogo from '../images/flightlogo.png';
 import backendServer from '../webConfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBooking } from '../reducers/actions';
 
 let rows = [];
 
@@ -11,13 +13,11 @@ function FlightList() {
   Axios.defaults.withCredentials = true;
   const [loading, setLoading] = useState(true);
   const history = useHistory();
-
-  const { details } = useParams();
-  const flightSearchDetails = JSON.parse(decodeURIComponent(details));
+  const dispatch = useDispatch();
+  const flightSearchDetails = useSelector((state) => state.bookingReducer);
 
   useEffect(() => {
     Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {
-      console.log(res);
       rows = res.data;
       setLoading(false);
     });
@@ -41,7 +41,8 @@ function FlightList() {
       price,
       miles,
     };
-    history.push(`/flightInfo/${encodeURIComponent(JSON.stringify(selectedFlight))}`);
+    history.push(`/flightInfo`);
+    dispatch(updateBooking(selectedFlight));
   };
 
   return (

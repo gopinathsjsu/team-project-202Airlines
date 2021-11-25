@@ -1,21 +1,22 @@
 import React from 'react';
 import Axios from "axios";
 import moment from 'moment';
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBooking } from '../reducers/actions';
 
-let rows = [];
 
 export default function FlightInfo() {
 
     Axios.defaults.withCredentials = true;
     const history = useHistory();
-
-    let { details } = useParams();
-    let selectedFlightDetails = JSON.parse(decodeURIComponent(details));
+    const dispatch = useDispatch();
+    let selectedFlightDetails = useSelector((state) => state.bookingReducer);
     let displayDate = moment(selectedFlightDetails.flight_date).format('MMMM Do, YYYY');;
 
     const travellerInfo = (res) => {
-        history.push("/travellerDetails/" + encodeURIComponent(JSON.stringify(selectedFlightDetails)));
+        history.push(`/travellerDetails`);
+        dispatch(updateBooking(selectedFlightDetails));
     }
 
 

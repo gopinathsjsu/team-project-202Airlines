@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateBooking } from '../reducers/actions';
 
 export default function BookFlight() {
   const history = useHistory();
@@ -12,11 +14,12 @@ export default function BookFlight() {
     travellers: '',
     flight_class: 'Economy',
   };
-
+  const dispatch = useDispatch();
   const [flightDetails, setFlightDetails] = useState(defaultValues);
 
-  const getFlight = (event) => {
-    history.push(`/flightList/${encodeURIComponent(JSON.stringify(flightDetails))}`);
+  const getFlight = () => {
+    history.push("/flightList");
+    dispatch(updateBooking(flightDetails));
   };
 
   return (
