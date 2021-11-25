@@ -17,14 +17,37 @@ export default function BookFlight() {
   };
   const dispatch = useDispatch();
   const [flightDetails, setFlightDetails] = useState(defaultValues);
+  const [alertMessage, setAlertMessage] = useState("");
 
-  const getFlight = () => {
-    history.push("/flightList");
-    dispatch(updateBooking(flightDetails));
+
+  const getFlight = (e) => {
+    e.preventDefault();
+
+    if(flightDetails.flying_from === flightDetails.flying_to){
+      setAlertMessage("Select different from and to airport!");
+    } else if(flightDetails.flying_from === "") {
+      setAlertMessage("Select From airport!");
+    } else if(flightDetails.flying_to === "") {
+      setAlertMessage("Select To airport!");
+    } else if(flightDetails.flight_date === "") {
+      setAlertMessage("Select valid date!");
+    } else if(flightDetails.travellers === "") {
+      setAlertMessage("Select number of travellers!");
+    }else if(flightDetails.flying_from !== "" && flightDetails.flying_to !== "" 
+    && flightDetails.flight_date !== "" && flightDetails.travellers !== ""){
+      history.push("/flightList");
+      dispatch(updateBooking(flightDetails));
+    }
   };
 
   return (
     <form className="flight-book-form">
+      {alertMessage && (
+                <div className="alert alert-danger" role="alert">
+                  {alertMessage}
+                </div>
+              )}
+      
       <div className="booking-form-box">
         <div
           className="radio-btn"
