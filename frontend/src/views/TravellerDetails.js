@@ -221,7 +221,7 @@ export default function TravellerDetails() {
   };
 
   return (
-    <div>
+    <div className="">
       {alertMessage && (
           <div className="alert alert-danger" role="alert">
             {alertMessage}

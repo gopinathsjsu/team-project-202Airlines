@@ -21,7 +21,7 @@ export default function FlightInfo() {
 
 
     return(
-        <div className="details-container font-weight-bold">
+        <div className="details-container font-weight-bold flight-background-container">
             <br/>
             <div>
                 <h3 className="text-center">REVIEW TRIP SUMMARY</h3>
