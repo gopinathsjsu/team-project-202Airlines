@@ -170,6 +170,11 @@
   font-size: 5rem;
 }
 
+.required-field:after {
+  content:" *";
+  color: red;
+}
+
 .btn-default {
   width: 5%;
   padding: 1px 0;
