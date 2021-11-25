@@ -47,7 +47,6 @@ export default function BookFlight() {
           {alertMessage}
         </div>
       )}
-      
       <div className="booking-form-box">
         <div
           className="radio-btn"
