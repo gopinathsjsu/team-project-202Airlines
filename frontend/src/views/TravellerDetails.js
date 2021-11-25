@@ -10,9 +10,11 @@ export default function TravellerDetails() {
 
   const dispatch = useDispatch();
   const flightDetails = useSelector((state) => state.bookingReducer);
-  const travelerInfo = [];
+  
+  const travelersList = [];
   for (let i = 1; i <= flightDetails.travellers; i++) {
-    travelerInfo.push({
+    travelersList.push({
+      traveler: i,
       firstName: '',
       middleName: '',
       lastName: '',
@@ -22,10 +24,11 @@ export default function TravellerDetails() {
       nationality: '',
     });
   }
+  const [travelerInfo, setTravellersInfo] = useState(travelersList);
   const [alertMessage, setAlertMessage] = useState("");
   const travellers = [];
 
-  for (let i = 0; i < travelerInfo.length; i++) {
+  for (let i = 0; i < travelersList.length; i++) {
     travellers.push(
         <div className="card m-5">
           <h5 className="card-title m-2">Traveler {i + 1}</h5>
@@ -38,7 +41,15 @@ export default function TravellerDetails() {
                     type="text"
                     placeholder="First Name"
                     onChange={(e) => {
-                      travelerInfo[i].firstName = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            firstName: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   />
                 </div>
@@ -52,7 +63,15 @@ export default function TravellerDetails() {
                     type="text"
                     placeholder="Middle Name"
                     onChange={(e) => {
-                      travelerInfo[i].middleName = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            middleName: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   />
                 </div>
@@ -68,7 +87,15 @@ export default function TravellerDetails() {
                     type="text"
                     placeholder="Last Name"
                     onChange={(e) => {
-                      travelerInfo[i].lastName = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            lastName: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   />
                 </div>
@@ -82,7 +109,15 @@ export default function TravellerDetails() {
                     type="number"
                     placeholder="Age"
                     onChange={(e) => {
-                      travelerInfo[i].age = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            age: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   />
                 </div>
@@ -98,7 +133,15 @@ export default function TravellerDetails() {
                     className="form-control select-date"
                     placeholder="YYYY-MM-DD"
                     onChange={(e) => {
-                      travelerInfo[i].dateOfBirth = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            dateOfBirth: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   />
                 </div>
@@ -111,7 +154,15 @@ export default function TravellerDetails() {
                   <select
                     className="form-control"
                     onChange={(e) => {
-                      travelerInfo[i].gender = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            gender: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   >
                     <option>Gender</option>
@@ -131,7 +182,15 @@ export default function TravellerDetails() {
                     type="text"
                     placeholder="Nationality"
                     onChange={(e) => {
-                      travelerInfo[i].nationality = e.target.value;
+                      setTravellersInfo([...travelerInfo].map(object => {
+                        if(object.traveler == i+1) {
+                          return {
+                            ...object,
+                            nationality: e.target.value
+                          }
+                        }
+                        else return object;
+                      }))
                     }}
                   />
                 </div>
