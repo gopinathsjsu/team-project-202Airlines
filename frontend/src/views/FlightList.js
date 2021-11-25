@@ -6,6 +6,7 @@ import flightLogo from '../images/flightlogo.png';
 import backendServer from '../webConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
+import { AIRPORTS } from '../utils/consts';
 
 let rows = [];
 
@@ -15,6 +16,7 @@ function FlightList() {
   const history = useHistory();
   const dispatch = useDispatch();
   const flightSearchDetails = useSelector((state) => state.bookingReducer);
+  const flightDate = moment(flightSearchDetails.flight_date).format('MMMM Do YYYY');
 
   useEffect(() => {
     Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {
@@ -49,14 +51,35 @@ function FlightList() {
     <div className="container flight-info">
       <div className="row">
         <div className="col-3" />
-        <div className="col-6 row display-text">
-          <div className="col-4 text-center">{flightSearchDetails.flying_from}</div>
+        <div className="col-6 row">
+          <div className="col-4 text-center">
+            <div className="display-text">{flightSearchDetails.flying_from}</div>
+            {
+              AIRPORTS.map((data, key)=>{
+                if(data.key === flightSearchDetails.flying_from)
+                  return (<label key={key}>{data.value}</label>)
+              })
+            }
+          </div>
           <div className="col-4 text-center">
             <img src={flightLogo} alt=" " width="100" height="100" />
           </div>
-          <div className="col-4 text-center">{flightSearchDetails.flying_to}</div>
+          <div className="col-4 text-center">
+            <div className="display-text">{flightSearchDetails.flying_to}</div>
+            {
+              AIRPORTS.map((data, key)=>{
+                if(data.key === flightSearchDetails.flying_to)
+                  return (<label key={key}>{data.value}</label>)
+              })
+            }
+          </div>
         </div>
         <div className="col-3" />
+      </div>
+      <div className="row">
+        <div className="col text-center">
+          {flightDate}
+        </div>
       </div>
       <br />
       <br />

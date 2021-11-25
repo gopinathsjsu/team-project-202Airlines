@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
+import { AIRPORTS } from '../utils/consts';
 
 export default function BookFlight() {
   const history = useHistory();
@@ -39,16 +40,26 @@ export default function BookFlight() {
 
         <div className="booking-form">
             <label> Flying From </label>
-            <input type="text" className="form-control book" placeholder="Enter Airport Code" required
-                   onChange={(e) => {
-                    setFlightDetails({ ...flightDetails, flying_from: e.target.value });
-                   }}/>
+            <select className="combobox form-control book"
+                    onChange={(e) => {
+                      setFlightDetails({ ...flightDetails, flying_from: e.target.value });
+                    }}>
+                <option value="">Enter Airport</option>
+                {AIRPORTS.map((data, key)=>{
+                    return (<option key={key} value={data.key}>{data.value}</option>)
+                })}
+            </select>
 
             <label> Flying To </label>
-            <input type="text" className="form-control book" placeholder="Enter Airport Code" required
+            <select className="combobox form-control book"
                     onChange={(e) => {
                       setFlightDetails({ ...flightDetails, flying_to: e.target.value });
-                    }}/>
+                    }}>
+                <option value="">Enter Airport</option>
+                {AIRPORTS.map((data, key)=>{
+                    return (<option key={key} value={data.key}>{data.value}</option>)
+                })}
+            </select>
 
             <div className="input-grp">
               <label> Departing </label>
