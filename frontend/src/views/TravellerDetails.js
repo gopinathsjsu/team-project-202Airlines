@@ -1,7 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
-import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
 
 export default function TravellerDetails() {
@@ -9,8 +9,7 @@ export default function TravellerDetails() {
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const { details } = useParams();
-  const flightDetails = JSON.parse(decodeURIComponent(details));
+  const flightDetails = useSelector((state) => state.bookingReducer);
   const travelerInfo = [];
   for (let i = 1; i <= flightDetails.travellers; i++) {
     travelerInfo.push({
