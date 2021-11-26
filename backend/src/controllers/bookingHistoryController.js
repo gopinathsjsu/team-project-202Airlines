@@ -104,12 +104,11 @@ const updatePassport = (req, res) => {
   );
 };
 
-
 const createBooking = (req, res) => {
   const body = req.body;
   const data = {
     status: "Booked",
-    booking_date: Date.now(),
+    booking_date: new Date(),
     flight_id: body.flight_id,
     customer_id: req.session.user.customer_id,
     traveller_cnt: body.travellers,
