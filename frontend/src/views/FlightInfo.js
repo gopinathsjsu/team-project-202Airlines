@@ -21,7 +21,7 @@ export default function FlightInfo() {
 
 
     return(
-        <div className="details-container font-weight-bold">
+        <div className="details-container font-weight-bold flight-background-container">
             <br/>
             <div>
                 <h3 className="text-center">REVIEW TRIP SUMMARY</h3>
@@ -77,20 +77,15 @@ export default function FlightInfo() {
                         </div>
                     </div>
                 </div>
-                <br/><br/>
-                <br/><br/>
-                <br/><br/>
-                <br/><br/>
-                <br/><br/>
-                <br/><br/>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-4"></div>
-
-                <button type="button" className="btn btn-primary  col-sm-4" onClick={travellerInfo}>Continue</button>
-                <div className="col-sm-4"></div>
+                <br/>
+                <br/>
+                <div className="row mt-5">
+                    <div className="col-sm-4"></div>
+                    <button type="button" className="btn btn-primary  col-sm-4" onClick={travellerInfo}>Continue</button>
+                    <div className="col-sm-4"></div>
+                </div>
             </div>
         </div>
-       
          )
 
 }

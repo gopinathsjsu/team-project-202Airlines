@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
+import { AIRPORTS } from '../utils/consts';
 
 export default function BookFlight() {
   const history = useHistory();
@@ -16,14 +17,36 @@ export default function BookFlight() {
   };
   const dispatch = useDispatch();
   const [flightDetails, setFlightDetails] = useState(defaultValues);
+  const [alertMessage, setAlertMessage] = useState("");
 
-  const getFlight = () => {
-    history.push("/flightList");
-    dispatch(updateBooking(flightDetails));
+
+  const getFlight = (e) => {
+    e.preventDefault();
+
+    if(flightDetails.flying_from === flightDetails.flying_to){
+      setAlertMessage("Select different from and to airport!");
+    } else if(flightDetails.flying_from === "") {
+      setAlertMessage("Select From airport!");
+    } else if(flightDetails.flying_to === "") {
+      setAlertMessage("Select To airport!");
+    } else if(flightDetails.flight_date === "") {
+      setAlertMessage("Select valid date!");
+    } else if(flightDetails.travellers === "") {
+      setAlertMessage("Select number of travellers!");
+    }else if(flightDetails.flying_from !== "" && flightDetails.flying_to !== "" 
+    && flightDetails.flight_date !== "" && flightDetails.travellers !== ""){
+      history.push("/flightList");
+      dispatch(updateBooking(flightDetails));
+    }
   };
 
   return (
     <form className="flight-book-form">
+      {alertMessage && (
+        <div className="alert alert-danger" role="alert">
+          {alertMessage}
+        </div>
+      )}
       <div className="booking-form-box">
         <div
           className="radio-btn"
@@ -38,20 +61,30 @@ export default function BookFlight() {
         </div>
 
         <div className="booking-form">
-            <label> Flying From </label>
-            <input type="text" className="form-control book" placeholder="Enter Airport Code" required
-                   onChange={(e) => {
-                    setFlightDetails({ ...flightDetails, flying_from: e.target.value });
-                   }}/>
+            <label className="required-field"> Flying From </label>
+            <select className="combobox form-control book"
+                    onChange={(e) => {
+                      setFlightDetails({ ...flightDetails, flying_from: e.target.value });
+                    }}>
+                <option value="">Enter Airport</option>
+                {AIRPORTS.map((data, key)=>{
+                    return (<option key={key} value={data.key}>{data.value}</option>)
+                })}
+            </select>
 
-            <label> Flying To </label>
-            <input type="text" className="form-control book" placeholder="Enter Airport Code" required
+            <label className="required-field"> Flying To </label>
+            <select className="combobox form-control book"
                     onChange={(e) => {
                       setFlightDetails({ ...flightDetails, flying_to: e.target.value });
-                    }}/>
+                    }}>
+                <option value="">Enter Airport</option>
+                {AIRPORTS.map((data, key)=>{
+                    return (<option key={key} value={data.key}>{data.value}</option>)
+                })}
+            </select>
 
             <div className="input-grp">
-              <label> Departing </label>
+              <label className="required-field"> Departing </label>
               <input type="date" className="form-control book select-date" required
                 onChange={(e) => {
                 setFlightDetails({ ...flightDetails, flight_date: e.target.value });
@@ -60,7 +93,7 @@ export default function BookFlight() {
           </div>
 
             <div className="input-grp">
-              <label> Travellers </label>
+              <label className="required-field"> Travellers </label>
               <input type="number" className="form-control book" min="1" step="1" required
                 onChange={(e) => {
                 setFlightDetails({ ...flightDetails, travellers: e.target.value });
