@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import backendServer from '../webConfig';
 import '../css/index.css';
+import { isAdmin } from '../utils/checkSignin';
 
 function AdminAddFlight() {
   const [airptCode, setAirptCode] = useState([]);
   const [errMsg, setErrMsg] = useState('');
+
+  if (!isAdmin()) {
+    return <Redirect to="/home" />;
+  }
 
   useEffect(() => {
     Axios.get(`${backendServer}/getAirportCode`)

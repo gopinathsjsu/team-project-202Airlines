@@ -12,6 +12,12 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         [REDUCER.SIGNEDIN]: true,
       };
+    case ACTION.ADMIN_SIGIN:
+      return {
+        ...state,
+        [REDUCER.SIGNEDIN]: true,
+        [REDUCER.ISADMIN]: true,
+      };
     case ACTION.RESET:
       return { ...initialState };
     default:
