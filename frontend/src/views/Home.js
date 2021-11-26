@@ -1,17 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import flighLogo from '../images/flight.png';
 import mytripLogo from '../images/mytrip.png';
 import mileageLogo from '../images/mileage.png';
 import useLoginValidate from '../components/Validate';
 import redirectLogin from '../components/RedirectLogin';
+import { REDUCER } from '../utils/consts';
 
 function Home() {
   const { loading, userData } = useLoginValidate();
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
+  const isAdmin = JSON.parse(localStorage.getItem(REDUCER.ISADMIN));
   console.log(userData);
   // if (!userData.email_id) {
   //   return redirectLogin();
   // }
+  if (isAdmin) {
+    return <Redirect to="/adminHome" />;
+  }
   return (
     <div className="shoe-container mx-auto">
       <div className="container">

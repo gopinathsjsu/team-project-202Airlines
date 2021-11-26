@@ -10,6 +10,7 @@ export const REDUCER = {
 
 export const ACTION = {
   CUSTOMER_SIGIN: 'CUSTOMER',
+  ADMIN_SIGIN: 'ADMIN',
   RESET: 'RESET',
   SHOWERROR: 'ERROR',
   BOOKING: 'BOOKING',
