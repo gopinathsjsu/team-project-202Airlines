@@ -8,22 +8,24 @@ import { useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import { REDUCER } from '../utils/consts';
 import { get } from '../utils/serverCall';
+import { isAdmin, isSignedIn } from '../utils/checkSignin';
 
 function Navigator() {
   const loginState = useSelector((state) => state.loginReducer);
   const errorState = useSelector((state) => state.errorReducer);
 
-  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
-  const isAdmin = JSON.parse(localStorage.getItem(REDUCER.ISADMIN));
+  const [signedIn, setSignedIn] = useState(isSignedIn());
+  const [admin, setAdmin] = useState(isAdmin());
   const [showAlert, setShowAlert] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    if (isSignedIn) {
+    if (signedIn) {
       get(`/getLogin`).then((response) => {
         if (response.loggedIn === true) {
-          const { email, customer } = response.data.user;
         } else {
+          setSignedIn(false);
+          setAdmin(false);
           localStorage.clear();
         }
       });
@@ -31,6 +33,8 @@ function Navigator() {
   }, []);
 
   useEffect(() => {
+    setSignedIn(isSignedIn());
+    setAdmin(isAdmin());
     console.log('entered change login state');
   }, [loginState]);
 
@@ -55,21 +59,21 @@ function Navigator() {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>MY-AIRLINE</Navbar.Brand>
-              {!isAdmin && (
+              {!admin && (
                 <Nav className="me-auto">
                   <Link to="/home" className="nav-link">
                     HOME
                   </Link>
                 </Nav>
               )}
-              {isSignedIn && isAdmin && (
+              {signedIn && admin && (
                 <Nav className="me-auto">
                   <Link to="/adminHome" className="nav-link">
                     HOME
                   </Link>
                 </Nav>
               )}
-              {isSignedIn && isAdmin && (
+              {signedIn && admin && (
                 <Nav className="me-auto">
                   <Link to="/adminNewFlight" className="nav-link">
                     Add Flight
@@ -77,14 +81,14 @@ function Navigator() {
                 </Nav>
               )}
 
-              {!isSignedIn && (
+              {!signedIn && (
                 <Nav>
                   <Link to="/signin" className="nav-link">
                     SIGN IN
                   </Link>
                 </Nav>
               )}
-              {isSignedIn && (
+              {signedIn && (
                 <Nav>
                   <Link to="/signout" className="nav-link">
                     SIGN OUT
