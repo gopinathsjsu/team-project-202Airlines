@@ -7,6 +7,7 @@ import backendServer from '../webConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
 import { AIRPORTS } from '../utils/consts';
+import { REDUCER } from '../utils/consts';
 
 
 
@@ -19,6 +20,7 @@ function FlightList() {
   const [flightDetails, setFlightDetails] = useState(flightSearchDetails);
   const [rows, setFlightList] = useState([]);
   const flightDate = moment(flightSearchDetails.flight_date).format('MMMM Do YYYY');
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
   useEffect(() => {
     Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {
@@ -55,6 +57,14 @@ function FlightList() {
     history.push(`/flightInfo`);
     dispatch(updateBooking(selectedFlight));
   };
+
+  const returnToSignIn = () => {
+    history.push("/signin");
+  }
+
+  if (!isSignedIn){
+    returnToSignIn();
+  }
 
   return (
     <div className="container flight-info flight-background-container">

@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
+import { REDUCER } from '../utils/consts';
 
 
 export default function FlightInfo() {
@@ -12,12 +13,21 @@ export default function FlightInfo() {
     const history = useHistory();
     const dispatch = useDispatch();
     let selectedFlightDetails = useSelector((state) => state.bookingReducer);
-    let displayDate = moment(selectedFlightDetails.flight_date).format('MMMM Do, YYYY');;
+    let displayDate = moment(selectedFlightDetails.flight_date).format('MMMM Do, YYYY');
+    const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
     const travellerInfo = (res) => {
         history.push(`/travellerDetails`);
         dispatch(updateBooking(selectedFlightDetails));
     }
+
+    const returnToSignIn = () => {
+        history.push("/signin");
+      }
+    
+      if (!isSignedIn){
+        returnToSignIn();
+      }
 
 
     return(

@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
+import { REDUCER } from '../utils/consts';
 
 export default function TravellerDetails() {
   Axios.defaults.withCredentials = true;
@@ -27,6 +28,7 @@ export default function TravellerDetails() {
   const [travelerInfo, setTravellersInfo] = useState(travelersList);
   const [alertMessage, setAlertMessage] = useState("");
   const travellers = [];
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
   for (let i = 0; i < travelersList.length; i++) {
     travellers.push(
@@ -219,6 +221,14 @@ export default function TravellerDetails() {
       dispatch(updateBooking(flightDetails));
     }
   };
+
+  const returnToSignIn = () => {
+    history.push("/signin");
+  }
+
+  if (!isSignedIn){
+    returnToSignIn();
+  }
 
   return (
     <div className="">
