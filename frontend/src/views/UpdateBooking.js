@@ -2,9 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import backendServer from '../webConfig';
+import { updateBooking } from '../reducers/actions';
 
 function UpdateBooking() {
+  const dispatch = useDispatch();
   const [bookingHistory, setBookingHistory] = useState([]);
   const [passport, setPassport] = useState('');
   const { id } = useParams();
@@ -22,6 +25,9 @@ function UpdateBooking() {
         flying_from: `${response.data[0].src}`,
         flying_to: `${response.data[0].dst}`,
         flight_date: `${response.data[0].dep_date}`,
+        travellers: `${response.data[0].traveller_cnt}`,
+        flight_class: `${response.data[0].class}`,
+        isUpdateMode: 1,
       });
     });
   };
@@ -41,7 +47,9 @@ function UpdateBooking() {
 
   const getFlight = (event) => {
     console.log('data for update', flightDetails);
-    history.push(`/updateflightList/${encodeURIComponent(JSON.stringify(flightDetails))}`);
+    // history.push(`/updateflightList/${encodeURIComponent(JSON.stringify(flightDetails))}`);
+    history.push('/flightList');
+    dispatch(updateBooking(flightDetails));
   };
 
   useEffect(() => {

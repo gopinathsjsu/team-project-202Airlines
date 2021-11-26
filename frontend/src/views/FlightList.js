@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import flightLogo from '../images/flightlogo.png';
 import backendServer from '../webConfig';
-import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
-import { AIRPORTS } from '../utils/consts';
-import { REDUCER } from '../utils/consts';
-
-
+import { AIRPORTS, REDUCER } from '../utils/consts';
 
 function FlightList() {
   Axios.defaults.withCredentials = true;
@@ -23,6 +20,7 @@ function FlightList() {
   const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
   useEffect(() => {
+    console.log(flightSearchDetails);
     Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {
       setFlightList(res.data, rows);
       setLoading(false);
@@ -30,11 +28,11 @@ function FlightList() {
   }, []);
 
   const getFlights = () => {
-      Axios.post(`${backendServer}/flightList`, flightDetails).then((res) => {
-        setFlightList(res.data, rows);
-        setLoading(false);
-      });
-  }
+    Axios.post(`${backendServer}/flightList`, flightDetails).then((res) => {
+      setFlightList(res.data, rows);
+      setLoading(false);
+    });
+  };
 
   const reviewFlight = (res) => {
     const { flight_date, flying_from, flying_to, travellers, flight_class, book_with } =
@@ -59,10 +57,10 @@ function FlightList() {
   };
 
   const returnToSignIn = () => {
-    history.push("/signin");
-  }
+    history.push('/signin');
+  };
 
-  if (!isSignedIn){
+  if (!isSignedIn) {
     returnToSignIn();
   }
 
@@ -73,32 +71,26 @@ function FlightList() {
         <div className="col-6 row">
           <div className="col-4 text-center">
             <div className="display-text">{flightSearchDetails.flying_from}</div>
-            {
-              AIRPORTS.map((data, key)=>{
-                if(data.key === flightSearchDetails.flying_from)
-                  return (<label key={key}>{data.value}</label>)
-              })
-            }
+            {AIRPORTS.map((data, key) => {
+              if (data.key === flightSearchDetails.flying_from)
+                return <label key={key}>{data.value}</label>;
+            })}
           </div>
           <div className="col-4 text-center mt-4">
             <img src={flightLogo} alt="->" width="100" height="100" />
           </div>
           <div className="col-4 text-center">
             <div className="display-text">{flightSearchDetails.flying_to}</div>
-            {
-              AIRPORTS.map((data, key)=>{
-                if(data.key === flightSearchDetails.flying_to)
-                  return (<label key={key}>{data.value}</label>)
-              })
-            }
+            {AIRPORTS.map((data, key) => {
+              if (data.key === flightSearchDetails.flying_to)
+                return <label key={key}>{data.value}</label>;
+            })}
           </div>
         </div>
         <div className="col-3" />
       </div>
       <div className="row">
-        <div className="col text-center">
-          {flightDate}
-        </div>
+        <div className="col text-center">{flightDate}</div>
       </div>
       <br />
       <hr />
@@ -153,22 +145,27 @@ function FlightList() {
         </div>
       ) : (
         <div>
-          <h2 className="text-danger text-center">No Flights Are Available for the Selected dates</h2>
+          <h2 className="text-danger text-center">
+            No Flights Are Available for the Selected dates
+          </h2>
           <div className="row">
-            <div className="col-5"></div>
+            <div className="col-5" />
             <div className="col-2">
               <h6 className="text-center">Select a different date</h6>
-              <input type="date" className="form-control book select-date" required
-                    onChange={(e) => {
-                      setFlightDetails({ ...flightDetails, flight_date: e.target.value });
-                      flightSearchDetails.flight_date = e.target.value;
-                      getFlights();
-                  }}/>
+              <input
+                type="date"
+                className="form-control book select-date"
+                required
+                onChange={(e) => {
+                  setFlightDetails({ ...flightDetails, flight_date: e.target.value });
+                  flightSearchDetails.flight_date = e.target.value;
+                  getFlights();
+                }}
+              />
             </div>
-            <div className="col-5"></div>
+            <div className="col-5" />
           </div>
         </div>
-        
       )}
     </div>
   );
