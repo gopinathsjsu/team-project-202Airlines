@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Nav, Row } from 'react-bootstrap';
+import { Col, Container, Form, Nav, Row } from 'react-bootstrap';
 import { useParams, useHistory, Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from '../utils/serverCall';
@@ -244,7 +244,11 @@ function SeatMap() {
   return (
     <>
       <div>{rows}</div>
-      <div>{`$${totalCost()}`}</div>
+      <div>
+        <Form.Label column sm="2">
+          {`Seat Price : $${totalCost()}`}
+        </Form.Label>
+      </div>
       <div>
         {next && (
           <button type="button" className="btn btn-primary me-auto col-sm-2" onClick={nextPage}>

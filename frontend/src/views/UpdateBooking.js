@@ -28,6 +28,7 @@ function UpdateBooking() {
         travellers: `${response.data[0].traveller_cnt}`,
         flight_class: `${response.data[0].class}`,
         isUpdateMode: 1,
+        booking_id: id,
       });
     });
   };

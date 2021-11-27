@@ -21,7 +21,8 @@ const SQL_BOOKING = {
   CREATE_BOOKING:
     "insert into Booking (status, booking_date, flight_id, customer_id, traveller_cnt, price, milesused, class ) values (?,?,?,?,?,?,?,?)",
   INSERT_TRAVELLERS:
-    "insert into Traveller (name,booking_id, gender, age, seatId) values ?",
+    "insert into Traveller (first,middle,last,nationality,booking_id, gender, age, seatId) values ?",
+  GET_TRAVELLERS: "select * from  Traveller where booking_id = ?",
 };
 
 module.exports = SQL_BOOKING;
