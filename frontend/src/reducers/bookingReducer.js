@@ -17,8 +17,8 @@ const initialState = {
   seats: [],
   seatsPrice: '',
   isUpdateMode: 0, // 0: new booking, 1: update mode
-  total_money: '',
-  total_miles: '',
+  total_money: 0,
+  total_miles: 0,
 };
 
 const bookingReducer = (state = initialState, action) => {

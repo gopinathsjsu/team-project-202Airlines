@@ -120,15 +120,17 @@ const updatePassport = (req, res) => {
 };
 
 const createBooking = (req, res) => {
+  console.log("Entered create booking", req.body);
   const body = req.body;
   const data = {
     status: "Booked",
+    book_with: body.book_with,
     booking_date: new Date(),
     flight_id: body.flight_id,
     customer_id: req.session.user.customer_id,
     traveller_cnt: body.travellers,
-    price: body.seatsPrice + body.price,
-    milesused: 0,
+    price: body.total_money,
+    milesused: body.total_miles,
     class: 0,
   };
   conn.query(SQL_BOOKING.CREATE_BOOKING, Object.values(data), (err, result) => {

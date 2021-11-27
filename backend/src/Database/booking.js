@@ -19,7 +19,7 @@ const SQL_BOOKING = {
   GET_PASSPORT: "Select passportid from Customer where customer_id=?;",
   UPDATE_PASSPORT: "Update Customer set passportid=? where customer_id=?",
   CREATE_BOOKING:
-    "insert into Booking (status, booking_date, flight_id, customer_id, traveller_cnt, price, milesused, class ) values (?,?,?,?,?,?,?,?)",
+    "insert into Booking (status, book_with, booking_date, flight_id, customer_id, traveller_cnt, price, milesused, class ) values (?,?,?,?,?,?,?,?,?)",
   INSERT_TRAVELLERS:
     "insert into Traveller (first,middle,last,nationality,booking_id, gender, age, seatId) values ?",
   GET_TRAVELLERS: "select * from  Traveller where booking_id = ?",

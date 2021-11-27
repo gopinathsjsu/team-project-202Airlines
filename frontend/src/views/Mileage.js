@@ -22,7 +22,6 @@ import useLoginValidate from '../components/Validate';
 import redirectLogin from '../components/RedirectLogin';
 import backendServer from '../webConfig';
 import '../css/App.css';
-// import '../css/Mileage.css';
 
 function Mileage() {
   const history = useHistory();
@@ -39,11 +38,12 @@ function Mileage() {
     p: 4,
   };
   const milesValues = [
-    '2000 miles: ($70.00)',
-    '3000 miles: ($105.00)',
-    '4000 miles: ($140.00)',
-    '5000 miles: ($150.00)',
-    '6000 miles: ($155.00)',
+    '1000 miles: ($100.00)',
+    '2000 miles: ($200.00)',
+    '3000 miles: ($300.00)',
+    '4000 miles: ($400.00)',
+    '5000 miles: ($500.00)',
+    '6000 miles: ($600.00)',
   ];
   const [miles, setMiles] = useState('2000 miles: ($70.00)');
   const [open, setOpen] = React.useState(false);
