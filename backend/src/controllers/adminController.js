@@ -2,10 +2,6 @@ const conn = require("../utils/dbConnector");
 const SQL_ADMIN = require("../Database/admin");
 
 const getProfile = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
   conn.query(SQL_ADMIN.ADMIN_PROFILE, (error, result) => {
     //  console.log(result);
     if (error) {
@@ -19,11 +15,7 @@ const getProfile = (req, res) => {
 };
 
 const getMileage = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
-  const customer_id = req.query.customer_id;
+  const customer_id = req.session.user.customer_id;
   conn.query(SQL_ADMIN.MILEAGE, [customer_id], (error, result) => {
     console.log(result);
     if (error) {
@@ -39,7 +31,7 @@ const getMileage = (req, res) => {
 const addMiles = (req, res) => {
   console.log("Entered");
   console.log(req.body);
-  const customer_id = req.body.customer_id;
+  const customer_id = req.session.user.customer_id;
   const miles = Number(req.body.miles) + Number(req.body.curr_miles);
   console.log(miles);
   conn.query(SQL_ADMIN.ADD_MILES, [miles, customer_id], (error, result) => {

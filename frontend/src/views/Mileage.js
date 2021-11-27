@@ -17,6 +17,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import { REDUCER } from '../utils/consts';
 import useLoginValidate from '../components/Validate';
 import redirectLogin from '../components/RedirectLogin';
 import backendServer from '../webConfig';
@@ -25,6 +26,7 @@ import '../css/App.css';
 
 function Mileage() {
   const history = useHistory();
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
   const style = {
     position: 'absolute',
     top: '50%',
@@ -48,31 +50,27 @@ function Mileage() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { loading, userData } = useLoginValidate();
-  userData.customer_id = 7;
   const [mileageDetails, setmileageDetails] = useState({ name: '', Mileageno: '', Miles: '' });
   // if (!userData.customer_id) {
   //   return redirectLogin();
   // }
   useEffect(async () => {
     console.log(userData.customer_id);
-    await axios
-      .get(`${backendServer}/mileage`, { params: { customer_id: userData.customer_id } })
-      .then((res) => {
-        console.log(res);
-        setmileageDetails((prevState) => ({
-          ...prevState,
-          name: res.data[0].customer_first_name,
-          Mileageno: res.data[0].mileage_plus_number,
-          Miles: res.data[0].total_miles,
-        }));
-      });
+    await axios.get(`${backendServer}/mileage`).then((res) => {
+      console.log(res);
+      setmileageDetails((prevState) => ({
+        ...prevState,
+        name: res.data[0].customer_first_name,
+        Mileageno: res.data[0].mileage_plus_number,
+        Miles: res.data[0].total_miles,
+      }));
+    });
   }, []);
 
   const { name, Mileageno, Miles } = mileageDetails;
   const addMiles = () => {
     const myArray = miles.split(' ');
     const data = {
-      customer_id: 7,
       curr_miles: mileageDetails.Miles,
       miles: myArray[0],
     };
@@ -91,6 +89,14 @@ function Mileage() {
     alert('Miles added successfully');
     handleClose();
   };
+
+  const returnToSignIn = () => {
+    history.push('/signin');
+  };
+
+  if (!isSignedIn) {
+    returnToSignIn();
+  }
 
   return (
     <div className="shoe-container mx-auto">
