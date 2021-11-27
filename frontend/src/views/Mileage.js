@@ -171,6 +171,7 @@ function Mileage() {
             <Button
               style={{ color: '#ffff', backgroundColor: '#0d9cdf', margin: '5px' }}
               type="submit"
+              onClick={handleClose}
             >
               <h6>Close</h6>
             </Button>

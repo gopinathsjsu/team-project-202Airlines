@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
 import { AIRPORTS } from '../utils/consts';
+import { REDUCER } from '../utils/consts';
 
 export default function BookFlight() {
   const history = useHistory();
@@ -18,6 +19,7 @@ export default function BookFlight() {
   const dispatch = useDispatch();
   const [flightDetails, setFlightDetails] = useState(defaultValues);
   const [alertMessage, setAlertMessage] = useState("");
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
 
   const getFlight = (e) => {
@@ -40,7 +42,16 @@ export default function BookFlight() {
     }
   };
 
+  const returnToSignIn = () => {
+    history.push("/signin");
+  }
+
+  if (!isSignedIn){
+    returnToSignIn();
+  }
+
   return (
+
     <form className="flight-book-form">
       {alertMessage && (
         <div className="alert alert-danger" role="alert">
@@ -124,3 +135,4 @@ export default function BookFlight() {
     </form>
   );
 }
+

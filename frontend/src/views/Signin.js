@@ -18,11 +18,12 @@ function Signin() {
   const [emailid, setEmailId] = useState('');
   const history = useHistory();
   const [password, setPassword] = useState('');
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [isCustomer, setIsCustomer] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [failMsg, setFailMsg] = useState('');
 
   const dispatch = useDispatch();
-  const { customerLogin } = bindActionCreators(actionCreators, dispatch);
+  const { adminLogin, customerLogin } = bindActionCreators(actionCreators, dispatch);
 
   Axios.defaults.withCredentials = true;
   const login = (event) => {
@@ -34,12 +35,17 @@ function Signin() {
     post('/signinData', data)
       .then((response) => {
         localStorage.setItem(REDUCER.SIGNEDIN, true);
-        customerLogin();
-        setLoginStatus(true);
+        if (response.isAdmin) {
+          localStorage.setItem(REDUCER.ISADMIN, true);
+          adminLogin();
+          setIsAdmin(true);
+        } else {
+          localStorage.setItem(REDUCER.ISADMIN, false);
+          customerLogin();
+          setIsCustomer(true);
+        }
       })
-      .catch(() => {
-        setLoginStatus(false);
-      });
+      .catch(() => {});
     // try {
     //   await post(`${backendServer}/signinData`, data).then((response) => {
     //     if (response.status === 200) {
@@ -55,9 +61,11 @@ function Signin() {
     // }
   };
 
-  if (loginStatus) {
-    console.log('Entered');
+  if (isCustomer) {
     return <Redirect to="/home" />;
+  }
+  if (isAdmin) {
+    return <Redirect to="/adminHome" />;
   }
 
   return (

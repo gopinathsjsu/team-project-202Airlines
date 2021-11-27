@@ -24,6 +24,21 @@ const getBookingHistory = (req, res) => {
   );
 };
 
+const getTravellers = (req, res) => {
+  conn.query(
+    SQL_BOOKING.GET_TRAVELLERS,
+    [req.query.booking_id],
+    (error, result) => {
+      if (error) {
+        res.status(404).send({ err: error.code });
+        return;
+      } else {
+        res.send(result);
+      }
+    }
+  );
+};
+
 const cancelFlightBooking = (req, res) => {
   conn.query(
     SQL_BOOKING.CANCEL_BOOKING,
@@ -104,12 +119,11 @@ const updatePassport = (req, res) => {
   );
 };
 
-
 const createBooking = (req, res) => {
   const body = req.body;
   const data = {
     status: "Booked",
-    booking_date: Date.now(),
+    booking_date: new Date(),
     flight_id: body.flight_id,
     customer_id: req.session.user.customer_id,
     traveller_cnt: body.travellers,
@@ -127,6 +141,9 @@ const createBooking = (req, res) => {
       travellerInfo = travellerInfo.map((each, index) => {
         let traveller = [];
         traveller.push(each.firstName);
+        traveller.push(each.middleName);
+        traveller.push(each.lastName);
+        traveller.push(each.nationality);
         traveller.push(result.insertId);
         traveller.push(each.gender);
         traveller.push(each.age);
@@ -162,4 +179,5 @@ module.exports = {
   getPassport,
   updatePassport,
   createBooking,
+  getTravellers,
 };

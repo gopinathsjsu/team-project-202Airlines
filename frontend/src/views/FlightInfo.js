@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBooking } from '../reducers/actions';
+import { REDUCER } from '../utils/consts';
 
 export default function FlightInfo() {
   Axios.defaults.withCredentials = true;
@@ -11,14 +12,23 @@ export default function FlightInfo() {
   const dispatch = useDispatch();
   const selectedFlightDetails = useSelector((state) => state.bookingReducer);
   const displayDate = moment(selectedFlightDetails.flight_date).format('MMMM Do, YYYY');
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
   const travellerInfo = (res) => {
     history.push(`/travellerDetails`);
     dispatch(updateBooking(selectedFlightDetails));
   };
 
+  const returnToSignIn = () => {
+    history.push('/signin');
+  };
+
+  if (!isSignedIn) {
+    returnToSignIn();
+  }
+
   return (
-    <div className="details-container font-weight-bold">
+    <div className="details-container font-weight-bold flight-background-container">
       <br />
       <div>
         <h3 className="text-center">REVIEW TRIP SUMMARY</h3>

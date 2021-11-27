@@ -26,7 +26,13 @@ const signin = (req, res) => {
         else if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              setSession(req, res, emailid, result[0].customer_id);
+              setSession(
+                req,
+                res,
+                emailid,
+                result[0].customer_id,
+                result[0].role
+              );
               // res.cookie("cookie", JSON.stringify(result[0].customer_id), {
               //   maxAge: 2 * 60 * 60 * 1000,
               //   httpOnly: false,
@@ -52,14 +58,16 @@ const signin = (req, res) => {
   }
 };
 
-const setSession = (req, res, email_id, customer_id, membership_type) => {
+const setSession = (req, res, email_id, customer_id, role) => {
   req.session.user = {
     email_id: email_id,
     customer_id: customer_id,
+    isAdmin: role === "admin",
   };
   res.send({
     email_id: email_id,
     customer_id: customer_id,
+    isAdmin: role === "admin",
   });
 };
 
