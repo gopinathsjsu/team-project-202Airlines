@@ -9,6 +9,7 @@ const {
   getPassport,
   updatePassport,
   createBooking,
+  getTravellers,
 } = require("./controllers/bookingHistoryController");
 const {
   getFlightList,
@@ -57,5 +58,6 @@ router.route("/getPassport").get(getPassport);
 router.route("/updatePassport").post(updatePassport);
 router.route("/getSeatInfo").get(getSeatInfo);
 router.route("/createBooking").post(createBooking);
+router.route("/getTravellers").get(getTravellers);
 
 module.exports = router;
