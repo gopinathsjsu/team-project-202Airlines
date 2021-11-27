@@ -21,6 +21,7 @@ const SQL_ADMIN = {
       price=?\
       where flight_id=?;",
   GET_AIRPORT_CODE: "Select * from Airport;",
+  ADD_MILES: "UPDATE Airlines.Customer SET total_miles=? where customer_id=?;",
 };
 
 module.exports = SQL_ADMIN;

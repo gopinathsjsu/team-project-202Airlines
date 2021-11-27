@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Divider } from '@material-ui/core';
 import '../css/Checkout.css';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import useLoginValidate from '../components/Validate';
+import { updateBooking } from '../reducers/actions';
 
 export default function Payment() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { loading, userData } = useLoginValidate();
+  const [total_money, settotalmoney] = useState('');
+  const [total_miles, settotalmiles] = useState('');
+  const bookingState = useSelector((state) => state.bookingReducer);
+
+  useEffect(async () => {
+    if (bookingState.book_with === 'Money') {
+      console.log(bookingState);
+      settotalmoney(parseFloat(bookingState.seatsPrice) + parseFloat(12.99));
+      dispatch(updateBooking({ total_money }));
+      console.log(bookingState);
+    } else {
+      console.log(bookingState);
+      settotalmiles(Number(bookingState.miles) + Number(10));
+      dispatch(updateBooking({ total_miles }));
+      console.log(bookingState);
+    }
+    console.log(bookingState);
+  }, []);
   const pay = () => {
     console.log(userData.email_id);
     alert(
@@ -75,11 +96,19 @@ export default function Payment() {
             <div className="payment__item payment__bill__container">
               <div className="payment__item bill__item">
                 <div className="item__name">Seat Price</div>
-                <div className="item__price">$59.99</div>
+                {bookingState.book_with === 'Money' ? (
+                  <div className="item__price">${bookingState.seatsPrice}</div>
+                ) : (
+                  <div className="item__price">{bookingState.miles} Miles</div>
+                )}
               </div>
               <div className="payment__item bill__item">
                 <div className="item__name">Taxes and fees</div>
-                <div className="item__price">$12.99</div>
+                {bookingState.book_with === 'Money' ? (
+                  <div className="item__price">$12.99</div>
+                ) : (
+                  <div className="item__price">10 Miles</div>
+                )}
               </div>
             </div>
             <Divider variant="fullWidth" className="payment__item divider" />
@@ -89,7 +118,11 @@ export default function Payment() {
 
             <div className="payment__item total__container">
               <div className="total__title">Total</div>
-              <div className="total__price">$59.99</div>
+              {bookingState.book_with === 'Money' ? (
+                <div className="total__price">{bookingState.total_money}</div>
+              ) : (
+                <div className="total__price">{bookingState.total_miles} Miles</div>
+              )}
             </div>
           </div>
         </div>

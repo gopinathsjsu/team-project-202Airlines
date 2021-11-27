@@ -36,6 +36,33 @@ const getMileage = (req, res) => {
   });
 };
 
+const addMiles = (req, res) => {
+  console.log("Entered");
+  console.log(req.body);
+  const customer_id = req.body.customer_id;
+  const miles = Number(req.body.miles) + Number(req.body.curr_miles);
+  console.log(miles);
+  conn.query(SQL_ADMIN.ADD_MILES, [miles, customer_id], (error, result) => {
+    if (error) {
+      res.status(404).send({ err: error.code });
+    } else if (result.length == 0) {
+      res.send([]);
+    } else {
+      conn.query(SQL_ADMIN.MILEAGE, [customer_id], (error, result) => {
+        console.log(result);
+        if (error) {
+          res.status(404).send({ err: error.code });
+        } else if (result.length == 0) {
+          res.send([]);
+        } else {
+          res.send(result);
+        }
+      });
+    }
+    console.log(result);
+  });
+};
+
 const getFlights = (req, res) => {
   // if (!req.session.user) {
   //   res.status(404).send({ err: "Invalid user session" });
@@ -157,6 +184,7 @@ const getAirportCode = (req, res) => {
 module.exports = {
   getProfile,
   getMileage,
+  addMiles,
   getFlights,
   getFlightsById,
   addFlights,
