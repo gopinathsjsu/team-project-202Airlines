@@ -129,8 +129,8 @@ const createBooking = (req, res) => {
     flight_id: body.flight_id,
     customer_id: req.session.user.customer_id,
     traveller_cnt: body.travellers,
-    price: body.total_money,
-    milesused: body.total_miles,
+    price: body.finalmoney,
+    milesused: body.finalmiles,
     class: 0,
   };
   conn.query(SQL_BOOKING.CREATE_BOOKING, Object.values(data), (err, result) => {

@@ -73,7 +73,6 @@ export default function TravellerDetails() {
                   index={i}
                   onChange={(e) => {
                     setTravellersInfo((prev) => {
-                      console.log(prev);
                       const update = prev;
                       update[e.target.getAttribute('index')].firstName = e.target.value;
                       return [...update];
@@ -117,7 +116,6 @@ export default function TravellerDetails() {
                   index={i}
                   onChange={(e) => {
                     setTravellersInfo((prev) => {
-                      console.log(prev);
                       const update = prev;
                       update[e.target.getAttribute('index')].lastName = e.target.value;
                       return [...update];

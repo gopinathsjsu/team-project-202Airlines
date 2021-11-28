@@ -23,7 +23,7 @@ export default function Payment() {
         parseFloat(bookingState.seatsPrice) + parseFloat(bookingState.price) + parseFloat(0.0)
       );
     } else {
-      settotalmiles(Number(bookingState.miles) + 10 + Number(0));
+      settotalmiles(Number(bookingState.miles) + Number(bookingState.price) + Number(0));
     }
   }, []);
   useEffect(() => {
@@ -32,16 +32,21 @@ export default function Payment() {
     }
   }, [bookingState]);
 
-  const createBooking = () => {
-    Axios.post(`${backendServer}/createBooking`, bookingState)
+  const createBooking = (booking) => {
+    Axios.post(`${backendServer}/createBooking`, booking)
       .then((response) => {})
       .catch((error) => {});
   };
   const confirmBooking = () => {
-    if (bookingState.book_with === 'Money') dispatch(updateBooking({ total_money }));
-    else dispatch(updateBooking({ total_miles }));
-    createBooking();
-    alert(`Booked successfully!!! \nAn email has been sent to your account'`);
+    let booking;
+    if (bookingState.book_with === 'Money') {
+      booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
+    } else {
+      booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
+    }
+    createBooking(booking);
+
+    alert(`Booked successfully!!! \nAn email has been sent to your account`);
     history.push('/myTrips');
   };
   const returnToSignIn = () => {
@@ -125,7 +130,7 @@ export default function Payment() {
                 {bookingState.book_with === 'Money' ? (
                   <div className="item__price">${bookingState.seatsPrice}</div>
                 ) : (
-                  <div className="item__price">{bookingState.miles} Miles</div>
+                  <div className="item__price">{bookingState.seatsPrice} Miles</div>
                 )}
               </div>
               <div className="payment__item bill__item">
