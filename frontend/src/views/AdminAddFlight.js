@@ -41,6 +41,7 @@ function AdminAddFlight() {
     const seatNo = formData.get('seatNo');
     const mile = formData.get('mile');
     const amount = formData.get('amount');
+    const fltArrDate = formData.get('fltArrDate');
 
     if (src === dst) {
       setErrMsg('Sourcs and Destination airport should be different');
@@ -57,13 +58,14 @@ function AdminAddFlight() {
       no_of_seats: seatNo,
       miles: mile,
       price: amount,
+      arr_date: fltArrDate,
     })
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
           console.log('returned');
           console.log(response.data);
-          //   window.location = '/adminHome';
+          window.location = '/adminHome';
         }
       })
       .catch((err) => {
@@ -73,7 +75,7 @@ function AdminAddFlight() {
   };
 
   return (
-    <div className="flight-book-form">
+    <div className="flight-book-form" style={{ height: '130vh' }}>
       <h2 className="text-center" style={{ marginTop: '20px', color: 'white' }}>
         Add New Flights
       </h2>
@@ -133,12 +135,23 @@ function AdminAddFlight() {
           </div>
           <br />
           <Form.Label>
-            <b style={{ color: 'white' }}>Flight Date</b>
+            <b style={{ color: 'white' }}>Flight Departure Date</b>
           </Form.Label>
           <Form.Control
             className="mb-3 text-primary"
             type="date"
             name="fltDate"
+            required
+            style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+          />
+          <br />
+          <Form.Label>
+            <b style={{ color: 'white' }}>Flight Arrival Date</b>
+          </Form.Label>
+          <Form.Control
+            className="mb-3 text-primary"
+            type="date"
+            name="fltArrDate"
             required
             style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
           />

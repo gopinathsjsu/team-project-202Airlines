@@ -87,20 +87,24 @@ const updateFlightBooking = (req, res) => {
   );
 };
 
-const getPassport = (req, res) => {
-  const customer_id = 1;
-  conn.query(SQL_BOOKING.GET_PASSPORT, [customer_id], (error, result) => {
-    if (error) {
-      res.status(404).send({ err: error.code });
-      return;
-    } else {
-      res.send(result);
-    }
-  });
+const getUserProfile = (req, res) => {
+  if (req.session.user) {
+    const customer_id = req.session.user.customer_id;
+    // console.log(req.session.user.customer_id);
+    conn.query(SQL_BOOKING.GET_USER_PROFILE, [customer_id], (error, result) => {
+      if (error) {
+        res.status(404).send({ err: error.code });
+      } else {
+        res.send(result);
+      }
+    });
+  } else {
+    res.send("User is not logged in");
+  }
 };
 
 const updatePassport = (req, res) => {
-  const customer_id = 1;
+  const customer_id = req.session.user.customer_id;
   // console.log(req.body);
   conn.query(
     SQL_BOOKING.UPDATE_PASSPORT,
@@ -108,7 +112,6 @@ const updatePassport = (req, res) => {
     (error, result) => {
       if (error) {
         res.status(404).send({ err: error.code });
-        return;
       } else if (result.length == 0) {
         res.send([]);
       } else {
@@ -178,7 +181,7 @@ module.exports = {
   getBookingHistory,
   cancelFlightBooking,
   updateFlightBooking,
-  getPassport,
+  getUserProfile,
   updatePassport,
   createBooking,
   getTravellers,

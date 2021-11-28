@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import '../css/App.css';
 import '../css/myTrip.css';
 import Alert from 'react-bootstrap/Alert';
 import moment from 'moment';
 import backendServer from '../webConfig';
+import { REDUCER } from '../utils/consts';
 
 function MyTrip() {
+  const history = useHistory();
   const [toggleState, setToggleState] = useState(1);
   const [bookingHistory, setBookingHistory] = useState([]);
   // const [cancelMode, setCancelMode] = useState(false);
+  const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -21,6 +25,14 @@ function MyTrip() {
     });
   }, []);
   console.log(bookingHistory);
+
+  const returnToSignIn = () => {
+    history.push('/signin');
+  };
+
+  if (!isSignedIn) {
+    returnToSignIn();
+  }
 
   const cancelBookingFullRefund = (id, prices, miles) => {
     if (prices) {
@@ -72,7 +84,7 @@ function MyTrip() {
   };
 
   return (
-    <div className="flight-book-form">
+    <div className="flight-book-form" style={{ height: '200vh' }}>
       <div className="container">
         <div className="bloc-tabs">
           <button
