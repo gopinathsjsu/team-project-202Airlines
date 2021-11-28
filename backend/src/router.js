@@ -6,7 +6,7 @@ const {
   getBookingHistory,
   cancelFlightBooking,
   updateFlightBooking,
-  getPassport,
+  getUserProfile,
   updatePassport,
   createBooking,
   getTravellers,
@@ -56,7 +56,7 @@ router.route("/getFlightsById/:flightId").get(getFlightsById);
 router.route("/addFlights").post(addFlights);
 router.route("/editFlights").post(editFlights);
 router.route("/getAirportCode").get(getAirportCode);
-router.route("/getPassport").get(getPassport);
+router.route("/getUserProfile").get(getUserProfile);
 router.route("/updatePassport").post(updatePassport);
 router.route("/getSeatInfo").get(getSeatInfo);
 router.route("/createBooking").post(createBooking);

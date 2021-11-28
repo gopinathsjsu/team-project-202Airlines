@@ -110,6 +110,7 @@ const addFlights = (req, res) => {
       req.body.no_of_seats,
       req.body.miles,
       req.body.price,
+      req.body.arr_date,
     ],
     (error, result) => {
       // console.log(result);
@@ -135,6 +136,7 @@ const editFlights = (req, res) => {
       req.body.airport_code_src,
       req.body.airport_code_dst,
       req.body.flight_date,
+      req.body.arr_date,
       req.body.start_time,
       req.body.end_time,
       req.body.flight_type,
@@ -144,7 +146,7 @@ const editFlights = (req, res) => {
       req.body.flight_id,
     ],
     (error, result) => {
-      //  console.log(result);
+      // console.log(result);
       if (error) {
         res.status(404).send({ err: error.code });
       } else if (result.length == 0) {
