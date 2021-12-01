@@ -101,7 +101,23 @@ function SeatMap() {
     }
   }, [selectedSeats]);
 
-  const setClickHandler = (id) => {
+  const isBookable = (row) => {
+    if (bookingState.flight_class === 'Economy') {
+      if (row < seatData.businessClass) {
+        return false;
+      }
+      return true;
+    }
+    if (row < seatData.businessClass) {
+      return true;
+    }
+    return false;
+  };
+
+  const setClickHandler = (id, row) => {
+    if (!isBookable(row)) {
+      return null;
+    }
     if (bookedSeats.indexOf(id) > -1) {
       return null;
     }
@@ -134,9 +150,9 @@ function SeatMap() {
     return style;
   };
 
-  const setSeatClass = (id) => {
+  const setSeatClass = (id, row) => {
     let className = 'seatIcon seatBase';
-    if (bookedSeats.indexOf(id) < 0) {
+    if (bookedSeats.indexOf(id) < 0 && isBookable(row)) {
       className += ' seatCursor';
     }
     return className;
@@ -189,19 +205,23 @@ function SeatMap() {
   };
 
   const rows = [];
+
+  const getSeatId = (row, division, col) =>
+    row + 1 + String.fromCharCode(division * seatData.cols + col + 1 + 64);
+
   for (let i = 0; i < seatData.rows; i += 1) {
     const divisions = [];
     for (let j = 0; j < seatData.divisions; j += 1) {
       const columns = [];
       for (let k = 0; k < seatData.cols; k += 1) {
-        const id = i + 1 + String.fromCharCode(j * seatData.cols + k + 1 + 64);
+        const id = getSeatId(i, j, k);
         columns.push(
           <div
             seatid={id}
             info={`${id} : $${generateSeatPrice(i, k, j)}`}
             key={id}
-            onClick={setClickHandler(id)}
-            className={setSeatClass(id)}
+            onClick={setClickHandler(id, i)}
+            className={setSeatClass(id, i)}
             style={setSeatStyle(id, i)}
             data-toggle="tooltip"
             // title={id}
@@ -236,10 +256,10 @@ function SeatMap() {
   if (redirectNextPage) {
     // return <Navigate to="/signin"> </Navigate>;
     // return <Redirect push="true" to="/bookingSummary" />;
-    return <Redirect push="true" to="/paymentGateway" />;
+    return <Redirect push to="/paymentGateway" />;
   }
   if (redirectHomePage) {
-    return <Redirect push="true" to="/bookFlight" />;
+    return <Redirect push to="/bookFlight" />;
   }
 
   return (

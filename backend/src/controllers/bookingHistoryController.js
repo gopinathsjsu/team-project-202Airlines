@@ -145,6 +145,7 @@ const createBooking = (req, res) => {
       let travellerInfo = body.travelerInfo;
       travellerInfo = travellerInfo.map((each, index) => {
         let traveller = [];
+        traveller.push(body.flight_id);
         traveller.push(each.firstName);
         traveller.push(each.middleName);
         traveller.push(each.lastName);

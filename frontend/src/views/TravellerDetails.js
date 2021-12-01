@@ -45,11 +45,11 @@ export default function TravellerDetails() {
         });
       });
     } else {
-      for (let i = 1; i <= flightDetails.travellers; i++) {
-        const travelers = [];
+      const travelers = [];
+      for (let i = 1; i <= JSON.parse(flightDetails.travellers); i++) {
         travelers.push({ ...defaultTraveller, traveler: i });
-        setTravellersInfo(travelers);
       }
+      setTravellersInfo(travelers);
     }
   }, []);
 
