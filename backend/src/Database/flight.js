@@ -9,8 +9,7 @@ const SQL_FLIGHT = {
   GET_SEAT_INFO:
     "Select Airplane.*, SeatPrice.* from Flight natural join Airplane natural join SeatPrice where flight_id = ?",
 
-  GET_BOOKED_SEATS:
-    "Select  seatId  from Booking natural join SeatBooking where flight_id=?",
+  GET_BOOKED_SEATS: "Select  seatId  from Traveller where flight_id=?",
 };
 
 module.exports = SQL_FLIGHT;

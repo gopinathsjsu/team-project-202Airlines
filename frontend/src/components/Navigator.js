@@ -102,7 +102,7 @@ function Navigator() {
           </Navbar>
         </Row>
         {showAlert && (
-          <div style={{ position: 'absolute', bottom: '10px', zIndex: '2' }}>
+          <div style={{ position: 'fixed', bottom: '10px', zIndex: '2' }}>
             <Alert variant="danger">{errorMsg}</Alert>
           </div>
         )}
