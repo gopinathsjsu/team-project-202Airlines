@@ -122,26 +122,12 @@ const updatePassport = (req, res) => {
   );
 };
 
-const createBooking = (req, res) => {
-  console.log("Entered create booking", req.body);
-  const body = req.body;
-  const data = {
-    status: "Booked",
-    book_with: body.book_with,
-    booking_date: new Date(),
-    flight_id: body.flight_id,
-    customer_id: req.session.user.customer_id,
-    traveller_cnt: body.travellers,
-    price: body.finalmoney,
-    milesused: body.finalmiles,
-    class: 0,
-  };
+const newBooking = (data, body, res) => {
   conn.query(SQL_BOOKING.CREATE_BOOKING, Object.values(data), (err, result) => {
     if (err) {
       res.status(404).send({ err: error.code });
       return;
     } else {
-      // const booking_id = result.insertId;
       let travellerInfo = body.travelerInfo;
       travellerInfo = travellerInfo.map((each, index) => {
         let traveller = [];
@@ -154,10 +140,6 @@ const createBooking = (req, res) => {
         traveller.push(each.gender);
         traveller.push(each.age);
         traveller.push(body.seats[index]);
-        // traveller.booking_id = result.insertId;
-        // traveller.gender = each.gender;
-        // traveller.age = each.age;
-        // traveller.seatId = body.seats[index];
         return traveller;
       });
       conn.query(
@@ -174,8 +156,77 @@ const createBooking = (req, res) => {
       );
     }
   });
-  console.log(req.body);
-  res.send();
+};
+
+const updateBooking = (data, body, res) => {
+  conn.query(
+    SQL_BOOKING.UPDATE_BOOKING,
+    [data.flight_id, data.price, data.milesused, data.class, body.booking_id],
+    (err, result) => {
+      if (err) {
+        res.status(404).send({ err: error.code });
+        return;
+      } else {
+        let travellerInfo = body.travelerInfo;
+        travellerInfo = travellerInfo.map((each, index) => {
+          let traveller = [];
+          traveller.push(body.flight_id);
+          traveller.push(each.firstName);
+          traveller.push(each.middleName);
+          traveller.push(each.lastName);
+          traveller.push(each.nationality);
+          traveller.push(body.booking_id);
+          traveller.push(each.gender);
+          traveller.push(each.age);
+          traveller.push(body.seats[index]);
+          return traveller;
+        });
+        conn.query(
+          SQL_BOOKING.DELETE_TRAVELLERS,
+          [body.booking_id],
+          (err2, res2) => {
+            if (err2) {
+              res.status(404).send({ err: err2.code });
+              return;
+            }
+            conn.query(
+              SQL_BOOKING.INSERT_TRAVELLERS,
+              [travellerInfo],
+              (err1, res1) => {
+                if (err1) {
+                  res.status(404).send({ err: err1.code });
+                  return;
+                } else {
+                  res.send();
+                }
+              }
+            );
+          }
+        );
+      }
+    }
+  );
+};
+
+const createBooking = (req, res) => {
+  console.log("Entered create booking", req.body);
+  const body = req.body;
+  const data = {
+    status: "Booked",
+    book_with: body.book_with,
+    booking_date: new Date(),
+    flight_id: body.flight_id,
+    customer_id: req.session.user.customer_id,
+    traveller_cnt: body.travellers,
+    price: body.finalmoney,
+    milesused: body.finalmiles,
+    class: 0,
+  };
+  if (body.isUpdateMode) {
+    updateBooking(data, body, res);
+  } else {
+    newBooking(data, body, res);
+  }
 };
 
 module.exports = {
