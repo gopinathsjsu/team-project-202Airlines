@@ -124,6 +124,7 @@ const updatePassport = (req, res) => {
 
 const createBooking = (req, res) => {
   console.log("Entered create booking", req.body);
+  console.log(req.session.user);
   const body = req.body;
   const data = {
     status: "Booked",
@@ -168,14 +169,25 @@ const createBooking = (req, res) => {
             res.status(404).send({ err: err1.code });
             return;
           } else {
-            res.send();
+            conn.query(
+              SQL_BOOKING.CHANGE_MILES_AFTER_BOOKING,
+              [body.finalmiles, req.session.user.customer_id],
+              (err, results) => {
+                if (err) {
+                  res.status(404).send({ err: err.code });
+                  return;
+                } else {
+                  res.send();
+                }
+              }
+            );
           }
         }
       );
     }
   });
   console.log(req.body);
-  res.send();
+  // res.send();
 };
 
 module.exports = {

@@ -17,6 +17,8 @@ const SQL_BOOKING = {
     "Update Airlines.Booking set src=?,dst=? where booking_id=? and customer_id=?;",
   CHANGE_MILES_AFTER_BOOKING_UPDATE:
     "Update Airlines.Customer set total_miles=? where customer_id=?",
+  CHANGE_MILES_AFTER_BOOKING:
+    "Update Airlines.Customer set total_miles=(total_miles-?) where customer_id=?;",
   GET_USER_PROFILE: "Select * from Customer where customer_id=?;",
   UPDATE_PASSPORT: "Update Customer set passportid=? where customer_id=?",
   CREATE_BOOKING:

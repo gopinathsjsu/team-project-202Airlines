@@ -23,7 +23,7 @@ export default function Payment() {
         parseFloat(bookingState.seatsPrice) + parseFloat(bookingState.price) + parseFloat(0.0)
       );
     } else {
-      settotalmiles(Number(bookingState.miles) + Number(bookingState.price) + Number(0));
+      settotalmiles(Number(bookingState.miles) + Number(bookingState.seatsPrice));
     }
   }, []);
   useEffect(() => {
@@ -62,50 +62,59 @@ export default function Payment() {
   return (
     <div className="wrapper col-6">
       <div className="payment payment-gateway">
-        <div className="payment-logo">
-          <p>P</p>
-        </div>
-
-        <h2>Payment Gateway</h2>
-        <div className="form">
-          <div className="card space icon-relative">
-            <label className="label">Card holder:</label>
-            <input type="text" className="input" placeholder="Name" />
-            <i className="fas fa-user" />
-          </div>
-          <div className="card space icon-relative">
-            <label className="label">Card number:</label>
-            <input
-              type="text"
-              className="input"
-              data-mask="0000 0000 0000 0000"
-              placeholder="Card Number"
-            />
-            <i className="far fa-credit-card" />
-          </div>
-          <div className="card-grp space  pg-1">
-            <div className="card-item icon-relative pg-2 pg2-1">
-              <label className="label">Expiry date:</label>
-              <input
-                type="text"
-                name="expiry-data"
-                className="input"
-                data-mask="00 / 00"
-                placeholder="00/00"
-              />
-              <i className="far fa-calendar-alt" />
+        {bookingState.book_with === 'Money' ? (
+          <div>
+            <div className="payment-logo">
+              <p>P</p>
             </div>
-            <div className="card-item icon-relative pg-2">
-              <label className="label">CVC:</label>
-              <input type="text" className="input" data-mask="000" placeholder="000" />
-              <i className="fas fa-lock" />
+
+            <h2>Payment Gateway</h2>
+            <div className="form">
+              <div className="card space icon-relative">
+                <label className="label">Card holder:</label>
+                <input type="text" className="input" placeholder="Name" />
+                <i className="fas fa-user" />
+              </div>
+              <div className="card space icon-relative">
+                <label className="label">Card number:</label>
+                <input
+                  type="text"
+                  className="input"
+                  data-mask="0000 0000 0000 0000"
+                  placeholder="Card Number"
+                />
+                <i className="far fa-credit-card" />
+              </div>
+              <div className="card-grp space  pg-1">
+                <div className="card-item icon-relative pg-2 pg2-1">
+                  <label className="label">Expiry date:</label>
+                  <input
+                    type="text"
+                    name="expiry-data"
+                    className="input"
+                    data-mask="00 / 00"
+                    placeholder="00/00"
+                  />
+                  <i className="far fa-calendar-alt" />
+                </div>
+                <div className="card-item icon-relative pg-2">
+                  <label className="label">CVC:</label>
+                  <input type="text" className="input" data-mask="000" placeholder="000" />
+                  <i className="fas fa-lock" />
+                </div>
+              </div>
+
+              <div className="btn-pg" onClick={confirmBooking}>
+                Confirm Booking
+              </div>
             </div>
           </div>
-
+        ) : (
           <div className="btn-pg" onClick={confirmBooking}>
             Confirm Booking
           </div>
-        </div>
+        )}
+
         <div className="order__payment__container">
           <div className="order__payment">
             <div className="payment__item place__order__container">
