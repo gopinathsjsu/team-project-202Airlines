@@ -19,3 +19,7 @@ export const showError = (payload) => (dispatch) => {
 export const updateBooking = (payload) => (dispatch) => {
   dispatch({ type: ACTION.BOOKING, payload });
 };
+
+export const clearBooking = (payload) => (dispatch) => {
+  dispatch({ type: ACTION.BOOKING_CLEAR, payload });
+};

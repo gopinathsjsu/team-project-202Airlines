@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Container, Form, Nav, Row } from 'react-bootstrap';
 import { useParams, useHistory, Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Typography } from '@material-ui/core';
 import { get } from '../utils/serverCall';
 import { BOOKING } from '../utils/consts';
 import { updateBooking } from '../reducers/actions';
@@ -247,7 +248,11 @@ function SeatMap() {
       );
     }
     rows.push(
-      <div className="seatRow" style={{ display: 'flex' }} key={i}>
+      <div
+        className="seatRow"
+        style={{ display: 'flex', width: 'fit-content', margin: 'auto' }}
+        key={i}
+      >
         {divisions}
       </div>
     );
@@ -263,21 +268,22 @@ function SeatMap() {
   }
 
   return (
-    <>
+    <div style={{ width: 'fit-content', margin: 'auto' }}>
+      <Typography variant="h3" gutterBottom component="div">
+        Select Seat
+      </Typography>
       <div>{rows}</div>
       <div>
-        <Form.Label column sm="2">
-          {`Seat Price : $${totalCost()}`}
-        </Form.Label>
+        <Form.Label column>{`Seats Price : $${totalCost()}`}</Form.Label>
       </div>
       <div>
         {next && (
-          <button type="button" className="btn btn-primary me-auto col-sm-2" onClick={nextPage}>
+          <button type="button" className="btn btn-primary me-auto" onClick={nextPage}>
             Continue
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

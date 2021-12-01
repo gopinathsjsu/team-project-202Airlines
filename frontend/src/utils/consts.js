@@ -14,6 +14,7 @@ export const ACTION = {
   RESET: 'RESET',
   SHOWERROR: 'ERROR',
   BOOKING: 'BOOKING',
+  BOOKING_CLEAR: 'BOOKING_CLEAR',
 };
 
 export const BOOKING = {
