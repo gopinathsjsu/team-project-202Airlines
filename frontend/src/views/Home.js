@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import flighLogo from '../images/flight.png';
 import mytripLogo from '../images/mytrip.png';
 import mileageLogo from '../images/mileage.png';
 import useLoginValidate from '../components/Validate';
 import redirectLogin from '../components/RedirectLogin';
 import { REDUCER } from '../utils/consts';
+import { clearBooking } from '../reducers/actions';
 
 function Home() {
+  const dispatch = useDispatch();
   const { loading, userData } = useLoginValidate();
   const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
   const isAdmin = JSON.parse(localStorage.getItem(REDUCER.ISADMIN));
@@ -15,6 +18,9 @@ function Home() {
   // if (!userData.email_id) {
   //   return redirectLogin();
   // }
+  useEffect(() => {
+    dispatch(clearBooking());
+  }, []);
   if (isAdmin) {
     return <Redirect to="/adminHome" />;
   }

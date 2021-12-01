@@ -28,6 +28,8 @@ const bookingReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
+    case ACTION.BOOKING_CLEAR:
+      return initialState;
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import { Divider } from '@material-ui/core';
 import '../css/Checkout.css';
 import { useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateBooking } from '../reducers/actions';
+import { clearBooking, updateBooking } from '../reducers/actions';
 import { REDUCER } from '../utils/consts';
 import backendServer from '../webConfig';
 
@@ -34,7 +34,9 @@ export default function Payment() {
 
   const createBooking = (booking) => {
     Axios.post(`${backendServer}/createBooking`, booking)
-      .then((response) => {})
+      .then((response) => {
+        dispatch(clearBooking());
+      })
       .catch((error) => {});
   };
   const confirmBooking = () => {
@@ -46,7 +48,7 @@ export default function Payment() {
     }
     createBooking(booking);
 
-    alert(`Booked successfully!!! \nAn email has been sent to your account`);
+    // alert(`Booked successfully!!! \nAn email has been sent to your account`);
     history.push('/myTrips');
   };
   const returnToSignIn = () => {
