@@ -126,7 +126,7 @@ function MyTrip() {
                 {bookingHistory
                   .filter(
                     (a) =>
-                      new Date(a.dep_date) - new Date() > 0 &&
+                      new Date(`${a.dep_date} ${a.start_time}`) - new Date() > 0 &&
                       !(
                         a.status.toLowerCase() === 'cancelled' ||
                         a.status.toLowerCase() === 'canceled'
@@ -189,7 +189,7 @@ function MyTrip() {
                 <th scope="col">Status</th>
               </tr>
               {bookingHistory
-                .filter((a) => new Date(a.dep_date) - new Date() < 0)
+                .filter((a) => new Date(`${a.dep_date} ${a.start_time}`) - new Date() < 0)
                 .map((data, index) => (
                   <tr key={data.booking_id}>
                     <th scope="row">{data.booking_id}</th>
