@@ -21,6 +21,8 @@ import Payment from './views/Payment';
 import FlightUpdateSearch from './views/FlightUpdateSearch';
 import FlightDateUpdate from './views/FlightDateUpdate';
 import Summary from './views/Summary';
+import UserProfile from './views/UserProfile';
+import AdminFlightDetail from './views/AdminFlightDetail';
 
 function App() {
   const [userState, setuserState] = useState(0);
@@ -83,6 +85,12 @@ function App() {
           </Route>
           <Route path="/bookingSummary" exact>
             <Summary />
+          </Route>
+          <Route path="/userProfile" exact>
+            <UserProfile />
+          </Route>
+          <Route path="/flightDetails/:flight_id" exact>
+            <AdminFlightDetail />
           </Route>
           <Route path="*">
             <Home />

@@ -2,10 +2,6 @@ const conn = require("../utils/dbConnector");
 const SQL_ADMIN = require("../Database/admin");
 
 const getProfile = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
   conn.query(SQL_ADMIN.ADMIN_PROFILE, (error, result) => {
     //  console.log(result);
     if (error) {
@@ -19,11 +15,7 @@ const getProfile = (req, res) => {
 };
 
 const getMileage = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
-  const customer_id = req.query.customer_id;
+  const customer_id = req.session.user.customer_id;
   conn.query(SQL_ADMIN.MILEAGE, [customer_id], (error, result) => {
     console.log(result);
     if (error) {
@@ -33,6 +25,33 @@ const getMileage = (req, res) => {
     } else {
       res.send(result);
     }
+  });
+};
+
+const addMiles = (req, res) => {
+  console.log("Entered");
+  console.log(req.body);
+  const customer_id = req.session.user.customer_id;
+  const miles = Number(req.body.miles) + Number(req.body.curr_miles);
+  console.log(miles);
+  conn.query(SQL_ADMIN.ADD_MILES, [miles, customer_id], (error, result) => {
+    if (error) {
+      res.status(404).send({ err: error.code });
+    } else if (result.length == 0) {
+      res.send([]);
+    } else {
+      conn.query(SQL_ADMIN.MILEAGE, [customer_id], (error, result) => {
+        console.log(result);
+        if (error) {
+          res.status(404).send({ err: error.code });
+        } else if (result.length == 0) {
+          res.send([]);
+        } else {
+          res.send(result);
+        }
+      });
+    }
+    console.log(result);
   });
 };
 
@@ -91,6 +110,7 @@ const addFlights = (req, res) => {
       req.body.no_of_seats,
       req.body.miles,
       req.body.price,
+      req.body.arr_date,
     ],
     (error, result) => {
       // console.log(result);
@@ -116,6 +136,7 @@ const editFlights = (req, res) => {
       req.body.airport_code_src,
       req.body.airport_code_dst,
       req.body.flight_date,
+      req.body.arr_date,
       req.body.start_time,
       req.body.end_time,
       req.body.flight_type,
@@ -125,7 +146,7 @@ const editFlights = (req, res) => {
       req.body.flight_id,
     ],
     (error, result) => {
-      //  console.log(result);
+      // console.log(result);
       if (error) {
         res.status(404).send({ err: error.code });
       } else if (result.length == 0) {
@@ -157,6 +178,7 @@ const getAirportCode = (req, res) => {
 module.exports = {
   getProfile,
   getMileage,
+  addMiles,
   getFlights,
   getFlightsById,
   addFlights,

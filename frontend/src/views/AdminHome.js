@@ -37,11 +37,13 @@ function AdminHome() {
     const seatNo = formData.get('seatNo');
     const mile = formData.get('mile');
     const amount = formData.get('amount');
+    const fltArrDate = formData.get('fltArrDate');
 
     Axios.post(`${backendServer}/editFlights`, {
       airport_code_src: src,
       airport_code_dst: dst,
       flight_date: fltDate,
+      arr_date: fltArrDate,
       start_time: strtTime,
       end_time: endTime,
       flight_type: fltType,
@@ -55,7 +57,7 @@ function AdminHome() {
         if (response.status === 200) {
           console.log('returned');
           console.log(response.data);
-          window.location = '/adminHome';
+          window.location = `/flightDetails/${id}`;
         }
       })
       .catch((err) => {
@@ -140,12 +142,21 @@ function AdminHome() {
                   required
                 />
                 <br />
-                <Form.Label>Flight Date</Form.Label>
+                <Form.Label>Flight Departure Date</Form.Label>
                 <Form.Control
                   className="mb-3 text-primary"
                   type="date"
                   name="fltDate"
                   defaultValue={data.flight_date}
+                  required
+                />
+                <br />
+                <Form.Label>Flight Arrival Date</Form.Label>
+                <Form.Control
+                  className="mb-3 text-primary"
+                  type="date"
+                  name="fltArrDate"
+                  defaultValue={data.arr_date}
                   required
                 />
                 <br />
@@ -207,6 +218,7 @@ function AdminHome() {
                   type="submit"
                   onClick={() => {
                     setId(`${data.flight_id}`);
+                    window.location = `/flightDetails/${data.flight_id}`;
                   }}
                 >
                   Update Details

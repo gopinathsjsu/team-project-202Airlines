@@ -90,6 +90,9 @@ function Navigator() {
               )}
               {signedIn && (
                 <Nav>
+                  <Link to="/userProfile" className="nav-link">
+                    PROFILE
+                  </Link>
                   <Link to="/signout" className="nav-link">
                     SIGN OUT
                   </Link>

@@ -235,7 +235,8 @@ function SeatMap() {
 
   if (redirectNextPage) {
     // return <Navigate to="/signin"> </Navigate>;
-    return <Redirect push="true" to="/bookingSummary" />;
+    // return <Redirect push="true" to="/bookingSummary" />;
+    return <Redirect push="true" to="/paymentGateway" />;
   }
   if (redirectHomePage) {
     return <Redirect push="true" to="/bookFlight" />;
