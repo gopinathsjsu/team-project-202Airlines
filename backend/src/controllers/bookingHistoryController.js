@@ -197,7 +197,19 @@ const updateBooking = (data, body, res) => {
                   res.status(404).send({ err: err1.code });
                   return;
                 } else {
-                  res.send();
+                  conn.query(
+                    SQL_BOOKING.CHANGE_MILES_AFTER_BOOKING,
+                    [body.finalmiles, req.session.user.customer_id],
+                    (err, results) => {
+                      if (err) {
+                        res.status(404).send({ err: err.code });
+                        return;
+                      } else {
+                        res.send();
+                      }
+                    }
+                  );
+                  // res.send();
                 }
               }
             );

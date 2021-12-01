@@ -38,12 +38,12 @@ function Mileage() {
     p: 4,
   };
   const milesValues = [
-    '1000 miles: ($100.00)',
-    '2000 miles: ($200.00)',
-    '3000 miles: ($300.00)',
-    '4000 miles: ($400.00)',
-    '5000 miles: ($500.00)',
-    '6000 miles: ($600.00)',
+    '10000 miles: ($1000.00)',
+    '20000 miles: ($2000.00)',
+    '30000 miles: ($3000.00)',
+    '40000 miles: ($4000.00)',
+    '50000 miles: ($5000.00)',
+    '60000 miles: ($6000.00)',
   ];
   const [miles, setMiles] = useState('2000 miles: ($70.00)');
   const [open, setOpen] = React.useState(false);
