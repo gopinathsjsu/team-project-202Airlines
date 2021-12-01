@@ -10,7 +10,7 @@ const getBookingHistory = (req, res) => {
   // }
   conn.query(
     SQL_BOOKING.GET_BOOKING_HISTORY,
-    [req.body.customer_id],
+    [req.session.user.customer_id],
     (error, result) => {
       //  console.log(result);
       if (error) {

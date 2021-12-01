@@ -1,8 +1,8 @@
 const SQL_BOOKING = {
   GET_BOOKING_HISTORY:
-    "select booking_id, DATE_FORMAT(sysdate(),'%Y-%m-%d') as curr_date, DATE_FORMAT(booking_date,'%Y-%m-%d') as booking_date,DATE_FORMAT(Flight.flight_date,'%Y-%m-%d') as dep_date,DATE_FORMAT(Flight.arr_date,'%Y-%m-%d') as arr_date,airport_code_src as src,airport_code_dst as dst,Booking.price,Booking.milesused,status \
+    "select start_time, end_time,  booking_id, DATE_FORMAT(sysdate(),'%Y-%m-%d') as curr_date, DATE_FORMAT(booking_date,'%Y-%m-%d') as booking_date,DATE_FORMAT(Flight.flight_date,'%Y-%m-%d') as dep_date,DATE_FORMAT(Flight.arr_date,'%Y-%m-%d') as arr_date,airport_code_src as src,airport_code_dst as dst,Booking.price,Booking.milesused,status \
     from Booking,Flight \
-    where Booking.flight_id=Flight.flight_id;",
+    where Booking.flight_id=Flight.flight_id and customer_id = ?",
   //  and customer_id=? order by booking_id;",
   CANCEL_BOOKING:
     "Update Airlines.Booking set status='Canceled' where booking_id=?;",
