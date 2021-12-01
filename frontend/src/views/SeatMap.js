@@ -273,10 +273,13 @@ function SeatMap() {
         Select Seat
       </Typography>
       <div>{rows}</div>
-      <div>
-        <Form.Label column>{`Seats Price : $${totalCost()}`}</Form.Label>
+      <div style={{ width: 'fit-content', marginLeft: 'auto' }}>
+        {/* <Form.Label column>{`Seats Price : $${totalCost()}`}</Form.Label> */}
+        <Typography variant="h6" gutterBottom component="div">
+          {`Seats Price : $${totalCost()}`}
+        </Typography>
       </div>
-      <div>
+      <div style={{ width: 'fit-content', marginLeft: 'auto' }}>
         {next && (
           <button type="button" className="btn btn-primary me-auto" onClick={nextPage}>
             Continue
