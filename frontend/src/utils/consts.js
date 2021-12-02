@@ -1,5 +1,7 @@
 export const SERVER = {
   URL: 'http://localhost:4000',
+  // URL: 'http://54.193.52.160:4000'
+  // URL: 'http://202-2139399698.us-west-1.elb.amazonaws.com:4000'
 };
 
 export const REDUCER = {

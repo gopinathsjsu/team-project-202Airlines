@@ -27,7 +27,7 @@ const get = (path, data) =>
     });
 const post = (path, data) =>
   // console.log('');
-  Axios.post(SERVER.URL + path, data, { mode: 'cors' })
+  Axios.post(SERVER.URL + path, data )
     .then((response) => response.data)
     .catch((error) => {
       if (error.response && error.response.data.err) {
