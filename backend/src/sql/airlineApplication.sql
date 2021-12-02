@@ -106,7 +106,7 @@ CREATE TABLE `Customer` (
   `sec_ques` varchar(250) DEFAULT NULL,
   `sec_ans` varchar(250) DEFAULT NULL,
   `mileage_plus_number` varchar(50) DEFAULT NULL,
-  `total_miles` int DEFAULT NULL,
+  `total_miles` int DEFAULT 0,
   `country` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
 );

@@ -16,8 +16,16 @@ export default function Payment() {
   const [total_money, settotalmoney] = useState(0);
   const [total_miles, settotalmiles] = useState(0);
   const bookingState = useSelector((state) => state.bookingReducer);
+  const [userMiles, setUserMiles] = useState(0);
+
+  const getMiles = () => {
+    Axios.get(`${backendServer}/mileage`).then((res) => {
+      setUserMiles(res.data[0].total_miles);
+    });
+  };
 
   useEffect(() => {
+    getMiles();
     if (bookingState.book_with === 'Money') {
       settotalmoney(
         parseFloat(bookingState.seatsPrice) + parseFloat(bookingState.price) + parseFloat(0.0)
@@ -32,6 +40,7 @@ export default function Payment() {
       );
     }
   }, []);
+
   useEffect(() => {
     if (bookingState.seats.length === 0) {
       setRedirectHomePage(true);
@@ -45,18 +54,31 @@ export default function Payment() {
       })
       .catch((error) => {});
   };
+
   const confirmBooking = () => {
     let booking;
     if (bookingState.book_with === 'Money') {
       booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
-    } else {
-      booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
+      createBooking(booking);
+      alert(`Booked successfully!!! \nAn email has been sent to your account`);
+      history.push('/myTrips');
+    } else if (bookingState.book_with === 'Miles') {
+      if (userMiles < bookingState.total_miles) {
+        alert('You do not have sufficient miles to book the flight');
+        history.push('/home');
+      } else {
+        booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
+        createBooking(booking);
+        alert(`Booked successfully!!! \nAn email has been sent to your account`);
+        history.push('/myTrips');
+      }
     }
-    createBooking(booking);
+    // createBooking(booking);
 
-    alert(`Booked successfully!!! \nAn email has been sent to your account`);
-    history.push('/myTrips');
+    // alert(`Booked successfully!!! \nAn email has been sent to your account`);
+    // history.push('/myTrips');
   };
+
   const returnToSignIn = () => {
     history.push('/signin');
   };
