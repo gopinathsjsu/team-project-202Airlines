@@ -235,7 +235,7 @@ const updateBooking = (data, body, res, req) => {
 const createBooking = (req, res) => {
   console.log("Entered create booking", req.body);
   const body = req.body;
-  const data = {
+  let data = {
     status: "Booked",
     book_with: body.book_with,
     booking_date: new Date(),
@@ -247,6 +247,8 @@ const createBooking = (req, res) => {
     class: body.flight_class,
   };
   if (body.isUpdateMode) {
+    data = { ...data, milesused: body.seatsPrice + body.miles };
+    // console.log(data);
     updateBooking(data, body, res, req);
   } else {
     newBooking(data, body, res, req);
