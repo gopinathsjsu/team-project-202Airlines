@@ -21,6 +21,7 @@ import { REDUCER } from "../utils/consts";
 import useLoginValidate from "../components/Validate";
 import redirectLogin from "../components/RedirectLogin";
 import "../css/App.css";
+import { get } from '../utils/serverCall';
 
 function Mileage() {
   const history = useHistory();
