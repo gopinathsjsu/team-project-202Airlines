@@ -244,7 +244,7 @@ const createBooking = (req, res) => {
     traveller_cnt: body.travellers,
     price: body.finalmoney,
     milesused: body.finalmiles,
-    class: 0,
+    class: body.flight_class,
   };
   if (body.isUpdateMode) {
     updateBooking(data, body, res, req);
