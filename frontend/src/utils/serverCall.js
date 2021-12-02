@@ -5,9 +5,10 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../reducers/actionCreators';
 import { showError } from '../reducers/actions';
 import store from '../reducers/store';
-import { SERVER } from './consts';
+import { REDUCER, SERVER } from './consts';
 
 Axios.defaults.withCredentials = true;
+Axios.defaults.headers.common.authorization = localStorage.getItem(REDUCER.TOKEN);
 
 // const dispatch = useDispatch();
 // const { showError } = bindActionCreators(actionCreators, dispatch);

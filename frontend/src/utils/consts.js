@@ -8,6 +8,7 @@ export const REDUCER = {
   SIGNEDIN: 'isSignedIn',
   ISADMIN: 'isAdmin',
   ERR_MSG: 'errMsg',
+  TOKEN: 'token',
 };
 
 export const ACTION = {

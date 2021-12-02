@@ -36,8 +36,9 @@ function Signin() {
     };
     post("/signinData", data)
       .then((response) => {
+        localStorage.setItem(REDUCER.TOKEN, response.token)
         localStorage.setItem(REDUCER.SIGNEDIN, true);
-        if (response.isAdmin) {
+        if (response.user.isAdmin) {
           localStorage.setItem(REDUCER.ISADMIN, true);
           adminLogin();
           setIsAdmin(true);

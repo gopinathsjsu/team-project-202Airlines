@@ -4,13 +4,13 @@ const { query } = require("express");
 //Get all bookking details
 
 const getBookingHistory = (req, res) => {
-  if (!req.session.user) {
+  if (!req.user) {
     res.status(404).send({ err: "Invalid user session" });
     return;
   }
   conn.query(
     SQL_BOOKING.GET_BOOKING_HISTORY,
-    [req.session.user.customer_id],
+    [req.user.customer_id],
     (error, result) => {
       //  console.log(result);
       if (error) {
@@ -54,7 +54,7 @@ const cancelFlightBooking = (req, res) => {
         if (req.body.total_miles != 0) {
           conn.query(
             SQL_BOOKING.CANCEL_BOOKING_MILES,
-            [req.body.total_miles, req.session.user.customer_id],
+            [req.body.total_miles, req.user.customer_id],
             (err, results) => {
               // console.log(req.body.total_miles);
               res.send(results);
@@ -88,8 +88,8 @@ const updateFlightBooking = (req, res) => {
 };
 
 const getUserProfile = (req, res) => {
-  if (req.session.user) {
-    const customer_id = req.session.user.customer_id;
+  if (req.user) {
+    const customer_id = req.user.customer_id;
     // console.log(req.session.user.customer_id);
     conn.query(SQL_BOOKING.GET_USER_PROFILE, [customer_id], (error, result) => {
       if (error) {
@@ -104,7 +104,7 @@ const getUserProfile = (req, res) => {
 };
 
 const updatePassport = (req, res) => {
-  const customer_id = req.session.user.customer_id;
+  const customer_id = req.user.customer_id;
   // console.log(req.body);
   conn.query(
     SQL_BOOKING.UPDATE_PASSPORT,
@@ -152,7 +152,7 @@ const newBooking = (data, body, res, req) => {
           } else {
             conn.query(
               SQL_BOOKING.CHANGE_MILES_AFTER_BOOKING,
-              [body.finalmiles, req.session.user.customer_id],
+              [body.finalmiles, req.user.customer_id],
               (err, results) => {
                 if (err) {
                   res.status(404).send({ err: err.code });
@@ -211,7 +211,7 @@ const updateBooking = (data, body, res, req) => {
                 } else {
                   conn.query(
                     SQL_BOOKING.CHANGE_MILES_AFTER_BOOKING,
-                    [body.finalmiles, req.session.user.customer_id],
+                    [body.finalmiles, req.user.customer_id],
                     (err, results) => {
                       if (err) {
                         res.status(404).send({ err: err.code });
@@ -240,7 +240,7 @@ const createBooking = (req, res) => {
     book_with: body.book_with,
     booking_date: new Date(),
     flight_id: body.flight_id,
-    customer_id: req.session.user.customer_id,
+    customer_id: req.user.customer_id,
     traveller_cnt: body.travellers,
     price: body.finalmoney,
     milesused: body.finalmiles,
