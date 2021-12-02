@@ -1,16 +1,15 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { MdModeEdit } from 'react-icons/md';
-import { Button, Modal } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import { REDUCER } from '../utils/consts';
-import backendServer from '../webConfig';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { MdModeEdit } from "react-icons/md";
+import { Button, Modal } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import { REDUCER } from "../utils/consts";
 
 function UserProfile() {
   const [userProfile, setUserProfile] = useState([]);
   const history = useHistory();
-  const [passData, setPassData] = useState('');
+  const [passData, setPassData] = useState("");
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -18,7 +17,7 @@ function UserProfile() {
   const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
 
   const returnToSignIn = () => {
-    history.push('/signin');
+    history.push("/signin");
   };
 
   if (!isSignedIn) {
@@ -26,10 +25,9 @@ function UserProfile() {
   }
 
   const getDetails = () => {
-    axios
-      .get(`${backendServer}/getUserProfile`)
+    get(`/getUserProfile`)
       .then((response) => {
-        setUserProfile(response.data);
+        setUserProfile(response);
         console.log(userProfile);
       })
       .catch((err) => {
@@ -42,9 +40,9 @@ function UserProfile() {
   }, []);
 
   const updatePassport = () => {
-    axios.post(`${backendServer}/updatePassport`, { passportid: passData }).then((result) => {
+    post(`/updatePassport`, { passportid: passData }).then((result) => {
       console.log(result);
-      window.location = '/userProfile';
+      window.location = "/userProfile";
     });
   };
 
@@ -52,10 +50,10 @@ function UserProfile() {
     <div>
       <form className="flight-book-form">
         <div className="Mileage-form-box">
-          <h3 style={{ marginTop: '20px' }}>
-            User Profile{'      '}
+          <h3 style={{ marginTop: "20px" }}>
+            User Profile{"      "}
             <MdModeEdit
-              style={{ marginLeft: '20px' }}
+              style={{ marginLeft: "20px" }}
               onClick={() => {
                 setShow(true);
                 getDetails();
@@ -65,18 +63,30 @@ function UserProfile() {
           <br />
           {userProfile.map((data, index) => (
             <div>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
                 First Name : {data.customer_first_name}
               </h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
                 Last Name : {data.customer_last_name}
               </h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>Email Id : {data.emailid}</h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>Address : {data.address}</h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>City : {data.city}</h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>State : {data.state}</h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>Zip Code : {data.zip_code}</h5>
-              <h5 style={{ marginLeft: '50px', textAlign: 'left' }}>Passport: {data.passportid}</h5>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
+                Email Id : {data.emailid}
+              </h5>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
+                Address : {data.address}
+              </h5>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
+                City : {data.city}
+              </h5>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
+                State : {data.state}
+              </h5>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
+                Zip Code : {data.zip_code}
+              </h5>
+              <h5 style={{ marginLeft: "50px", textAlign: "left" }}>
+                Passport: {data.passportid}
+              </h5>
 
               <br />
               <br />

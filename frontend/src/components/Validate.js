@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import backendServer from '../webConfig';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { get } from "../utils/serverCall";
 
 const useLoginValidate = () => {
   const [userData, setUserData] = useState({});
@@ -9,14 +9,14 @@ const useLoginValidate = () => {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get(`${backendServer}/getLogin`).then((response) => {
-      if (response.data.loggedIn === true) {
-        const { email, customer } = response.data.user;
+    get(`/getLogin`).then((response) => {
+      if (response.loggedIn === true) {
+        const { email, customer } = response.user;
 
         setUserData((prevState) => ({
           ...prevState,
-          email_id: response.data.user.email_id,
-          customer_id: response.data.user.customer_id,
+          email_id: response.user.email_id,
+          customer_id: response.user.customer_id,
         }));
       } else {
         setUserData({});

@@ -1,29 +1,31 @@
-import React, { useState, Component } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/esm/Col';
-import Container from 'react-bootstrap/esm/Container';
-import Form from 'react-bootstrap/Form';
-import classnames from 'classnames';
-import Axios from 'axios';
-import cookie from 'react-cookies';
-import { bindActionCreators } from 'redux';
-import { useSelector, useDispatch } from 'react-redux';
-import { post } from '../utils/serverCall';
-import backendServer from '../webConfig';
-import { actionCreators } from '../reducers/actionCreators';
-import { REDUCER } from '../utils/consts';
+import React, { useState, Component } from "react";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/esm/Col";
+import Container from "react-bootstrap/esm/Container";
+import Form from "react-bootstrap/Form";
+import classnames from "classnames";
+import Axios from "axios";
+import cookie from "react-cookies";
+import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
+import { post } from "../utils/serverCall";
+import { actionCreators } from "../reducers/actionCreators";
+import { REDUCER } from "../utils/consts";
 
 function Signin() {
-  const [emailid, setEmailId] = useState('');
+  const [emailid, setEmailId] = useState("");
   const history = useHistory();
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isCustomer, setIsCustomer] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [failMsg, setFailMsg] = useState('');
+  const [failMsg, setFailMsg] = useState("");
 
   const dispatch = useDispatch();
-  const { adminLogin, customerLogin } = bindActionCreators(actionCreators, dispatch);
+  const { adminLogin, customerLogin } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   Axios.defaults.withCredentials = true;
   const login = (event) => {
@@ -32,7 +34,7 @@ function Signin() {
       emailid,
       password,
     };
-    post('/signinData', data)
+    post("/signinData", data)
       .then((response) => {
         localStorage.setItem(REDUCER.SIGNEDIN, true);
         if (response.isAdmin) {
@@ -71,7 +73,7 @@ function Signin() {
   return (
     <form className="flight-book-form">
       <div className="login-form-box">
-        <div className="login-form" style={{ color: 'white' }}>
+        <div className="login-form" style={{ color: "white" }}>
           <h2 className="heading-section text-center">Sign In</h2>
           <h3 className="mb-4 text-center">Have an account?</h3>
           <input
@@ -96,9 +98,11 @@ function Signin() {
             <h4>Sign In</h4>
           </button>
           <br />
-          <p className="w-100 text-center">&mdash; Haven't registered yet &mdash;</p>
+          <p className="w-100 text-center">
+            &mdash; Haven't registered yet &mdash;
+          </p>
           <a href="Signup">
-            <h4 style={{ color: 'white', textAlign: 'center' }}>SignUp</h4>
+            <h4 style={{ color: "white", textAlign: "center" }}>SignUp</h4>
           </a>
         </div>
       </div>
