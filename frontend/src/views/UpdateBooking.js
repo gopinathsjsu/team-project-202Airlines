@@ -102,7 +102,8 @@ function UpdateBooking() {
                     <input
                       type="date"
                       className="form-control select-date"
-                      defaultValue={data.dep_date}
+                      // defaultValue={data.dep_date}
+                      value={flightDetails.flight_date}
                       onChange={(e) => {
                         setFlightDetails({ ...flightDetails, flight_date: e.target.value });
                       }}
@@ -111,7 +112,8 @@ function UpdateBooking() {
                     <br />
                     <select
                       className="custom-select"
-                      defaultValue="Business"
+                      // defaultValue={flightDetails.flight_class}
+                      value={flightDetails.flight_class}
                       style={{ width: '100%', height: '40px' }}
                       onChange={(e) => {
                         setFlightDetails({ ...flightDetails, flight_class: e.target.value });
