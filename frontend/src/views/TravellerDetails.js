@@ -29,8 +29,8 @@ export default function TravellerDetails() {
     if (flightDetails.isUpdateMode === 1) {
       get('/getTravellers', { booking_id: flightDetails.booking_id }).then((result) => {
         console.log(result);
+        const travelers = [];
         result.forEach((each, index) => {
-          const travelers = [];
           travelers.push({
             ...defaultTraveller,
             traveler: index,
@@ -41,8 +41,8 @@ export default function TravellerDetails() {
             age: each.age,
             gender: each.gender,
           });
-          setTravellersInfo(travelers);
         });
+        setTravellersInfo(travelers);
       });
     } else {
       const travelers = [];
