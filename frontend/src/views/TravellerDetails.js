@@ -59,7 +59,7 @@ export default function TravellerDetails() {
 
   for (let i = 0; i < travelerInfo.length; i++) {
     travellers.push(
-      <div className="card m-5">
+      <div className="card m-5 card-bg-traveler">
         <h5 className="card-title m-2">Traveler {i + 1}</h5>
         <div className="row m-2">
           <div className="col-6">
@@ -256,7 +256,7 @@ export default function TravellerDetails() {
   }
 
   return (
-    <div className="">
+    <div className="flight-background-container">
       {alertMessage && (
         <div className="alert alert-danger" role="alert">
           {alertMessage}

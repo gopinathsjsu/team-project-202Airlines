@@ -69,7 +69,7 @@ export default function Payment() {
       }
       history.push('/myTrips');
     } else if (bookingState.book_with === 'Miles') {
-      if (userMiles < bookingState.total_miles) {
+      if (userMiles < bookingState.total_miles || bookingState.total_miles === 0) {
         alert('You do not have sufficient miles to book the flight');
         history.push('/home');
       } else {
@@ -135,7 +135,7 @@ export default function Payment() {
                 </div>
                 <div className="card-item icon-relative pg-2">
                   <label className="label">CVC:</label>
-                  <input type="text" className="input" data-mask="000" placeholder="000" />
+                  <input type="password" className="input" data-mask="000" placeholder="000" />
                   <i className="fas fa-lock" />
                 </div>
               </div>
