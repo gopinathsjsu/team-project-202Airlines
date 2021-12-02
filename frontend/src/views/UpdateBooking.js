@@ -37,11 +37,11 @@ function UpdateBooking() {
     });
   };
 
-  const getPassport = () => {
+ /*const getPassport = () => {
     get(`/getPassport`).then((response) => {
       setPassport(response[0].passportid);
     });
-  };
+  };*/
   const returnToSignIn = () => {
     history.push("/signin");
   };
@@ -66,7 +66,7 @@ function UpdateBooking() {
 
   useEffect(() => {
     bookingList();
-    getPassport();
+    //getPassport();
   }, []);
 
   return (

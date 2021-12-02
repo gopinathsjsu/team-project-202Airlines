@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearBooking, updateBooking } from "../reducers/actions";
 import { REDUCER } from "../utils/consts";
 import { get } from "../utils/serverCall";
+import { post } from '../utils/serverCall';
 
 export default function Payment() {
   const history = useHistory();
