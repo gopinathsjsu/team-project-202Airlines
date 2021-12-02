@@ -112,6 +112,9 @@ function UpdateBooking() {
                       className="custom-select"
                       defaultValue="Business"
                       style={{ width: '100%', height: '40px' }}
+                      onChange={(e) => {
+                        setFlightDetails({ ...flightDetails, flight_class: e.target.value });
+                      }}
                     >
                       <option value="Economy">Economy</option>
                       <option value="Business">Business</option>
