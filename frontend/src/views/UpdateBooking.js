@@ -31,6 +31,7 @@ function UpdateBooking() {
         flight_class: `${response.data[0].class}`,
         isUpdateMode: 1,
         booking_id: id,
+        booked_miles: `${response.data[0].miles}`,
       });
     });
   };
