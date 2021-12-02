@@ -4,10 +4,10 @@ const { query } = require("express");
 //Get all bookking details
 
 const getBookingHistory = (req, res) => {
-  // if (!req.session.user) {
-  //   res.status(404).send({ err: "Invalid user session" });
-  //   return;
-  // }
+  if (!req.session.user) {
+    res.status(404).send({ err: "Invalid user session" });
+    return;
+  }
   conn.query(
     SQL_BOOKING.GET_BOOKING_HISTORY,
     [req.session.user.customer_id],
