@@ -120,7 +120,9 @@ function Mileage() {
           </div>
         </div>
         <br />
-        <h5>Available miles: {Miles} </h5>
+        <div>
+          {Miles === null ? <h5>Available miles: 0 </h5> : <h5>Available miles: {Miles} </h5>}
+        </div>
         <p>
           Miles never expire <AiFillQuestionCircle style={{ color: '#0d9cdf', fontSize: '20' }} />
         </p>

@@ -48,7 +48,7 @@ export default function Payment() {
     }
     createBooking(booking);
 
-    // alert(`Booked successfully!!! \nAn email has been sent to your account`);
+    alert(`Booked successfully!!! \nAn email has been sent to your account`);
     history.push('/myTrips');
   };
   const returnToSignIn = () => {
