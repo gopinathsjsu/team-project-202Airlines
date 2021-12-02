@@ -180,14 +180,18 @@ export default function Payment() {
                   <div className="item__price">0 Miles</div>
                 )}
               </div>
-              <div className="payment__item bill__item">
-                <div className="item__name">Refund</div>
-                {bookingState.book_with === 'Money' ? (
-                  <div className="item__price">$0.00</div>
-                ) : (
-                  <div className="item__price"> - {bookingState.booked_miles} Miles</div>
-                )}
-              </div>
+              {bookingState.isUpdateMode === 1 ? (
+                <div className="payment__item bill__item">
+                  <div className="item__name">Refund</div>
+                  {bookingState.book_with === 'Money' ? (
+                    <div className="item__price">$0.00</div>
+                  ) : (
+                    <div className="item__price"> - {bookingState.booked_miles} Miles</div>
+                  )}
+                </div>
+              ) : (
+                ' '
+              )}
             </div>
             <Divider variant="fullWidth" className="payment__item divider" />
             <div className="payment__order__instructions__container">
