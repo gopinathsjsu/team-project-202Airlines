@@ -122,7 +122,7 @@ const updatePassport = (req, res) => {
   );
 };
 
-const newBooking = (data, body, res) => {
+const newBooking = (data, body, res, req) => {
   conn.query(SQL_BOOKING.CREATE_BOOKING, Object.values(data), (err, result) => {
     if (err) {
       res.status(404).send({ err: error.code });
@@ -158,7 +158,7 @@ const newBooking = (data, body, res) => {
   });
 };
 
-const updateBooking = (data, body, res) => {
+const updateBooking = (data, body, res, req) => {
   conn.query(
     SQL_BOOKING.UPDATE_BOOKING,
     [data.flight_id, data.price, data.milesused, data.class, body.booking_id],
@@ -235,9 +235,9 @@ const createBooking = (req, res) => {
     class: 0,
   };
   if (body.isUpdateMode) {
-    updateBooking(data, body, res);
+    updateBooking(data, body, res, req);
   } else {
-    newBooking(data, body, res);
+    newBooking(data, body, res, req);
   }
 };
 
