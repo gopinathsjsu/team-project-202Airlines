@@ -22,8 +22,14 @@ export default function Payment() {
       settotalmoney(
         parseFloat(bookingState.seatsPrice) + parseFloat(bookingState.price) + parseFloat(0.0)
       );
-    } else {
+    } else if (bookingState.isUpdateMode === 0) {
       settotalmiles(Number(bookingState.miles) + Number(bookingState.seatsPrice));
+    } else {
+      settotalmiles(
+        Number(bookingState.miles) +
+          Number(bookingState.seatsPrice) -
+          Number(bookingState.booked_miles)
+      );
     }
   }, []);
   useEffect(() => {
@@ -150,6 +156,14 @@ export default function Payment() {
                   <div className="item__price">$0.00</div>
                 ) : (
                   <div className="item__price">0 Miles</div>
+                )}
+              </div>
+              <div className="payment__item bill__item">
+                <div className="item__name">Refund</div>
+                {bookingState.book_with === 'Money' ? (
+                  <div className="item__price">$0.00</div>
+                ) : (
+                  <div className="item__price"> - {bookingState.booked_miles} Miles</div>
                 )}
               </div>
             </div>
