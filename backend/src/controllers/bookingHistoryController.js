@@ -99,7 +99,7 @@ const getUserProfile = (req, res) => {
       }
     });
   } else {
-    res.send("User is not logged in");
+    res.status(404).send("User is not logged in");
   }
 };
 
