@@ -60,7 +60,13 @@ export default function Payment() {
     if (bookingState.book_with === 'Money') {
       booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
       createBooking(booking);
-      alert(`Booked successfully!!! \nAn email has been sent to your account`);
+      if (bookingState.isUpdateMode === 1) {
+        if (total_money < Number(bookingState.booked_money)) {
+          alert(`Refund will be processed and updated within a week!!`);
+        }
+      } else {
+        alert(`Booked successfully!!! \nAn email has been sent to your account`);
+      }
       history.push('/myTrips');
     } else if (bookingState.book_with === 'Miles') {
       if (userMiles < bookingState.total_miles) {
@@ -184,7 +190,7 @@ export default function Payment() {
                 <div className="payment__item bill__item">
                   <div className="item__name">Refund</div>
                   {bookingState.book_with === 'Money' ? (
-                    <div className="item__price">$0.00</div>
+                    <div className="item__price">-${bookingState.booked_money}</div>
                   ) : (
                     <div className="item__price"> - {bookingState.booked_miles} Miles</div>
                   )}
@@ -201,7 +207,15 @@ export default function Payment() {
             <div className="payment__item total__container">
               <div className="total__title">Total</div>
               {bookingState.book_with === 'Money' ? (
-                <div className="total__price">${total_money}</div>
+                <div>
+                  {bookingState.isUpdateMode === 1 ? (
+                    <div className="total__price">
+                      $ {bookingState.seatsPrice + bookingState.price - bookingState.booked_money}
+                    </div>
+                  ) : (
+                    <div className="total__price">$ {total_money}</div>
+                  )}
+                </div>
               ) : (
                 <div className="total__price">{total_miles} Miles</div>
               )}

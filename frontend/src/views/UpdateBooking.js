@@ -32,6 +32,7 @@ function UpdateBooking() {
         isUpdateMode: 1,
         booking_id: id,
         booked_miles: `${response.data[0].miles}`,
+        booked_money: `${response.data[0].price}`,
       });
     });
   };

@@ -247,7 +247,9 @@ const createBooking = (req, res) => {
     class: body.flight_class,
   };
   if (body.isUpdateMode) {
-    data = { ...data, milesused: body.seatsPrice + body.miles };
+    if (body.book_with == "Miles") {
+      data = { ...data, milesused: body.seatsPrice + body.miles };
+    }
     // console.log(data);
     updateBooking(data, body, res, req);
   } else {
