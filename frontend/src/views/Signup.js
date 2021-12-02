@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import Axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
-import Col from 'react-bootstrap/esm/Col';
-import Container from 'react-bootstrap/esm/Container';
-import Form from 'react-bootstrap/Form';
-import classnames from 'classnames';
+import { useState } from "react";
+import Axios from "axios";
+import { Link, useHistory } from "react-router-dom";
+import Col from "react-bootstrap/esm/Col";
+import Container from "react-bootstrap/esm/Container";
+import Form from "react-bootstrap/Form";
+import classnames from "classnames";
 import {
   Button,
   FormControl,
@@ -13,14 +13,13 @@ import {
   MenuItem,
   Select,
   TextField,
-} from '@material-ui/core';
-import { post } from '../utils/serverCall';
-import backendServer from '../webConfig';
+} from "@material-ui/core";
+import { post } from "../utils/serverCall";
 
 function Signup() {
   Axios.defaults.withCredentials = true;
   const [registered, setRegisterd] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [invalid, setInvalid] = useState({
     // user_id: false,
     password: false,
@@ -39,20 +38,20 @@ function Signup() {
     role: false,
   });
   const defaultValues = {
-    password: '',
-    customer_first_name: '',
-    customer_last_name: '',
-    emailid: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zip_code: '',
-    passportid: '',
-    gender: 'Male',
+    password: "",
+    customer_first_name: "",
+    customer_last_name: "",
+    emailid: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    zip_code: "",
+    passportid: "",
+    gender: "Male",
     sec_ques: "What is your mother's maiden name?",
-    sec_ans: '',
-    role: 'customer',
+    sec_ans: "",
+    role: "customer",
   };
 
   const [userDetails, setUserDetails] = useState(defaultValues);
@@ -62,37 +61,37 @@ function Signup() {
 
     if (
       userDetails.password.trim().length < 5 ||
-      userDetails.customer_first_name.trim() === '' ||
-      userDetails.customer_last_name.trim() === '' ||
-      userDetails.city.trim() === '' ||
-      userDetails.address.trim() === '' ||
-      userDetails.emailid.trim() === '' ||
+      userDetails.customer_first_name.trim() === "" ||
+      userDetails.customer_last_name.trim() === "" ||
+      userDetails.city.trim() === "" ||
+      userDetails.address.trim() === "" ||
+      userDetails.emailid.trim() === "" ||
       userDetails.zip_code.length < 5
     ) {
-      alert('Please fill all fields');
-      setMessage('Please fill all fields');
+      alert("Please fill all fields");
+      setMessage("Please fill all fields");
     } else if (
-      userDetails.emailid.includes(' ') ||
-      userDetails.zip_code.includes(' ') ||
-      userDetails.password.includes(' ')
+      userDetails.emailid.includes(" ") ||
+      userDetails.zip_code.includes(" ") ||
+      userDetails.password.includes(" ")
     ) {
-      console.log('Entered');
-      alert('Space character not allowed in zip_code, password, email_id');
-      setMessage('Space character not allowed in zip_code, password, email_id');
+      console.log("Entered");
+      alert("Space character not allowed in zip_code, password, email_id");
+      setMessage("Space character not allowed in zip_code, password, email_id");
     } else {
-      console.log('Entered');
-      Axios.post(`${backendServer}/register`, {
+      console.log("Entered");
+      post(`/register`, {
         userDetails,
       })
         .then((response) => {
           console.log(response);
           setMessage(
-            `Your User ID is "${response.data.emailid}" \n Mileage account: "${response.data.mileage_number}"`
+            `Your User ID is "${response.emailid}" \n Mileage account: "${response.mileage_number}"`
           );
           setRegisterd(true);
         })
         .catch((error) => {
-          setMessage(error.response.data.err);
+          setMessage(error.response.err);
           setRegisterd(false);
         });
     }
@@ -102,9 +101,9 @@ function Signup() {
     return (
       <form className="flight-book-form">
         <div className="main">
-          <h1 style={{ textAlign: 'center' }}> {message}</h1>
+          <h1 style={{ textAlign: "center" }}> {message}</h1>
           <br />
-          <Link to="/login" style={{ fontSize: 35, textAlign: 'center' }}>
+          <Link to="/login" style={{ fontSize: 35, textAlign: "center" }}>
             <h1>Go to Login Page</h1>
           </Link>
         </div>
@@ -114,7 +113,7 @@ function Signup() {
 
   return (
     <form className="flight-book-form">
-      <div className="login-form" style={{ color: 'white' }}>
+      <div className="login-form" style={{ color: "white" }}>
         <Container>
           <h2 className="mb-4 text-center">Fill your details</h2>
           <Form>
@@ -123,14 +122,21 @@ function Signup() {
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
-                  helpertext={invalid.customer_first_name ? '1-25 characters' : ''}
+                  helpertext={
+                    invalid.customer_first_name ? "1-25 characters" : ""
+                  }
                   id="register-first-name"
                   label="First Name"
                   error={invalid.first_name}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length > 25 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, customer_first_name: validation });
-                    setUserDetails({ ...userDetails, customer_first_name: e.target.value });
+                    setUserDetails({
+                      ...userDetails,
+                      customer_first_name: e.target.value,
+                    });
                   }}
                 />
               </Form.Group>
@@ -138,15 +144,22 @@ function Signup() {
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   required
-                  helpertext={invalid.customer_last_name ? '1-25 characters' : ''}
+                  helpertext={
+                    invalid.customer_last_name ? "1-25 characters" : ""
+                  }
                   id="register-last-name"
                   label="Last Name"
                   type="text"
                   error={invalid.customer_last_name}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length > 25 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, customer_last_name: validation });
-                    setUserDetails({ ...userDetails, customer_last_name: e.target.value });
+                    setUserDetails({
+                      ...userDetails,
+                      customer_last_name: e.target.value,
+                    });
                   }}
                 />
               </Form.Group>
@@ -156,13 +169,15 @@ function Signup() {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   required
-                  helpertext={invalid.emailid ? '1-25 characters' : ''}
+                  helpertext={invalid.emailid ? "1-25 characters" : ""}
                   id="register-email-id"
                   label="Email ID"
                   type="text"
                   error={invalid.email_id}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length > 25 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, emailid: validation });
                     setUserDetails({ ...userDetails, emailid: e.target.value });
                   }}
@@ -181,10 +196,13 @@ function Signup() {
                     const validation = !!(
                       e.target.value.length < 5 ||
                       e.target.value.length > 25 ||
-                      e.target.value === ''
+                      e.target.value === ""
                     );
                     setInvalid({ ...invalid, password: validation });
-                    setUserDetails({ ...userDetails, password: e.target.value });
+                    setUserDetails({
+                      ...userDetails,
+                      password: e.target.value,
+                    });
                   }}
                 />
               </Form.Group>
@@ -193,13 +211,15 @@ function Signup() {
               <Form.Label>Address</Form.Label>
               <Form.Control
                 required
-                helpertext={invalid.address ? '1-25 characters' : ''}
+                helpertext={invalid.address ? "1-25 characters" : ""}
                 id="register-street"
                 label="Street"
                 type="text"
                 error={invalid.street}
                 onChange={(e) => {
-                  const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                  const validation = !!(
+                    e.target.value.length > 25 || e.target.value === ""
+                  );
                   setInvalid({ ...invalid, address: validation });
                   setUserDetails({ ...userDetails, address: e.target.value });
                 }}
@@ -210,13 +230,15 @@ function Signup() {
                 <Form.Label>City</Form.Label>
                 <Form.Control
                   required
-                  helpertext={invalid.city ? '1-25 characters' : ''}
+                  helpertext={invalid.city ? "1-25 characters" : ""}
                   id="register-city"
                   label="City"
                   type="text"
                   error={invalid.city}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length > 25 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, city: validation });
                     setUserDetails({ ...userDetails, city: e.target.value });
                   }}
@@ -226,13 +248,15 @@ function Signup() {
                 <Form.Label>State</Form.Label>
                 <Form.Control
                   required
-                  helpertext={invalid.state ? '1-25 characters' : ''}
+                  helpertext={invalid.state ? "1-25 characters" : ""}
                   id="register-state"
                   label="state"
                   type="text"
                   error={invalid.state}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length > 25 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, state: validation });
                     setUserDetails({ ...userDetails, state: e.target.value });
                   }}
@@ -242,13 +266,15 @@ function Signup() {
                 <Form.Label>Country</Form.Label>
                 <Form.Control
                   required
-                  helpertext={invalid.country ? '1-25 characters' : ''}
+                  helpertext={invalid.country ? "1-25 characters" : ""}
                   id="register-country"
                   label="Country"
                   type="text"
                   error={invalid.country}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length > 25 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length > 25 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, country: validation });
                     setUserDetails({ ...userDetails, country: e.target.value });
                   }}
@@ -266,9 +292,14 @@ function Signup() {
                   type="number"
                   error={invalid.zip_code}
                   onChange={(e) => {
-                    const validation = !!(e.target.value.length !== 5 || e.target.value === '');
+                    const validation = !!(
+                      e.target.value.length !== 5 || e.target.value === ""
+                    );
                     setInvalid({ ...invalid, zip_code: validation });
-                    setUserDetails({ ...userDetails, zip_code: e.target.value });
+                    setUserDetails({
+                      ...userDetails,
+                      zip_code: e.target.value,
+                    });
                   }}
                 />
               </Form.Group>
@@ -277,7 +308,10 @@ function Signup() {
                 <Form.Control
                   type="text"
                   onChange={(e) => {
-                    setUserDetails({ ...userDetails, passportid: e.target.value });
+                    setUserDetails({
+                      ...userDetails,
+                      passportid: e.target.value,
+                    });
                   }}
                 />
               </Form.Group>
@@ -306,7 +340,10 @@ function Signup() {
                   default="What is your mother's maiden name?"
                   value={userDetails?.sec_ques}
                   onChange={(e) => {
-                    setUserDetails({ ...userDetails, sec_ques: e.target.value });
+                    setUserDetails({
+                      ...userDetails,
+                      sec_ques: e.target.value,
+                    });
                   }}
                 >
                   <option value="What is your mother's maiden name?">

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import { Divider } from '@material-ui/core';
-import '../css/Checkout.css';
-import { useHistory, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearBooking, updateBooking } from '../reducers/actions';
-import { REDUCER } from '../utils/consts';
-import backendServer from '../webConfig';
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+import { Divider } from "@material-ui/core";
+import "../css/Checkout.css";
+import { useHistory, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearBooking, updateBooking } from "../reducers/actions";
+import { REDUCER } from "../utils/consts";
+import { get } from "../utils/serverCall";
 
 export default function Payment() {
   const history = useHistory();
@@ -19,19 +19,23 @@ export default function Payment() {
   const [userMiles, setUserMiles] = useState(0);
 
   const getMiles = () => {
-    Axios.get(`${backendServer}/mileage`).then((res) => {
-      setUserMiles(res.data[0].total_miles);
+    get(`/mileage`).then((res) => {
+      setUserMiles(res[0].total_miles);
     });
   };
 
   useEffect(() => {
     getMiles();
-    if (bookingState.book_with === 'Money') {
+    if (bookingState.book_with === "Money") {
       settotalmoney(
-        parseFloat(bookingState.seatsPrice) + parseFloat(bookingState.price) + parseFloat(0.0)
+        parseFloat(bookingState.seatsPrice) +
+          parseFloat(bookingState.price) +
+          parseFloat(0.0)
       );
     } else if (bookingState.isUpdateMode === 0) {
-      settotalmiles(Number(bookingState.miles) + Number(bookingState.seatsPrice));
+      settotalmiles(
+        Number(bookingState.miles) + Number(bookingState.seatsPrice)
+      );
     } else {
       settotalmiles(
         Number(bookingState.miles) +
@@ -48,7 +52,7 @@ export default function Payment() {
   }, [bookingState]);
 
   const createBooking = (booking) => {
-    Axios.post(`${backendServer}/createBooking`, booking)
+    post(`/createBooking`, booking)
       .then((response) => {
         dispatch(clearBooking());
       })
@@ -57,26 +61,38 @@ export default function Payment() {
 
   const confirmBooking = () => {
     let booking;
-    if (bookingState.book_with === 'Money') {
-      booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
+    if (bookingState.book_with === "Money") {
+      booking = {
+        ...bookingState,
+        finalmoney: total_money,
+        finalmiles: total_miles,
+      };
       createBooking(booking);
       if (bookingState.isUpdateMode === 1) {
         if (total_money < Number(bookingState.booked_money)) {
           alert(`Refund will be processed and updated within a week!!`);
         }
       } else {
-        alert(`Booked successfully!!! \nAn email has been sent to your account`);
+        alert(
+          `Booked successfully!!! \nAn email has been sent to your account`
+        );
       }
-      history.push('/myTrips');
-    } else if (bookingState.book_with === 'Miles') {
+      history.push("/myTrips");
+    } else if (bookingState.book_with === "Miles") {
       if (userMiles < bookingState.total_miles) {
-        alert('You do not have sufficient miles to book the flight');
-        history.push('/home');
+        alert("You do not have sufficient miles to book the flight");
+        history.push("/home");
       } else {
-        booking = { ...bookingState, finalmoney: total_money, finalmiles: total_miles };
+        booking = {
+          ...bookingState,
+          finalmoney: total_money,
+          finalmiles: total_miles,
+        };
         createBooking(booking);
-        alert(`Booked successfully!!! \nAn email has been sent to your account`);
-        history.push('/myTrips');
+        alert(
+          `Booked successfully!!! \nAn email has been sent to your account`
+        );
+        history.push("/myTrips");
       }
     }
     // createBooking(booking);
@@ -86,7 +102,7 @@ export default function Payment() {
   };
 
   const returnToSignIn = () => {
-    history.push('/signin');
+    history.push("/signin");
   };
 
   if (!isSignedIn) {
@@ -98,7 +114,7 @@ export default function Payment() {
   return (
     <div className="wrapper col-6">
       <div className="payment payment-gateway">
-        {bookingState.book_with === 'Money' ? (
+        {bookingState.book_with === "Money" ? (
           <div>
             <div className="payment-logo">
               <p>P</p>
@@ -135,7 +151,12 @@ export default function Payment() {
                 </div>
                 <div className="card-item icon-relative pg-2">
                   <label className="label">CVC:</label>
-                  <input type="text" className="input" data-mask="000" placeholder="000" />
+                  <input
+                    type="text"
+                    className="input"
+                    data-mask="000"
+                    placeholder="000"
+                  />
                   <i className="fas fa-lock" />
                 </div>
               </div>
@@ -157,14 +178,15 @@ export default function Payment() {
               <div>Payment summary</div>
             </div>
             <div className="payment__item delivery__guideline">
-              Please complete your payment. For your security, we use standard SSL encryption to
-              protect the transfer of your payment information.
+              Please complete your payment. For your security, we use standard
+              SSL encryption to protect the transfer of your payment
+              information.
             </div>
             <Divider variant="fullWidth" className="payment__item divider" />
             <div className="payment__item payment__bill__container">
               <div className="payment__item bill__item">
                 <div className="item__name">Ticket Price</div>
-                {bookingState.book_with === 'Money' ? (
+                {bookingState.book_with === "Money" ? (
                   <div className="item__price">${bookingState.price}</div>
                 ) : (
                   <div className="item__price">{bookingState.miles} Miles</div>
@@ -172,15 +194,17 @@ export default function Payment() {
               </div>
               <div className="payment__item bill__item">
                 <div className="item__name">Seat Price</div>
-                {bookingState.book_with === 'Money' ? (
+                {bookingState.book_with === "Money" ? (
                   <div className="item__price">${bookingState.seatsPrice}</div>
                 ) : (
-                  <div className="item__price">{bookingState.seatsPrice} Miles</div>
+                  <div className="item__price">
+                    {bookingState.seatsPrice} Miles
+                  </div>
                 )}
               </div>
               <div className="payment__item bill__item">
                 <div className="item__name">Taxes and fees</div>
-                {bookingState.book_with === 'Money' ? (
+                {bookingState.book_with === "Money" ? (
                   <div className="item__price">$0.00</div>
                 ) : (
                   <div className="item__price">0 Miles</div>
@@ -189,14 +213,19 @@ export default function Payment() {
               {bookingState.isUpdateMode === 1 ? (
                 <div className="payment__item bill__item">
                   <div className="item__name">Refund</div>
-                  {bookingState.book_with === 'Money' ? (
-                    <div className="item__price">-${bookingState.booked_money}</div>
+                  {bookingState.book_with === "Money" ? (
+                    <div className="item__price">
+                      -${bookingState.booked_money}
+                    </div>
                   ) : (
-                    <div className="item__price"> - {bookingState.booked_miles} Miles</div>
+                    <div className="item__price">
+                      {" "}
+                      - {bookingState.booked_miles} Miles
+                    </div>
                   )}
                 </div>
               ) : (
-                ' '
+                " "
               )}
             </div>
             <Divider variant="fullWidth" className="payment__item divider" />
@@ -206,11 +235,14 @@ export default function Payment() {
 
             <div className="payment__item total__container">
               <div className="total__title">Total</div>
-              {bookingState.book_with === 'Money' ? (
+              {bookingState.book_with === "Money" ? (
                 <div>
                   {bookingState.isUpdateMode === 1 ? (
                     <div className="total__price">
-                      $ {bookingState.seatsPrice + bookingState.price - bookingState.booked_money}
+                      ${" "}
+                      {bookingState.seatsPrice +
+                        bookingState.price -
+                        bookingState.booked_money}
                     </div>
                   ) : (
                     <div className="total__price">$ {total_money}</div>

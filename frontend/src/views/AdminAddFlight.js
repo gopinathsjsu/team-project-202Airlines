@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import Axios from 'axios';
-import Form from 'react-bootstrap/Form';
-import { Button } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import Autocomplete from '@mui/material/Autocomplete';
-import backendServer from '../webConfig';
-import '../css/index.css';
-import { isAdmin } from '../utils/checkSignin';
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import Autocomplete from "@mui/material/Autocomplete";
+import "../css/index.css";
+import { isAdmin } from "../utils/checkSignin";
+import { post } from "../utils/serverCall";
 
 function AdminAddFlight() {
   const [airptCode, setAirptCode] = useState([]);
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState("");
 
   if (!isAdmin()) {
     return <Redirect to="/home" />;
   }
 
   useEffect(() => {
-    Axios.get(`${backendServer}/getAirportCode`)
+    get(`/getAirportCode`)
       .then((res) => {
         // console.log('code', res.data);
-        setAirptCode(res.data);
+        setAirptCode(res);
       })
       .catch((err) => {
         console.log(err.response);
@@ -31,23 +31,23 @@ function AdminAddFlight() {
     // const isValid = formValidation();
 
     const formData = new FormData(e.target);
-    const fltNo = formData.get('fltNo');
-    const src = formData.get('src');
-    const dst = formData.get('dst');
-    const fltDate = formData.get('fltDate');
-    const strtTime = formData.get('strtTime');
-    const endTime = formData.get('endTime');
-    const fltType = formData.get('fltType');
-    const seatNo = formData.get('seatNo');
-    const mile = formData.get('mile');
-    const amount = formData.get('amount');
-    const fltArrDate = formData.get('fltArrDate');
+    const fltNo = formData.get("fltNo");
+    const src = formData.get("src");
+    const dst = formData.get("dst");
+    const fltDate = formData.get("fltDate");
+    const strtTime = formData.get("strtTime");
+    const endTime = formData.get("endTime");
+    const fltType = formData.get("fltType");
+    const seatNo = formData.get("seatNo");
+    const mile = formData.get("mile");
+    const amount = formData.get("amount");
+    const fltArrDate = formData.get("fltArrDate");
 
     if (src === dst) {
-      setErrMsg('Sourcs and Destination airport should be different');
+      setErrMsg("Sourcs and Destination airport should be different");
     }
 
-    Axios.post(`${backendServer}/addFlights`, {
+    post(`/addFlights`, {
       flight_number: fltNo,
       airport_code_src: src,
       airport_code_dst: dst,
@@ -63,49 +63,49 @@ function AdminAddFlight() {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          console.log('returned');
-          console.log(response.data);
-          window.location = '/adminHome';
+          console.log("returned");
+          console.log(response);
+          window.location = "/adminHome";
         }
       })
       .catch((err) => {
-        console.log('caught an error');
+        console.log("caught an error");
         console.log(err.response);
       });
   };
 
   return (
-    <div className="flight-book-form" style={{ height: '130vh' }}>
-      <h2 className="text-center" style={{ marginTop: '20px', color: 'white' }}>
+    <div className="flight-book-form" style={{ height: "130vh" }}>
+      <h2 className="text-center" style={{ marginTop: "20px", color: "white" }}>
         Add New Flights
       </h2>
       <br />
       <Form
         onSubmit={addNewFlight}
-        style={{ maxWidth: '700px', margin: '10% auto 0', marginTop: '5px' }}
+        style={{ maxWidth: "700px", margin: "10% auto 0", marginTop: "5px" }}
       >
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>
-            <b style={{ color: 'white' }}>Flight Number</b>
+            <b style={{ color: "white" }}>Flight Number</b>
           </Form.Label>
           <Form.Control
             className="mb-3 text-primary"
             type="text"
             name="fltNo"
             required
-            style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+            style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
           />
           <div className="row g-2">
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>Departure Airport</b>
+                <b style={{ color: "white" }}>Departure Airport</b>
               </Form.Label>
               <Form.Control
                 type="text"
                 name="src"
                 required
                 placeholder="Enter Departure Airport Code"
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
               {/* <Autocomplete
                 // options={jobDtls.filter(companyName => nameComp)}
@@ -122,69 +122,69 @@ function AdminAddFlight() {
             </div>
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>Arrival Airport</b>
+                <b style={{ color: "white" }}>Arrival Airport</b>
               </Form.Label>
               <Form.Control
                 type="text"
                 name="dst"
                 required
                 placeholder="Enter Arrival Airport Code"
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
             </div>
           </div>
           <br />
           <Form.Label>
-            <b style={{ color: 'white' }}>Flight Departure Date</b>
+            <b style={{ color: "white" }}>Flight Departure Date</b>
           </Form.Label>
           <Form.Control
             className="mb-3 text-primary"
             type="date"
             name="fltDate"
             required
-            style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+            style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
           />
           <br />
           <Form.Label>
-            <b style={{ color: 'white' }}>Flight Arrival Date</b>
+            <b style={{ color: "white" }}>Flight Arrival Date</b>
           </Form.Label>
           <Form.Control
             className="mb-3 text-primary"
             type="date"
             name="fltArrDate"
             required
-            style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+            style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
           />
           <br />
           <div className="row g-2">
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>Start Time</b>
+                <b style={{ color: "white" }}>Start Time</b>
               </Form.Label>
               <Form.Control
                 className="mb-3 text-primary"
                 type="time"
                 name="strtTime"
                 required
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
             </div>
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>End Time</b>
+                <b style={{ color: "white" }}>End Time</b>
               </Form.Label>
               <Form.Control
                 className="mb-3 text-primary"
                 type="time"
                 name="endTime"
                 required
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
             </div>
           </div>
           <br />
           <Form.Label>
-            <b style={{ color: 'white' }}>Flight Type</b>
+            <b style={{ color: "white" }}>Flight Type</b>
           </Form.Label>
           <Form.Control
             className="mb-3 text-primary"
@@ -192,13 +192,13 @@ function AdminAddFlight() {
             name="fltType"
             required
             placeholder="International or Domestic"
-            style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+            style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
           />
           <br />
           <div className="row g-3">
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>Number of Seats</b>
+                <b style={{ color: "white" }}>Number of Seats</b>
               </Form.Label>
               <Form.Control
                 className="mb-3 text-primary"
@@ -207,13 +207,13 @@ function AdminAddFlight() {
                 required
                 min="0"
                 placeholder="0"
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
               <br />
             </div>
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>Miles</b>
+                <b style={{ color: "white" }}>Miles</b>
               </Form.Label>
               <Form.Control
                 className="mb-3 text-primary"
@@ -222,12 +222,12 @@ function AdminAddFlight() {
                 required
                 min="0"
                 placeholder="0"
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
             </div>
             <div className="col auto">
               <Form.Label>
-                <b style={{ color: 'white' }}>Price (in Dollars)</b>
+                <b style={{ color: "white" }}>Price (in Dollars)</b>
               </Form.Label>
               <Form.Control
                 className="mb-3 text-primary"
@@ -236,14 +236,18 @@ function AdminAddFlight() {
                 required
                 min="0"
                 placeholder="0"
-                style={{ borderWidth: '2px', borderBlockColor: 'skyblue' }}
+                style={{ borderWidth: "2px", borderBlockColor: "skyblue" }}
               />
             </div>
           </div>
           <br />
           <Button
             type="submit"
-            style={{ marginLeft: '270px', paddingLeft: '50px', paddingRight: '50px' }}
+            style={{
+              marginLeft: "270px",
+              paddingLeft: "50px",
+              paddingRight: "50px",
+            }}
           >
             <b>Add Flight</b>
           </Button>

@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import Axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
-import { MdModeEdit } from 'react-icons/md';
-import { Button, Modal } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import flightLogo from '../images/flightlogo.png';
-import backendServer from '../webConfig';
-import '../css/index.css';
-import { isAdmin } from '../utils/checkSignin';
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+import { Link, Redirect } from "react-router-dom";
+import { MdModeEdit } from "react-icons/md";
+import { Button, Modal } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import flightLogo from "../images/flightlogo.png";
+import "../css/index.css";
+import { isAdmin } from "../utils/checkSignin";
+import { get, post } from "../utils/serverCall";
 
 function AdminHome() {
   const [show, setShow] = useState(false);
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
   const [getFlights, setGetFlights] = useState([]);
   const [getFlightsById, setGetFlightsById] = useState([]);
   const handleClose = () => setShow(false);
 
   const getFlightDetailsById = async (flightId) => {
-    await Axios.get(`${backendServer}/getFlightsById/${flightId}`).then((res) => {
-      console.log(res.data);
-      setGetFlightsById(res.data);
+    await get(`/getFlightsById/${flightId}`).then((res) => {
+      console.log(res);
+      setGetFlightsById(res);
     });
   };
 
@@ -28,18 +28,18 @@ function AdminHome() {
     // const isValid = formValidation();
 
     const formData = new FormData(e.target);
-    const src = formData.get('src');
-    const dst = formData.get('dst');
-    const fltDate = formData.get('fltDate');
-    const strtTime = formData.get('strtTime');
-    const endTime = formData.get('endTime');
-    const fltType = formData.get('fltType');
-    const seatNo = formData.get('seatNo');
-    const mile = formData.get('mile');
-    const amount = formData.get('amount');
-    const fltArrDate = formData.get('fltArrDate');
+    const src = formData.get("src");
+    const dst = formData.get("dst");
+    const fltDate = formData.get("fltDate");
+    const strtTime = formData.get("strtTime");
+    const endTime = formData.get("endTime");
+    const fltType = formData.get("fltType");
+    const seatNo = formData.get("seatNo");
+    const mile = formData.get("mile");
+    const amount = formData.get("amount");
+    const fltArrDate = formData.get("fltArrDate");
 
-    Axios.post(`${backendServer}/editFlights`, {
+    post(`/editFlights`, {
       airport_code_src: src,
       airport_code_dst: dst,
       flight_date: fltDate,
@@ -55,21 +55,21 @@ function AdminHome() {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          console.log('returned');
-          console.log(response.data);
+          console.log("returned");
+          console.log(response);
           window.location = `/flightDetails/${id}`;
         }
       })
       .catch((err) => {
-        console.log('caught an error');
+        console.log("caught an error");
         console.log(err.response);
       });
   };
 
   useEffect(() => {
-    Axios.get(`${backendServer}/getFlights`).then((res) => {
-      console.log(res.data);
-      setGetFlights(res.data);
+    get(`/getFlights`).then((res) => {
+      console.log(res);
+      setGetFlights(res);
     });
   }, []);
 
@@ -79,7 +79,7 @@ function AdminHome() {
 
   return (
     <div className="shoe-container mx-auto">
-      <h2 className="text-center" style={{ marginTop: '20px' }}>
+      <h2 className="text-center" style={{ marginTop: "20px" }}>
         Available Flights
       </h2>
       <br />
@@ -88,10 +88,14 @@ function AdminHome() {
           <div
             className="card border-primary mb-3"
             key={key}
-            style={{ marginTop: '20px', marginInline: '1.5rem', width: '200px' }}
+            style={{
+              marginTop: "20px",
+              marginInline: "1.5rem",
+              width: "200px",
+            }}
           >
-            <h3 className="card-header" style={{ wordSpacing: '2rem' }}>
-              {data.flight_number} {'   '}
+            <h3 className="card-header" style={{ wordSpacing: "2rem" }}>
+              {data.flight_number} {"   "}
               <MdModeEdit
                 onClick={() => {
                   setShow(true);
@@ -99,10 +103,13 @@ function AdminHome() {
                 }}
               />
             </h3>
-            <div className="card-body text-primary" style={{ wordSpacing: '2rem' }}>
-              <b>{data.airport_code_src}</b> {'  '}
+            <div
+              className="card-body text-primary"
+              style={{ wordSpacing: "2rem" }}
+            >
+              <b>{data.airport_code_src}</b> {"  "}
               <img src={flightLogo} alt=" " width="25" height="25" />
-              {'  '}
+              {"  "}
               <b>{data.airport_code_dst}</b>
             </div>
           </div>

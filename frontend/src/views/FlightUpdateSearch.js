@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Axios from 'axios';
-import moment from 'moment';
-import { useParams, useHistory } from 'react-router-dom';
-import flightLogo from '../images/flightlogo.png';
-import backendServer from '../webConfig';
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+import moment from "moment";
+import { useParams, useHistory } from "react-router-dom";
+import flightLogo from "../images/flightlogo.png";
 
 let rows = [];
 
@@ -14,18 +13,21 @@ function FlightUpdateSearch() {
 
   const { details } = useParams();
   const flightSearchDetails = JSON.parse(decodeURIComponent(details));
-  const displayDate = moment(flightSearchDetails.flight_date).format('MMMM Do, YYYY');
+  const displayDate = moment(flightSearchDetails.flight_date).format(
+    "MMMM Do, YYYY"
+  );
 
   useEffect(() => {
-    Axios.post(`${backendServer}/flightList`, flightSearchDetails).then((res) => {
+    post(`/flightList`, flightSearchDetails).then((res) => {
       console.log(res);
-      rows = res.data;
+      rows = res;
       setLoading(false);
     });
   }, []);
 
   const reviewFlight = (res) => {
-    const { flight_date, flying_from, flying_to, flight_class, book_with } = flightSearchDetails;
+    const { flight_date, flying_from, flying_to, flight_class, book_with } =
+      flightSearchDetails;
     const { flight_number, start_time, end_time, price, miles } = res;
     const selectedFlight = {
       flight_date,
@@ -40,7 +42,9 @@ function FlightUpdateSearch() {
       miles,
     };
     console.log(selectedFlight);
-    history.push(`/flightDateUpdate/${encodeURIComponent(JSON.stringify(selectedFlight))}`);
+    history.push(
+      `/flightDateUpdate/${encodeURIComponent(JSON.stringify(selectedFlight))}`
+    );
   };
 
   return (
@@ -48,11 +52,15 @@ function FlightUpdateSearch() {
       <div className="row">
         <div className="col-3" />
         <div className="col-6 row display-text">
-          <div className="col-4 text-center">{flightSearchDetails.flying_from}</div>
+          <div className="col-4 text-center">
+            {flightSearchDetails.flying_from}
+          </div>
           <div className="col-4 text-center">
             <img src={flightLogo} alt=" " width="100" height="100" />
           </div>
-          <div className="col-4 text-center">{flightSearchDetails.flying_to}</div>
+          <div className="col-4 text-center">
+            {flightSearchDetails.flying_to}
+          </div>
         </div>
         <div className="col-3" />
       </div>
@@ -92,16 +100,24 @@ function FlightUpdateSearch() {
               <div className="col">
                 {moment
                   .duration(
-                    moment(res.end_time, 'HH:mm:ss').diff(moment(res.start_time, 'HH:mm:ss'))
+                    moment(res.end_time, "HH:mm:ss").diff(
+                      moment(res.start_time, "HH:mm:ss")
+                    )
                   )
-                  .asHours()}{' '}
+                  .asHours()}{" "}
                 hours
               </div>
               <div className="col">
                 {/* {flightSearchDetails.book_with === 'Money' ?  : ''} */}
-                {flightSearchDetails.book_with === 'Money' ? `$${res.price}` : `${res.miles}`}
+                {flightSearchDetails.book_with === "Money"
+                  ? `$${res.price}`
+                  : `${res.miles}`}
               </div>
-              <button className="btn btn-default" type="button" onClick={() => reviewFlight(res)}>
+              <button
+                className="btn btn-default"
+                type="button"
+                onClick={() => reviewFlight(res)}
+              >
                 Select
               </button>
               <br />
@@ -110,7 +126,9 @@ function FlightUpdateSearch() {
         </div>
       ) : (
         <div>
-          <h3 className="text-danger">No Flights Are Available for the Selected dates</h3>
+          <h3 className="text-danger">
+            No Flights Are Available for the Selected dates
+          </h3>
           <a href="/myTrips">
             <b>Go Back to My trips</b>
           </a>
