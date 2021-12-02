@@ -15,7 +15,7 @@ const getProfile = (req, res) => {
 };
 
 const getMileage = (req, res) => {
-  const customer_id = req.session.user.customer_id;
+  const customer_id = req.user.customer_id;
   conn.query(SQL_ADMIN.MILEAGE, [customer_id], (error, result) => {
     console.log(result);
     if (error) {
@@ -31,7 +31,7 @@ const getMileage = (req, res) => {
 const addMiles = (req, res) => {
   console.log("Entered");
   console.log(req.body);
-  const customer_id = req.session.user.customer_id;
+  const customer_id = req.user.customer_id;
   const miles = Number(req.body.miles) + Number(req.body.curr_miles);
   console.log(miles);
   conn.query(SQL_ADMIN.ADD_MILES, [miles, customer_id], (error, result) => {
