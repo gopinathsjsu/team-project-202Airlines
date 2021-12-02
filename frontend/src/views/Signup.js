@@ -103,7 +103,7 @@ function Signup() {
         <div className="main">
           <h1 style={{ textAlign: "center" }}> {message}</h1>
           <br />
-          <Link to="/login" style={{ fontSize: 35, textAlign: "center" }}>
+          <Link to="/signin" style={{ fontSize: 35, textAlign: "center" }}>
             <h1>Go to Login Page</h1>
           </Link>
         </div>
