@@ -7,7 +7,7 @@ const SQL_BOOKING = {
   CANCEL_BOOKING:
     "Update Airlines.Booking set status='Canceled' where booking_id=?;",
   CANCEL_BOOKING_MILES:
-    "Update Airlines.Customer set total_miles=(total_miles+?) where customer_id=1;",
+    "Update Airlines.Customer set total_miles=(total_miles+?) where customer_id=?;",
   GET_BOOKING_FOR_UPDATE:
     "select class, traveller_cnt, booking_id,DATE_FORMAT(booking_date,'%Y-%m-%d') as booking_date,DATE_FORMAT(flight_date,'%Y-%m-%d') as dep_date,DATE_FORMAT(arr_date,'%Y-%m-%d') as arr_date,airport_code_src as src,airport_code_dst as dst,Booking.price,Booking.milesused,status \
     from Booking,Flight \

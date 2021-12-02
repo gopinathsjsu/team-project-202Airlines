@@ -54,7 +54,7 @@ const cancelFlightBooking = (req, res) => {
         if (req.body.total_miles != 0) {
           conn.query(
             SQL_BOOKING.CANCEL_BOOKING_MILES,
-            [req.body.total_miles],
+            [req.body.total_miles, req.session.user.customer_id],
             (err, results) => {
               // console.log(req.body.total_miles);
               res.send(results);
@@ -150,6 +150,18 @@ const newBooking = (data, body, res, req) => {
             res.status(404).send({ err: err1.code });
             return;
           } else {
+            conn.query(
+              SQL_BOOKING.CHANGE_MILES_AFTER_BOOKING,
+              [body.finalmiles, req.session.user.customer_id],
+              (err, results) => {
+                if (err) {
+                  res.status(404).send({ err: err.code });
+                  return;
+                } else {
+                  res.send();
+                }
+              }
+            );
             res.send();
           }
         }
