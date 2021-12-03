@@ -8,14 +8,15 @@ import store from '../reducers/store';
 import { REDUCER, SERVER } from './consts';
 
 Axios.defaults.withCredentials = true;
-Axios.defaults.headers.common.authorization = localStorage.getItem(REDUCER.TOKEN);
+// Axios.defaults.headers.common.authorization = localStorage.getItem(REDUCER.TOKEN);
 
 // const dispatch = useDispatch();
 // const { showError } = bindActionCreators(actionCreators, dispatch);
 
-const get = (path, data) =>
+const get = (path, data) =>{
+  Axios.defaults.headers.common.authorization = localStorage.getItem(REDUCER.TOKEN);
   // console.log('');
-  Axios.get(SERVER.URL + path, { params: data })
+  return Axios.get(SERVER.URL + path, { params: data })
     .then((response) => response.data)
     .catch((error) => {
       if (error.response && error.response.data.err) {
@@ -25,10 +26,11 @@ const get = (path, data) =>
         store.dispatch(showError('Server Side Error Occured'));
         throw 'Server Side Error Occured';
       }
-    });
-const post = (path, data) =>
+    });}
+const post = (path, data) =>{
+  Axios.defaults.headers.common.authorization = localStorage.getItem(REDUCER.TOKEN);
   // console.log('');
-  Axios.post(SERVER.URL + path, data )
+  return Axios.post(SERVER.URL + path, data )
     .then((response) => response.data)
     .catch((error) => {
       if (error.response && error.response.data.err) {
@@ -38,5 +40,5 @@ const post = (path, data) =>
         store.dispatch(showError('Server Side Error Occured'));
         throw 'Server Side Error Occured';
       }
-    });
+    });}
 export { get, post };
