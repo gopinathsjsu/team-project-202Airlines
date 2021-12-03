@@ -50,7 +50,7 @@ function Mileage() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { loading, userData } = useLoginValidate();
+  // const { loading, userData } = useLoginValidate();
   const [mileageDetails, setmileageDetails] = useState({
     name: "",
     Mileageno: "",
@@ -60,7 +60,7 @@ function Mileage() {
   //   return redirectLogin();
   // }
   useEffect(async () => {
-    console.log(userData.customer_id);
+    // console.log(userData.customer_id);
     await get(`/mileage`).then((res) => {
       console.log(res);
       setmileageDetails((prevState) => ({

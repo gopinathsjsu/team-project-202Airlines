@@ -11,10 +11,10 @@ import { clearBooking } from '../reducers/actions';
 
 function Home() {
   const dispatch = useDispatch();
-  const { loading, userData } = useLoginValidate();
+  // const { loading, userData } = useLoginValidate();
   const isSignedIn = JSON.parse(localStorage.getItem(REDUCER.SIGNEDIN));
   const isAdmin = JSON.parse(localStorage.getItem(REDUCER.ISADMIN));
-  console.log(userData);
+  // console.log(userData);
   // if (!userData.email_id) {
   //   return redirectLogin();
   // }
