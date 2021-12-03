@@ -82,6 +82,15 @@ function MyTrip() {
         .catch((error) => {});
     } else {
       alert("Money after charges will be refunded within 5 days");
+      const values = {
+        booking_id: id,
+        total_miles: 0,
+      };
+      post(`/cancelFlightBookingRefund`, values)
+      .then((result) => {
+        // console.log(result);
+        window.location.reload();
+      })
     }
   };
 

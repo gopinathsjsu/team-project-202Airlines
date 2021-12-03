@@ -7,6 +7,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "../css/index.css";
 import { isAdmin } from "../utils/checkSignin";
 import { post } from "../utils/serverCall";
+import { get } from '../utils/serverCall';
 
 function AdminAddFlight() {
   const [airptCode, setAirptCode] = useState([]);
@@ -62,11 +63,12 @@ function AdminAddFlight() {
     })
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+       /* if (response.status === 200) {
           console.log("returned");
           console.log(response);
           window.location = "/adminHome";
-        }
+        }*/
+        window.location = "/adminHome";
       })
       .catch((err) => {
         console.log("caught an error");
