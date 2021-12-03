@@ -10,22 +10,23 @@ const passport = require("passport");
 const { auth } = require('./src/utils/auth');
 
 const app = express();
-app.use(
-  session({
-    key: '202Airlines',
-    secret: 'groupProject',
-    resave: false,
-    saveUninitialized: false,
-    rolling: true,
-    cookie: {
-      maxAge: 2 * 60 * 60 * 1000,
-    },
-  })
-);
+
+// app.use(
+//   session({
+//     key: '202Airlines',
+//     secret: 'groupProject',
+//     resave: false,
+//     saveUninitialized: false,
+//     rolling: true,
+//     cookie: {
+//       maxAge: 2 * 60 * 60 * 1000,
+//     },
+//   })
+// );
 
 app.use(
   cors({
-    origin: CONFIG.FRONTEND, // add to constants file or configuration file.
+    origin: [CONFIG.FRONTEND,"http://54.193.52.160:3000","http://54.219.137.24:3000"], // add to constants file or configuration file.
     // origin: '*',
     methods: ['GET', 'POST', 'PUT'],
     credentials: true,
