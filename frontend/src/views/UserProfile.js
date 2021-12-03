@@ -6,6 +6,7 @@ import { Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { REDUCER } from "../utils/consts";
 import { get } from "../utils/serverCall";
+import { post } from "../utils/serverCall";
 
 function UserProfile() {
   const [userProfile, setUserProfile] = useState([]);
