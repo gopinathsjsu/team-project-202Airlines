@@ -7,6 +7,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "../css/index.css";
 import { isAdmin } from "../utils/checkSignin";
 import { post } from "../utils/serverCall";
+import { get } from '../utils/serverCall';
 
 function AdminAddFlight() {
   const [airptCode, setAirptCode] = useState([]);
