@@ -63,11 +63,12 @@ function AdminAddFlight() {
     })
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+       /* if (response.status === 200) {
           console.log("returned");
           console.log(response);
           window.location = "/adminHome";
-        }
+        }*/
+        window.location = "/adminHome";
       })
       .catch((err) => {
         console.log("caught an error");
