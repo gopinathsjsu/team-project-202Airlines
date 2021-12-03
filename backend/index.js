@@ -26,7 +26,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [CONFIG.FRONTEND,"http://54.193.52.160:3000","http://54.219.137.24:3000"], // add to constants file or configuration file.
+    origin: [CONFIG.FRONTEND,"http://54.193.52.160:3000","http://54.219.137.24:3000","http://3.138.179.57:3000"], // add to constants file or configuration file.
     // origin: '*',
     methods: ['GET', 'POST', 'PUT'],
     credentials: true,
