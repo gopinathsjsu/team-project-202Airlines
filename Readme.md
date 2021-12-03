@@ -1,8 +1,8 @@
 # Team Members
-Anil Gubbala - 015263729
-Himakshi Vijayvargiya - 015351453
-Isha Rao - 015323113
-Jahnavi Marthala - 015351323
+- Anil Gubbala - 015263729
+- Himakshi Vijayvargiya - 015351453
+- Isha Rao - 015323113
+- Jahnavi Marthala - 015351323
 
 # Project Board
 https://github.com/gopinathsjsu/team-project-202Airlines/projects/1
@@ -22,8 +22,8 @@ https://github.com/gopinathsjsu/team-project-202Airlines/tree/main/UI%20Wirefram
 https://github.com/gopinathsjsu/team-project-202Airlines/tree/main/Agile%20Documentation
 
 # Technology Stack
-Frontend : React js, Redux
-Backend : Node js
-DB : MySQL(Deployed in AWS)
-Login Authentication : JWT Token
-Deployed Application to AWS in an Auto Scaled EC2 Cluster with Load Balancer 
+- Frontend : React js, Redux
+- Backend : Node js
+- DB : MySQL(Deployed in AWS)
+- Login Authentication : JWT Token
+- Deployed Application to AWS in an Auto Scaled EC2 Cluster with Load Balancer 
