@@ -80,7 +80,7 @@ export default function Payment() {
       }
       history.push("/myTrips");
     } else if (bookingState.book_with === "Miles") {
-      if (userMiles < bookingState.total_miles || bookingState.total_miles === 0) {
+      if (userMiles < bookingState.total_miles) {
         alert("You do not have sufficient miles to book the flight");
         history.push("/home");
       } else {
